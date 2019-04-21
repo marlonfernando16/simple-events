@@ -24,6 +24,7 @@ public class EventoController {
 	
 	@RequestMapping("/salvar")
 	public String salvarEvento(@Valid Evento evento, Model model, BindingResult br) {
+		System.out.println("oi");
 		if(br.hasErrors())
 			return "evento-form";
 		else {
