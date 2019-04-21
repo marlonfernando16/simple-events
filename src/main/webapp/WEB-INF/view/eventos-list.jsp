@@ -1,35 +1,104 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Listagem de Eventos</title>
-</head>
-<body>
+<!-- CSS  -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-	<h1>Eventos Cadastrados</h1>
-	<c:if test="${not empty evento}">
-		<p>Evento cadastrado!</p>
-	</c:if>
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+</head>
+
+<style>
+	body {
+		background-color: #F8F8F8 ;
+		}
+	
+	.eventos{
+		margin-left: 10%;
+	}
+    .i-circle.md-login{
+      margin-left: 50px;
+      margin-top: 50%;
+      font-weight:900;
+      padding: 10px;
+      padding-right: 15px;
+      padding-left: 15px;
+      border-radius: 50%;
+      color:black;
+    }
+
+</style>
+<body>
+	<!--menu-->
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content">
+		<li> </li>
+		<li><a href="#!">Sair</a></li>
+	</ul>
+	<nav class="teal lighten-2" >
+		<div class="nav-wrapper">
+			<a href="#!" class="brand-logo">Simple event</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="${pageContext.request.contextPath }/login/form"><i class="material-icons left">home</i>Home</a></li>
+				<li><a href="${pageContext.request.contextPath }/eventos/add"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
+				<!-- Dropdown Trigger -->
+				<li><a class="dropdown-trigger" href="#!"
+					data-target="dropdown1"><span class="i-circle md-login center white ">A</span><i class="material-icons right">arrow_drop_down</i></a></li>
+			</ul>
+		</div>
+	</nav>
+
+
 	
 	<c:if test="${empty eventos}">
 		<p>Ainda não há eventos cadastrados.</p>
 	</c:if>
-	
-	<ul>
+
+	<ul class="eventos">
 		<c:forEach var="e" items="${eventos}">
-			<li>
-				<ul>
-					<li>Evento: ${e.id}</li>
-					<li>Descrição: ${e.descricao}</li>
-					<li>Data: ${e.data}</li>
-					<li>Local: ${e.local}</li>
-				</ul>
-			</li>
+				
+	<div class="col s12 m8 offset-m2 l6 offset-l3">
+      <div class="card-panel white hoverable lighten-5 z-depth-1" style="width:90%;height:9em;padding-top:5px">
+        <div class="row">
+            <div class="col s12 m4 l5">
+            <span class="black-text">
+                <h4><a href="#" class="black-text text-darken-3" style="font-weight:700">  ${e.descricao} </a></h4>
+                <small class="grey-text">as vagas aqui vem </small>
+              </span>
+            </div>
+            <div class="col s12 m4 l5">
+              <h4 class="locais blue-text" >${e.local}</h4>
+              <small class="grey-text">${e.data}</small>
+            </div>
+        </div>
+      </div>
+  </div>
 		</c:forEach>
 	</ul>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		   $('.modal').modal();
+		   $('.dropdown-trigger').dropdown();
+		});
+	</script>
 
 </body>
 </html>
