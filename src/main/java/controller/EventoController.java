@@ -31,7 +31,7 @@ public class EventoController {
 			EventosRepository.store(evento);
 			model.addAttribute("evento", evento);
 			model.addAttribute("eventos", EventosRepository.findAll());
-			return "eventos-list";
+			return "redirect:/eventos/";
 		}
 	}
 	
