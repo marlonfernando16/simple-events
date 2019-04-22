@@ -46,8 +46,8 @@ public class UserController {
 			return new ModelAndView("user-create");
 		} else {
 			UserRepository.store(user);
-			attr.addFlashAttribute("message", "Usuario castrado");
-			return new ModelAndView("redirect:listUsers");
+			attr.addFlashAttribute("message", "Usuario cadastrado");
+			return new ModelAndView("redirect:/login/form/");
 		}
 	}
 

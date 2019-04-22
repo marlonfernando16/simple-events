@@ -15,6 +15,14 @@
 <!-- Compiled and minified JavaScript -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	
+<style>
+	
+	body {
+		background-color: #F8F8F8 ;
+		margin-top: 3%;
+		}
+</style>
 </head>
 <body>
 	<div class="valign-wrapper row login-box">
@@ -23,14 +31,17 @@
 
 			<div
 				class="card-action s10 pull-s1 m6 pull-m3 l4 pull-l4 teal lighten-2 white-text blue">
-				<h3 class="center">Simple Event</h3>
+				<h3 class="center">Log in</h3>
 			</div>
 
 				<div class="card-content">
 					<c:if test="${not empty erro }">
 						<p class="center" style="color: red">${erro}</p>
 					</c:if>
-					<form:form action="valide" method="post">
+					<c:if test="${not empty message }">
+						<p class="center" style="color: green">${message}</p>
+					</c:if>
+					<form:form action="${pageContext.request.contextPath }/login/valide" method="post">
 					<div class="input-field col s12">
 							<i class="material-icons prefix">account_circle</i>
 							<input type="text" name="login"/><br>
@@ -39,12 +50,15 @@
 					<div class="input-field col s12">
 							<i class="material-icons prefix">lock</i>
 						 	<input type="password" name="senha"/><br>
-						 	<label for="login">Senha</label>
+						 	<label for="login">Password</label>
 					</div>
 							<div class="form-field center-align">
-								<button class="btn-large ">Login</button>
+								<button class="btn-large ">Log in</button>
 							</div>
 							<br>
+							<div class ="center">
+								Don't have an account yet?<a href="${pageContext.request.contextPath }/usuario/"> Sign up for free.</a>
+							</div> 
 					</form:form>
 			 </div>
         </div>
