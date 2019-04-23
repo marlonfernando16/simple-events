@@ -95,7 +95,7 @@
 				<small class="grey-text">Edit</small>             
             </div>
             <div class="col s14 m4 l5 gambiarra">
-				<p><a href="${pageContext.request.contextPath}/eventos/delete/${evento.id}"><i class="material-icons">delete_forever</i></a></p> 
+				<p><a href="${pageContext.request.contextPath}/eventos/delete/${e.id}"><i class="material-icons">delete_forever</i></a></p> 
 				<small class="grey-text">Delete</small>             
             </div>
         </div>
