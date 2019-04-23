@@ -30,7 +30,6 @@ public class EventoController {
 	
 	@RequestMapping("/salvar")
 	public ModelAndView salvarEvento(@Valid Evento evento, BindingResult bindingResult, RedirectAttributes attr) {
-		System.out.println("oi");
 		if(bindingResult.hasErrors())
 			return new ModelAndView("event-form");
 		else {
@@ -71,7 +70,7 @@ public class EventoController {
 				attr.addFlashAttribute("evento", evento);
 				return new ModelAndView("redirect:/eventos/");
 			}else {
-				attr.addFlashAttribute("message", "Evento não pode ser atualizado");
+				attr.addFlashAttribute("message", "Evento nï¿½o pode ser atualizado");
 				attr.addFlashAttribute("evento", evento);
 				return new ModelAndView("redirect:/eventos/");
 			}
