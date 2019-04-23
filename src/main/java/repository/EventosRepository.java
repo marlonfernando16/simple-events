@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Evento;
+import model.User;
 
 public class EventosRepository {
 
@@ -28,4 +29,21 @@ public class EventosRepository {
 		return new ArrayList<>(data.values());
 	}
 	
+	public static Evento findById(Long id) {
+		return data.get(id);
+	}
+	
+	public static boolean update(Long id, Evento evento) {
+		evento.setId(id);
+		return data.replace(id, findById(id), evento);
+	}
+	
+	public static Evento delete(Long id) {
+		Evento e = findById(id);
+		if (e != null) {
+			data.remove(e.getId(), e);
+			return e;
+		}
+		return null;
+	}
 }
