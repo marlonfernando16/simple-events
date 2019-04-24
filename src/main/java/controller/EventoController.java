@@ -22,7 +22,7 @@ import repository.UserRepository;
 public class EventoController {
 
 	@RequestMapping("/add")
-	public ModelAndView showAlunoForm() {
+	public ModelAndView showLoginForm() {
 		ModelAndView mav = new ModelAndView("evento-form");
 		mav.addObject("evento", new Evento());
 		return mav;
@@ -31,7 +31,7 @@ public class EventoController {
 	@RequestMapping("/salvar")
 	public ModelAndView salvarEvento(@Valid Evento evento, BindingResult bindingResult, RedirectAttributes attr) {
 		if(bindingResult.hasErrors())
-			return new ModelAndView("event-form");
+			return new ModelAndView("evento-form");
 		else {
 			EventosRepository.store(evento);
 			attr.addFlashAttribute("evento", evento);

@@ -20,7 +20,7 @@ public class User {
 	private String email;
 	@Size(min = 8, message = "a senha deve conter no minino 8 caracteres")
 	private String senha;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Past(message = "A data deve estar no passado")
 	private Date datanascimento;
 

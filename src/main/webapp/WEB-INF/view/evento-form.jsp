@@ -70,21 +70,24 @@
             <!--Campo Descricao -->
             <div class="input-field col s12">
                 <i class="material-icons prefix">event_note</i>
-				<form:input path="descricao"/><form:errors path="descricao" />
+				<form:input path="descricao"/>
+				<form:errors class="center red-text" path="descricao" />
 				<label for="descricao">Descricao</label>
             </div>
 
             <!--Campo Data -->
             <div class="input-field col s12">
                 <i class="material-icons prefix">calendar_today</i>
- 				<form:input path="data" type="text"/><form:errors path="data" />
+ 				<form:input path="data" type="date"/>
+ 				<form:errors class="center red-text" path="data" />
 				<label for="data">Data</label>
             </div>
 
             <!--Campo Local -->
             <div class="input-field col s12">
                 <i class="material-icons prefix">location_on</i>
-				<form:input path="local"/><form:errors path="local" />
+				<form:input path="local"/>
+				<form:errors class="center red-text" path="local" />
 				<label for="local">Local</label>
             </div>
 

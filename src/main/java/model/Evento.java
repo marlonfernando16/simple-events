@@ -15,7 +15,7 @@ public class Evento {
 	@NotEmpty(message = "Descrição é obrigatória")
 	private String descricao;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Data é obrigatória")
 	@Future(message = "A data deve estar no futuro")
 	private Date data;

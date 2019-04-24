@@ -52,9 +52,9 @@
 					</div>
 					<div class="input-field col s12">
 							<i class="material-icons prefix">calendar_today</i>
-							<form:input path="datanascimento" class="validate"   />
+							<form:input path="datanascimento" type="date" class="validate"   />
 							<form:errors class="center red-text" path="datanascimento"/>
-							<label for="telefone">Date of birth</label>
+							<label for="datanascimento">Date of birth</label>
 					</div>
 					<div class="input-field col s12">
 							<i class="material-icons prefix">email</i>
