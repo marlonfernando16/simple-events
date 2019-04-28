@@ -36,6 +36,14 @@ public class UserRepository {
 		}
 		return null;
 	}
+	
+	public static User findByEmail(String email) {
+		for (Map.Entry<Long, User> entry : data.entrySet()) {
+			if (entry.getValue().getEmail().equals(email))
+				return entry.getValue();
+		}
+		return null;
+	}
 
 	public static User findById(Long id) {
 		return data.get(id);

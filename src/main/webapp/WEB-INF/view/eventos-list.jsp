@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +65,7 @@
 				<li><a href="${pageContext.request.contextPath }/eventos/add"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->
 				<li><a class="dropdown-trigger" href="#!"
-					data-target="dropdown1"><span class="i-circle md-login center white ">A</span><i class="material-icons right">arrow_drop_down</i></a></li>
+					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(login, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>
 			</ul>
 		</div>
 	</nav>
