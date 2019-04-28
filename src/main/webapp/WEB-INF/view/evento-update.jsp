@@ -83,7 +83,7 @@
             <!--Campo Data -->
             <div class="input-field col s12">
                 <i class="material-icons prefix">calendar_today</i>
- 				<form:input path="data" type="text"/><form:errors path="data" />
+ 				<form:input path="data" type="date"/><form:errors path="data" />
 				<form:errors path="data">
 					<c:if test="${not empty evento}">
 					${evento.data}
@@ -106,7 +106,7 @@
 
             <!--Botões-->
             <div class="input-field col s12">
-                <input type="submit" value="cadastrar" class="btn blue">
+                <input type="submit" value="atualizar" class="btn blue">
                 <a href="#" class="btn red">cancelar</a>
             </div>
         </fieldset>

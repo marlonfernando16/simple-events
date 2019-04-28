@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,7 +89,7 @@
             </div>
             <div class="col s12 m4 l5 gambiarra">
               <h4 class="locais blue-text" >${e.local}</h4>
-              <small class="grey-text">${e.data}</small>
+              <small class="grey-text center">will happen in <fmt:formatDate pattern="dd-MM-yyyy" value="${e.data}" /></small>
             </div>
             <div class="col s14 m4 l5 gambiarra">
 				<p><a href="${pageContext.request.contextPath}/eventos/read/${e.id}"><i class="material-icons">create</i></a></p> 
