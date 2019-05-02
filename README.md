@@ -22,7 +22,7 @@
 - uma vez logado, este usuário poderá:
   - consultar eventos, identificando o dono do evento pelo login;
     - A consulta poderá ser pelo título do evento ou por nome da especialidade
-  - gerenciar (adicionar, remover, visualizar) seus eventos;
+  - gerenciar (adicionar, remover, visualizar, finalizar) seus eventos;
     - o evento deve está associado a uma ou várias vagas
     - cada vaga deve está relacionado a uma especialidade
   - visualizar as candidaturas das vagas, identificando cada candidato pelo login
