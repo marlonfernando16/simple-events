@@ -1,1 +1,2 @@
-web: java -jar target/simple-events-1.0.0.jar
+web:    java $JAVA_OPTS -jar target/dependency/jetty-runner.jar --port $PORT target/*.war
+
