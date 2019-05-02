@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class indexController {
     @GetMapping("/")
     public String index() {
-        return "Just do it.";
+        return "Just do it!!!";
     }
 }
