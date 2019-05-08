@@ -41,7 +41,7 @@ public class EventoController {
 		}
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping({"/", ""})
 	public ModelAndView listarEventos() {
 		ModelAndView mav = new ModelAndView("eventos-list");
 		mav.addObject("eventos", EventosRepository.findAll());
