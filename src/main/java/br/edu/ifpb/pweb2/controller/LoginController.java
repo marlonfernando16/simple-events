@@ -1,10 +1,10 @@
-package controller;
+package br.edu.ifpb.pweb2.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import model.User;
+import br.edu.ifpb.pweb2.model.User;
 import repository.UserRepository;
 
 @Controller
@@ -24,7 +24,7 @@ public class LoginController {
 			model.addAttribute("user_name", user.getNome());
 			return "eventos-list";
 		}else {
-			model.addAttribute("erro", "Login ou senha inválidos");
+			model.addAttribute("erro", "Login ou senha invï¿½lidos");
 			return "form-login";
 		}
 	}

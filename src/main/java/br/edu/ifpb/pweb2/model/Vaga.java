@@ -1,12 +1,30 @@
-package model;
+package br.edu.ifpb.pweb2.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_vaga")
 public class Vaga {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@ManyToOne
 	private Evento evento;
 	private int qtd_vagas;
-	private ArrayList<Candidato_vaga> candidato_vaga = new ArrayList<>();
+	@OneToMany(mappedBy = "vaga", cascade = CascadeType.ALL)
+	private List<Candidato_Vaga> candidato_vaga = new ArrayList<>();
+	@OneToOne
 	private Especialidade especialidade;
 	
 	public Vaga() {};
@@ -40,10 +58,10 @@ public class Vaga {
 	public void setQtd_vagas(int qtd_vagas) {
 		this.qtd_vagas = qtd_vagas;
 	}
-	public ArrayList<Candidato_vaga> getCandidato_vaga() {
+	public List<Candidato_Vaga> getCandidato_vaga() {
 		return candidato_vaga;
 	}
-	public void setCandidato_vaga(ArrayList<Candidato_vaga> candidato_vaga) {
+	public void setCandidato_vaga(ArrayList<Candidato_Vaga> candidato_vaga) {
 		this.candidato_vaga = candidato_vaga;
 	}
 	
