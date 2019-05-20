@@ -12,7 +12,6 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>5.1.1.RELEASE</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-catalina</artifactId>
