@@ -1,53 +1,77 @@
-package model;
+package br.edu.ifpb.pweb2.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Entity
+@Table(name = "tb_usuario")
 public class User {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@NotEmpty(message = "Nome e obrigatorio")
 	private String nome;
+
 //	@Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", message = "Informe um telefone [(83) 98892-1223]")
 	private String telefone;
+	
 	private String email;
+	
 	@Size(min = 8, message = "a senha deve conter no minino 8 caracteres")
 	private String senha;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Past(message = "A data deve estar no passado")
 	private Date datanascimento;
-	/* relação com eventos */
-	private ArrayList<Evento> eventos = new ArrayList<>();
+	
+	/* relaï¿½ï¿½o com eventos */
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	private List<Evento> eventos = new ArrayList<>();
+	
 	/* relacao com candidato_vaga */
-	private Candidato_vaga candidato_vaga;
+	@OneToOne
+	private Candidato_Vaga candidato_vaga;
+	
 	/* relacao com Avaliacao_evento */
-	private Avaliacao_evento avaliacao_evento;
+	@OneToOne
+	private Avaliacao_Evento avaliacao_evento;
 
-	public User() {};
+	public User() {
+	};
 
-	public Avaliacao_evento getAvaliacao_evento() {
+	public Avaliacao_Evento getAvaliacao_evento() {
 		return avaliacao_evento;
 	}
 
-	public void setAvaliacao_evento(Avaliacao_evento avaliacao_evento) {
+	public void setAvaliacao_evento(Avaliacao_Evento avaliacao_evento) {
 		this.avaliacao_evento = avaliacao_evento;
 	}
 
-	public Candidato_vaga getCandidato_vaga() {
+	public Candidato_Vaga getCandidato_vaga() {
 		return candidato_vaga;
 	}
 
-	public void setCandidato_vaga(Candidato_vaga candidato_vaga) {
+	public void setCandidato_vaga(Candidato_Vaga candidato_vaga) {
 		this.candidato_vaga = candidato_vaga;
 	}
 
-	public ArrayList<Evento> getEventos() {
+	public List<Evento> getEventos() {
 		return eventos;
 	}
 

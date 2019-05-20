@@ -62,7 +62,7 @@
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/login/form"><i class="material-icons left">home</i>Home</a></li>
-				<li><a href="${pageContext.request.contextPath }/eventos/add"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
+				<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->
 				<li><a class="dropdown-trigger" href="#!"
 					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(login, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>

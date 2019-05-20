@@ -1,11 +1,27 @@
-package model;
+package br.edu.ifpb.pweb2.model;
 
-public class Avaliacao_evento {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_avaliacao_evento")
+public class Avaliacao_Evento {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@ManyToOne
 	private Evento evento;
 	private int nota_avaliacao_evento;
+	@OneToOne
 	private User participante;
 
-	public Avaliacao_evento() {};
+	public Avaliacao_Evento() {
+	};
 
 	public Evento getEvento() {
 		return evento;
