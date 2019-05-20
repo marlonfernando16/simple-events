@@ -63,10 +63,10 @@
 <!-- Formulario de Cadastro -->
 <div class="row container">
     <p>&nbsp;</p>
-    <form:form action="${pageContext.request.contextPath}/eventos/update/${evento.id}" method="post" class="col s12 white " modelAttribute="evento" >
+    <form:form action="${pageContext.request.contextPath }/eventos/update/${evento.id}" method="post" class="col s12 white " modelAttribute="evento">
         <fieldset class="formulario">
             <legend> <i class="material-icons prefix " style="font-size: 70px">event_available</i></legend>
-            <h5 class="light center">Cadastro de Eventos </h5>
+            <h5 class="light center">Atualizar Evento </h5>
             
             <!--Campo Descricao -->
             <div class="input-field col s12">

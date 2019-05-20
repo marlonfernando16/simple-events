@@ -51,7 +51,7 @@
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/login/form"><i class="material-icons left">home</i>Home</a></li>
-				<li><a href="${pageContext.request.contextPath }/eventos/add"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
+				<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->
 				<li><a class="dropdown-trigger" href="#!"
 					data-target="dropdown1"><span class="i-circle md-login center white ">A</span><i class="material-icons right">arrow_drop_down</i></a></li>
@@ -62,7 +62,7 @@
 <!-- Formulario de Cadastro -->
 <div class="row container">
     <p>&nbsp;</p>
-    <form:form action="${pageContext.request.contextPath }/eventos/salvar" method="post" class="col s12 white " modelAttribute="evento" >
+    <form:form action="${pageContext.request.contextPath }/eventos" method="post" class="col s12 white " modelAttribute="evento" >
         <fieldset class="formulario">
             <legend> <i class="material-icons prefix " style="font-size: 70px">event_available</i></legend>
             <h5 class="light center">Cadastro de Eventos </h5>

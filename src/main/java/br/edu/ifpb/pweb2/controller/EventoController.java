@@ -2,11 +2,14 @@ package br.edu.ifpb.pweb2.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +22,8 @@ import br.edu.ifpb.pweb2.model.Evento;
 @RequestMapping("/eventos")
 public class EventoController {
 	@Autowired
-	EventoDAO dao;
-
+	EventoDAO eventodao;
+	
 	@RequestMapping("/form")
 	public ModelAndView showLoginForm() {
 		ModelAndView mav = new ModelAndView("evento-form");
@@ -33,7 +36,7 @@ public class EventoController {
 		if (bindingResult.hasErrors())
 			return new ModelAndView("evento-form");
 		else {
-			dao.gravar(evento);
+			eventodao.gravar(evento);
 			attr.addFlashAttribute("mensagem", "Evento cadastrado com sucesso!");
 			return new ModelAndView("redirect:eventos");
 		}
@@ -42,52 +45,53 @@ public class EventoController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView liste() {
 		ModelAndView a = new ModelAndView("eventos-list");
-		List<Evento> eventos = dao.findAll();
+		List<Evento> eventos = eventodao.findAll();
 		a.addObject("eventos", eventos);
 		return a;
 	}
 
 ////	Read
-//	@RequestMapping("read/{eventoId}")
-//	public ModelAndView readEvent(@PathVariable Long eventoId, HttpServletRequest request,
-//			HttpServletResponse response) {
-//		Evento e = EventosRepository.findById(eventoId);
-//		if (e != null) {
-//			return new ModelAndView("evento-update").addObject(e);
-//		}
-//		return null;
-//	}
-//
-////	Update
-//	@RequestMapping("update/{eventoId}")
-//	public ModelAndView updateEvento(@PathVariable Long eventoId, @Valid Evento evento, BindingResult bindingResult,
-//			RedirectAttributes attr) {
-//		if (bindingResult.hasErrors()) {
-////			VER COMO FAZER UM REDIRECT E PLOTAR OS ERROS
-//			return new ModelAndView("evento-form");
-//		} else {
-//			if (EventosRepository.update(eventoId, evento)) {
-//				attr.addFlashAttribute("message", "Evento atualizado");
-//				attr.addFlashAttribute("evento", evento);
-//				return new ModelAndView("redirect:/eventos/");
-//			} else {
-//				attr.addFlashAttribute("message", "Evento n�o pode ser atualizado");
-//				attr.addFlashAttribute("evento", evento);
-//				return new ModelAndView("redirect:/eventos/");
-//			}
-//		}
-//	}
+	@RequestMapping("read/{eventoId}")
+	public ModelAndView readEvent(@PathVariable Long eventoId, HttpServletRequest request,
+			HttpServletResponse response) {
+		Evento e = eventodao.findById(eventoId);
+		if (e != null) {
+			return new ModelAndView("evento-update").addObject(e);
+		}
+		return null;
+	}
+
+//	Update
+	@RequestMapping("update/{eventoId}")
+	public ModelAndView updateEvento(@PathVariable Long eventoId,@Valid Evento evento, BindingResult bindingResult,
+			RedirectAttributes attr) {
+		if (bindingResult.hasErrors()) {
+//			VER COMO FAZER UM REDIRECT E PLOTAR OS ERROS
+			return new ModelAndView("evento-form");
+		} else {
+			Evento e = eventodao.update(eventoId,evento);
+			if (e != null) {
+				attr.addFlashAttribute("message", "Evento atualizado");
+				attr.addFlashAttribute("evento", e);
+				return new ModelAndView("redirect:/eventos/");
+			} else {
+				attr.addFlashAttribute("message", "Evento n�o pode ser atualizado");
+				attr.addFlashAttribute("evento", e);
+				return new ModelAndView("redirect:/eventos/");
+			}
+		}
+	}
 //
 ////	Delete
-//	@RequestMapping("delete/{eventoId}")
-//	private ModelAndView deleteEvento(@PathVariable Long eventoId, RedirectAttributes attr) {
-//		Evento e = EventosRepository.delete(eventoId);
-//		if (e != null) {
-//			attr.addFlashAttribute("message", "Evento deletado");
-//			attr.addFlashAttribute("evento", e);
-//			return new ModelAndView("redirect:/eventos/");
-//		}
-//		return null;
-//	}
+	@RequestMapping("delete/{eventoId}")
+	private ModelAndView deleteEvento(@PathVariable Long eventoId, RedirectAttributes attr) {
+		Evento e = eventodao.delete(eventoId);
+		if (e != null) {
+			attr.addFlashAttribute("message", "Evento deletado");
+			attr.addFlashAttribute("evento", e);
+			return new ModelAndView("redirect:/eventos/");
+		}
+		return null;
+	}
 
 }

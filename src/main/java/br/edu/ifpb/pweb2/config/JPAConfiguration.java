@@ -22,15 +22,15 @@ public class JPAConfiguration {
 		factoryBean.setJpaVendorAdapter(vendorAdapter);
 		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setUsername("sa");
-		dataSource.setPassword("");
-		dataSource.setUrl("jdbc:hsqldb:hsql://localhost/eventos");
-		dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
+		dataSource.setUsername("postgres");
+		dataSource.setPassword("mfive12");
+		dataSource.setUrl("jdbc:postgresql://localhost/simple-events");
+		dataSource.setDriverClassName("org.postgresql.Driver");
 		
 		factoryBean.setDataSource(dataSource);
 		
 		Properties props = new Properties();
-		props.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+		props.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		props.setProperty("hibernate.show_sql", "true");
 		props.setProperty("hibernate.hbm2ddl.auto", "update");
 		

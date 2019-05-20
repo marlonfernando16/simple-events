@@ -1,15 +1,19 @@
 package br.edu.ifpb.pweb2.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.edu.ifpb.pweb2.dao.UserDAO;
 import br.edu.ifpb.pweb2.model.User;
-import repository.UserRepository;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	
+	@Autowired	
+	UserDAO userdao;
 	
 	@RequestMapping("/form")
 	public String showForm() {
@@ -18,7 +22,7 @@ public class LoginController {
 	
 	@RequestMapping("/valide")
 	public String valide(String login, String senha, Model model) {
-		User user = UserRepository.findByEmail(login);
+		User user = userdao.findByEmail(login);
 		if(user != null && user.getSenha().equals(senha)) {
 			model.addAttribute("login",login);
 			model.addAttribute("user_name", user.getNome());
