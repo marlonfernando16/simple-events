@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,17 +45,17 @@
 	<!-- Dropdown Structure -->
 	<ul id="dropdown1" class="dropdown-content">
 		<li> </li>
-		<li><a href="#!">Sair</a></li>
+		<li><a href="${pageContext.request.contextPath }/login/logout">Sair</a></li>
 	</ul>
 	<nav class="teal lighten-2" >
 		<div class="nav-wrapper">
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
-				<li><a href="${pageContext.request.contextPath }/login/form"><i class="material-icons left">home</i>Home</a></li>
+				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
 				<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->
 				<li><a class="dropdown-trigger" href="#!"
-					data-target="dropdown1"><span class="i-circle md-login center white ">A</span><i class="material-icons right">arrow_drop_down</i></a></li>
+					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(user.email, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>
 			</ul>
 		</div>
 	</nav>
@@ -94,7 +95,7 @@
             <!--Botões-->
             <div class="input-field col s12">
                 <input type="submit" value="cadastrar" class="btn blue">
-                <a href="#" class="btn red">cancelar</a>
+                <a href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
             </div>
         </fieldset>
     </form:form>

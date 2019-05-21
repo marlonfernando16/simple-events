@@ -23,7 +23,7 @@ public class JPAConfiguration {
 		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUsername("postgres");
-		dataSource.setPassword("mfive12");
+		dataSource.setPassword("123");
 		dataSource.setUrl("jdbc:postgresql://localhost/simple-events");
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		

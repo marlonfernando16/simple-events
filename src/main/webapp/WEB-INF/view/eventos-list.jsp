@@ -55,17 +55,17 @@
 	<!-- Dropdown Structure -->
 	<ul id="dropdown1" class="dropdown-content">
 		<li> </li>
-		<li><a href="#!">Sair</a></li>
+		<li><a href="${pageContext.request.contextPath }/login/logout">Sair</a></li>
 	</ul>
 	<nav class="teal lighten-2" >
 		<div class="nav-wrapper">
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
-				<li><a href="${pageContext.request.contextPath }/login/form"><i class="material-icons left">home</i>Home</a></li>
+				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
 				<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->
 				<li><a class="dropdown-trigger" href="#!"
-					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(login, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>
+					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(user.email, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>
 			</ul>
 		</div>
 	</nav>
@@ -85,7 +85,7 @@
             <div class="col s12 m4 l5 gambiarra">
             <span class="black-text">
                 <h4><a href="#" class="black-text text-darken-3" style="font-weight:700">  ${e.descricao} </a></h4>
-                <small class="grey-text">as vagas aqui vem </small>
+                <small class="grey-text">created by ${e.owner.email }</small>
               </span>
             </div>
             <div class="col s12 m4 l5 gambiarra">
