@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.dao.EventoDAO;
 import br.edu.ifpb.pweb2.model.Evento;
+import br.edu.ifpb.pweb2.model.User;
 
 @Controller
 @RequestMapping("/eventos")
@@ -32,10 +34,12 @@ public class EventoController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView cadastre(@Valid Evento evento, BindingResult bindingResult, RedirectAttributes attr) {
+	public ModelAndView cadastre(HttpSession session, @Valid Evento evento, BindingResult bindingResult, RedirectAttributes attr) {
 		if (bindingResult.hasErrors())
 			return new ModelAndView("evento-form");
 		else {
+			User user = (User) session.getAttribute("user");
+			evento.setOwner(user);
 			eventodao.gravar(evento);
 			attr.addFlashAttribute("mensagem", "Evento cadastrado com sucesso!");
 			return new ModelAndView("redirect:eventos");
@@ -63,12 +67,14 @@ public class EventoController {
 
 //	Update
 	@RequestMapping("update/{eventoId}")
-	public ModelAndView updateEvento(@PathVariable Long eventoId,@Valid Evento evento, BindingResult bindingResult,
+	public ModelAndView updateEvento(HttpSession session, @PathVariable Long eventoId,@Valid Evento evento, BindingResult bindingResult,
 			RedirectAttributes attr) {
 		if (bindingResult.hasErrors()) {
 //			VER COMO FAZER UM REDIRECT E PLOTAR OS ERROS
 			return new ModelAndView("evento-form");
 		} else {
+			User user = (User) session.getAttribute("user");
+			evento.setOwner(user);
 			Evento e = eventodao.update(eventoId,evento);
 			if (e != null) {
 				attr.addFlashAttribute("message", "Evento atualizado");

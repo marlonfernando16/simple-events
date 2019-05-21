@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -33,11 +34,13 @@ public class UserDAO {
 	}
 
 	public List<User> findAll() {
-		return manager.createQuery("select a from Aluno a", User.class).getResultList();
+		return manager.createQuery("select u from User u").getResultList();
 	}
 
 	public User findByEmail(String email) {
-		return manager.find(User.class, email);
+		Query query = manager.createQuery("select u from User u where u.email = :email");
+		query.setParameter("email", email);
+		return (User)query.getSingleResult();
 	}
 	public User findByName(String nome) {
 		return manager.find(User.class, nome);

@@ -15,8 +15,6 @@ public class Especialidade {
 	private Long id;
 	private String nome;
 	private String descricao;
-	@OneToOne
-	private Vaga vaga;
 
 	public Especialidade() {
 	};
@@ -45,12 +43,5 @@ public class Especialidade {
 		this.descricao = descricao;
 	}
 
-	public Vaga getVaga() {
-		return vaga;
-	}
-
-	public void setVaga(Vaga vaga) {
-		this.vaga = vaga;
-	}
 
 }
