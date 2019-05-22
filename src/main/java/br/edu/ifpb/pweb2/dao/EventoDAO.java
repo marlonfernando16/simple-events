@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import br.edu.ifpb.pweb2.model.Evento;
-import br.edu.ifpb.pweb2.model.User;
 
 @Repository
 public class EventoDAO {

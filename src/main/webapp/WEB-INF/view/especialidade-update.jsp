@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Novo Evento</title>
+<title>Atualizar Especialidade</title>
 <!-- CSS  -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
@@ -53,7 +53,7 @@
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
-				<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
+				<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar Especialidades</a></li>
 				<!-- Dropdown Trigger -->
 				<li><a class="dropdown-trigger" href="#!"
 					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(user.email, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>
@@ -64,51 +64,39 @@
 <!-- Formulario de Cadastro -->
 <div class="row container">
     <p>&nbsp;</p>
-    <form:form action="${pageContext.request.contextPath }/eventos/update/${evento.id}" method="post" class="col s12 white " modelAttribute="evento">
+    <form:form action="${pageContext.request.contextPath }/especialidade/update/${especialidade.id}" method="post" class="col s12 white " modelAttribute="especialidade">
         <fieldset class="formulario">
             <legend> <i class="material-icons prefix " style="font-size: 70px">event_available</i></legend>
-            <h5 class="light center">Atualizar Evento </h5>
+            <h5 class="light center">Atualizar Especialidade</h5>
+                      
+            <!--Campo Nome -->
+            <div class="input-field col s12">
+                <i class="material-icons prefix">location_on</i>
+				<form:input path="nome"/><form:errors path="nome" />
+				<form:errors path="nome">
+					<c:if test="${not empty especialidade}">
+					${especialidade.nome}
+				</c:if>
+				</form:errors>
+				<label for="nome">nome</label>
+            </div>
             
             <!--Campo Descricao -->
             <div class="input-field col s12">
                 <i class="material-icons prefix">event_note</i>
 				<form:input path="descricao"/><form:errors path="descricao" />
 					<form:errors path="descricao">
-					<c:if test="${not empty evento}">
-					${evento.descricao}
+					<c:if test="${not empty especialidade}">
+					${especialidade.descricao}
 				</c:if>
 			  </form:errors>
-				<label for="descricao">Descricao</label>
-            </div>
-
-            <!--Campo Data -->
-            <div class="input-field col s12">
-                <i class="material-icons prefix">calendar_today</i>
- 				<form:input path="data" type="date"/><form:errors path="data" />
-				<form:errors path="data">
-					<c:if test="${not empty evento}">
-					${evento.data}
-				</c:if>
-			  </form:errors>
-				<label for="data">Data</label>
-            </div>
-
-            <!--Campo Local -->
-            <div class="input-field col s12">
-                <i class="material-icons prefix">location_on</i>
-				<form:input path="local"/><form:errors path="local" />
-				<form:errors path="local">
-					<c:if test="${not empty evento}">
-					${evento.local}
-				</c:if>
-				</form:errors>
-				<label for="local">Local</label>
+				<label for="descricao">Descrição</label>
             </div>
 
             <!--Botões-->
             <div class="input-field col s12">
                 <input type="submit" value="atualizar" class="btn blue">
-                <a href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
+                <a href="${pageContext.request.contextPath }/especialidade" class="btn red">Cancelar</a>
             </div>
         </fieldset>
     </form:form>

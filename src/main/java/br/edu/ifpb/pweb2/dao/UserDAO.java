@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import br.edu.ifpb.pweb2.model.Evento;
 import br.edu.ifpb.pweb2.model.User;
 
 @Repository
@@ -34,11 +33,11 @@ public class UserDAO {
 	}
 
 	public List<User> findAll() {
-		return manager.createQuery("select u from User u").getResultList();
+		return manager.createQuery("select u from User u", User.class).getResultList();
 	}
 
 	public User findByEmail(String email) {
-		Query query = manager.createQuery("select u from User u where u.email = :email");
+		Query query = manager.createQuery("select u from User u where u.email = :email", User.class);
 		query.setParameter("email", email);
 		return (User)query.getSingleResult();
 	}
