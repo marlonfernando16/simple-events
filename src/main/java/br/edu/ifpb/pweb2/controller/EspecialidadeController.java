@@ -10,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.dao.EspecialidadeDAO;
 import br.edu.ifpb.pweb2.model.Especialidade;
+import br.edu.ifpb.pweb2.model.Evento;
+import br.edu.ifpb.pweb2.model.User;
 
 @Controller
 @RequestMapping("/especialidade")
@@ -35,6 +38,18 @@ public class EspecialidadeController {
 		ModelAndView mav = new ModelAndView("especialidade-form");
 		mav.addObject("especialidade", new Especialidade());
 		return mav;
+	}
+	
+	@RequestMapping("/add")
+	public ModelAndView cadastre(HttpSession session, @Valid Especialidade especialidade, 
+			BindingResult bindingResult, RedirectAttributes attr) {
+		if (bindingResult.hasErrors())
+			return new ModelAndView("especialidade-form");
+		else {
+			dao.gravar(especialidade);
+			attr.addFlashAttribute("mensagem", "Especialidade cadastrado com sucesso!");
+			return new ModelAndView("redirect:/especialidade/");
+		}
 	}
 	
 	@RequestMapping("read/{especialidadeId}")
