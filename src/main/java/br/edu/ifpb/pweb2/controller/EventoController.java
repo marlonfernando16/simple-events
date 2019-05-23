@@ -47,9 +47,11 @@ public class EventoController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView liste() {
+	public ModelAndView liste(HttpSession session) {
 		ModelAndView a = new ModelAndView("eventos-list");
 		List<Evento> eventos = eventodao.findAll();
+		User user = (User) session.getAttribute("user");
+		a.addObject("usuario", user);
 		a.addObject("eventos", eventos);
 		return a;
 	}
@@ -90,12 +92,15 @@ public class EventoController {
 //
 ////	Delete
 	@RequestMapping("delete/{eventoId}")
-	private ModelAndView deleteEvento(@PathVariable Long eventoId, RedirectAttributes attr) {
-		Evento e = eventodao.delete(eventoId);
-		if (e != null) {
-			attr.addFlashAttribute("message", "Evento deletado");
-			attr.addFlashAttribute("evento", e);
-			return new ModelAndView("redirect:/eventos/");
+	private ModelAndView deleteEvento(HttpSession session, @PathVariable Long eventoId, RedirectAttributes attr) {
+		Evento e = eventodao.findById(eventoId);
+		if(e != null) {
+			if(e.getOwner() == session.getAttribute("user")) {
+				attr.addFlashAttribute("message", "Evento deletado");
+				attr.addFlashAttribute("evento", e);
+				return new ModelAndView("redirect:/eventos/");
+			}else
+				return new ModelAndView("redirect:/permissao-negada/");
 		}
 		return null;
 	}

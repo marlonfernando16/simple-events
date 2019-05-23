@@ -69,8 +69,6 @@
 			</ul>
 		</div>
 	</nav>
-
-
 	
 	<c:if test="${empty eventos}">
 		<p>Ainda não há eventos cadastrados.</p>
@@ -78,7 +76,7 @@
 
 	<ul class="eventos">
 		<c:forEach var="e" items="${eventos}">
-				
+
 	<div class="col s12 m8 offset-m2 l6 offset-l3">
       <div class="card-panel white hoverable lighten-5 z-depth-1" style="width:90%;height:9em;padding-top:5px">
         <div class="row">
@@ -92,14 +90,18 @@
               <h4 class="locais blue-text" >${e.local}</h4>
               <small class="grey-text center">will happen in <fmt:formatDate pattern="dd-MM-yyyy" value="${e.data}" /></small>
             </div>
+            <c:if test="${usuario.email == e.owner.email}">
             <div class="col s14 m4 l5 gambiarra">
 				<p><a href="${pageContext.request.contextPath}/eventos/read/${e.id}"><i class="material-icons">create</i></a></p> 
-				<small class="grey-text">Edit</small>             
+				<small class="grey-text">Edit</small>
             </div>
+            </c:if>
+            <c:if test="${usuario.email == e.owner.email}">
             <div class="col s14 m4 l5 gambiarra">
 				<p><a href="${pageContext.request.contextPath}/eventos/delete/${e.id}"><i class="material-icons">delete_forever</i></a></p> 
-				<small class="grey-text">Delete</small>             
+				<small class="grey-text">Delete</small>
             </div>
+            </c:if>
         </div>
       </div>
   </div>
