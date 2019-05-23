@@ -23,9 +23,14 @@ public class EspecialidadeController {
 	
 	@Autowired
 	EspecialidadeDAO dao;
-	
 	@RequestMapping({"", "/"})
-	public ModelAndView listar(Especialidade e) {
+	public ModelAndView listar(HttpSession session, Especialidade e) {
+		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			return new ModelAndView("redirect:/eventos/");
+		}
+		else if(!user.isAdmin())
+			return new ModelAndView("redirect:/eventos/");
 		ModelAndView mav = new ModelAndView("especialidade-list");
 		mav.addObject("especialidades", dao.findAll());
 		return mav;

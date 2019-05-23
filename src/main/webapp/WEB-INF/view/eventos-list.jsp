@@ -62,10 +62,17 @@
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
-				<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
+				<c:if test="${user!=null}">
+					<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->
-				<li><a class="dropdown-trigger" href="#!"
+					<li><a class="dropdown-trigger" href="#!"
 					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(user.email, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>
+				</c:if>
+				<c:if test="${user == null}">
+						<li> <a href="${pageContext.request.contextPath }/login/form"><i class="material-icons left">account_circle</i>Log in </a></li>
+				</c:if>
+				
+			
 			</ul>
 		</div>
 	</nav>
