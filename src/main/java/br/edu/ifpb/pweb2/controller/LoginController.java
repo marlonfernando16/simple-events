@@ -21,6 +21,8 @@ public class LoginController {
 	@Autowired	
 	UserDAO userdao;
 	
+	
+	
 	@RequestMapping("/form")
 	public String showForm() {
 		return "form-login";
@@ -31,6 +33,7 @@ public class LoginController {
 		User user = userdao.findByEmail(login);
 		if(user != null && user.getSenha().equals(senha)) {
 			session.setAttribute("user", user);
+			
 			return new ModelAndView("redirect:/eventos") ;
 		}else {
 			model.addAttribute("erro", "Login ou senha inv�lidos");

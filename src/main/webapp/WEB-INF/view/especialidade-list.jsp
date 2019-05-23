@@ -55,8 +55,10 @@
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
 				<li><a href="${pageContext.request.contextPath }/especialidade/form"><i class="material-icons left">event</i>Cadastrar Especialidades</a></li>
 				<!-- Dropdown Trigger -->
+			<c:if test="${user != null}">	
 				<li><a class="dropdown-trigger" href="#!"
 					data-target="dropdown1"><span class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(user.email, -1, 1))}</span><i class="material-icons right">arrow_drop_down</i></a></li>
+			</c:if>
 			</ul>
 		</div>
 	</nav>

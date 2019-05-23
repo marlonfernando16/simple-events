@@ -10,13 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.dao.EspecialidadeDAO;
 import br.edu.ifpb.pweb2.model.Especialidade;
-import br.edu.ifpb.pweb2.model.Evento;
 import br.edu.ifpb.pweb2.model.User;
 
 @Controller
@@ -25,16 +23,28 @@ public class EspecialidadeController {
 	
 	@Autowired
 	EspecialidadeDAO dao;
-	
 	@RequestMapping({"", "/"})
-	public ModelAndView listar(Especialidade e) {
+	public ModelAndView listar(HttpSession session, Especialidade e) {
+		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			return new ModelAndView("redirect:/eventos/");
+		}
+		else if(!user.isAdmin())
+			return new ModelAndView("redirect:/eventos/");
 		ModelAndView mav = new ModelAndView("especialidade-list");
 		mav.addObject("especialidades", dao.findAll());
 		return mav;
 	}
 	
 	@RequestMapping("/form")
-	public ModelAndView cadastrar() {
+	public ModelAndView cadastrar(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user == null)
+			return new ModelAndView("redirect:/permissao-negada/");
+		
+		if(!user.isAdmin())
+			return new ModelAndView("redirect:/permissao-negada/");
+		
 		ModelAndView mav = new ModelAndView("especialidade-form");
 		mav.addObject("especialidade", new Especialidade());
 		return mav;

@@ -44,6 +44,12 @@ public class UserController {
 //	Create
 	@RequestMapping("create")
 	public ModelAndView salveUser(@Valid User user, BindingResult bindingResult, RedirectAttributes attr) {
+		User u = userdao.findByEmail(user.getEmail());
+			if(u != null) {
+				attr.addFlashAttribute("message", "Esse email já está em uso");
+				return new ModelAndView("redirect:/login/form/");
+			}
+		
 		if (bindingResult.hasErrors()) {
 //			VER COMO FAZER UM REDIRECT E PLOTAR OS ERROS
 			return new ModelAndView("user-create");

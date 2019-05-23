@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,20 +22,24 @@ import br.edu.ifpb.pweb2.model.Evento;
 import br.edu.ifpb.pweb2.model.User;
 
 @Controller
-@RequestMapping("/eventos")
+@RequestMapping({"/eventos","/",""})
 public class EventoController {
 	@Autowired
 	EventoDAO eventodao;
-	
+		
 	@RequestMapping("/form")
-	public ModelAndView showLoginForm() {
+	public ModelAndView showLoginForm(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user == null)
+			return new ModelAndView("redirect:/eventos/");
+		
 		ModelAndView mav = new ModelAndView("evento-form");
 		mav.addObject("evento", new Evento());
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView cadastre(HttpSession session, @Valid Evento evento, BindingResult bindingResult, RedirectAttributes attr) {
+	public ModelAndView cadastre(HttpSession session, @Valid Evento evento, BindingResult bindingResult, RedirectAttributes attr,Model model) {
 		if (bindingResult.hasErrors())
 			return new ModelAndView("evento-form");
 		else {
@@ -47,9 +52,11 @@ public class EventoController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView liste() {
+	public ModelAndView liste(HttpSession session) {
 		ModelAndView a = new ModelAndView("eventos-list");
 		List<Evento> eventos = eventodao.findAll();
+		User user = (User) session.getAttribute("user");
+		a.addObject("usuario", user);
 		a.addObject("eventos", eventos);
 		return a;
 	}
@@ -90,12 +97,15 @@ public class EventoController {
 //
 ////	Delete
 	@RequestMapping("delete/{eventoId}")
-	private ModelAndView deleteEvento(@PathVariable Long eventoId, RedirectAttributes attr) {
-		Evento e = eventodao.delete(eventoId);
-		if (e != null) {
-			attr.addFlashAttribute("message", "Evento deletado");
-			attr.addFlashAttribute("evento", e);
-			return new ModelAndView("redirect:/eventos/");
+	private ModelAndView deleteEvento(HttpSession session, @PathVariable Long eventoId, RedirectAttributes attr) {
+		Evento e = eventodao.findById(eventoId);
+		if(e != null) {
+			if(e.getOwner() == session.getAttribute("user")) {
+				attr.addFlashAttribute("message", "Evento deletado");
+				attr.addFlashAttribute("evento", e);
+				return new ModelAndView("redirect:/eventos/");
+			}else
+				return new ModelAndView("redirect:/permissao-negada/");
 		}
 		return null;
 	}

@@ -56,6 +56,8 @@ public class User implements Serializable {
 	/* relacao com Avaliacao_evento */
 	@OneToOne
 	private Avaliacao_Evento avaliacao_evento;
+	
+	private boolean isAdmin = false;
 
 	public User() {
 	};
@@ -138,6 +140,14 @@ public class User implements Serializable {
 
 	public void setDatanascimento(Date datanascimento) {
 		this.datanascimento = datanascimento;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	@Override

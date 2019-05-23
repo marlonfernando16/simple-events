@@ -14,7 +14,7 @@ public class Avaliacao_Evento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne
+	@ManyToOne	
 	private Evento evento;
 	private int nota_avaliacao_evento;
 	@OneToOne
