@@ -62,6 +62,9 @@
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
+				<c:if test="${user.admin }">
+					<li><a href="${pageContext.request.contextPath }/especialidade"><i class="material-icons left">work</i>Especialidades</a></li>
+				</c:if>
 				<c:if test="${user!=null}">
 					<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->

@@ -76,7 +76,7 @@ body {
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
-		<form:form action="${pageContext.request.contextPath }/eventos"
+		<form:form action="${pageContext.request.contextPath }/eventos/add"
 			method="post" class="col s12 white " modelAttribute="evento">
 			<fieldset class="formulario">
 				<legend>
@@ -88,14 +88,15 @@ body {
 				<div class="input-field col s12">
 					<i class="material-icons prefix">event_note</i>
 					<form:input path="descricao" />
-					<form:errors class="center red-text" path="descricao" />
+					<form:errors class="center red-text" path="descricao"
+						value="${evento.descricao }" />
 					<label for="descricao">Descricao</label>
 				</div>
 
 				<!--Campo Data -->
 				<div class="input-field col s12">
 					<i class="material-icons prefix">calendar_today</i>
-					<form:input path="data" type="date" />
+					<form:input path="data" type="date" value="01/12/2019" />
 					<form:errors class="center red-text" path="data" />
 					<label for="data">Data</label>
 				</div>
@@ -104,34 +105,36 @@ body {
 				<div class="input-field col s12">
 					<i class="material-icons prefix">location_on</i>
 					<form:input path="local" />
-					<form:errors class="center red-text" path="local" />
+					<form:errors class="center red-text" path="local"
+						value="${evento.local }" />
 					<label for="local">Local</label>
 				</div>
 
 				<!--Vagas -->
 				<div class="input-field col s12">
-					<select name="especialidades" multiple>
-						<option value="" disabled selected>Choose your option</option>
-						<c:forEach var="esp" items="${especialidades }">
-							<option value="${esp.id}">${esp.nome }</option>
-						</c:forEach>
-
-					</select> <label>Especialidades</label>
+					<c:forEach var="vaga" items="${vagas}">
+						<div class="input-field col s2">
+							<input name="vagasespecialidade" type="number" value="${vaga.qtd_vagas}" />
+							<label for="especialidade">${vaga.especialidade.nome}</label>
+						</div>
+						
+					</c:forEach>
 				</div>
 
 				<!--Botões-->
 				<div class="input-field col s4">
-					<a href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
-					<input type="submit" value="next" class="btn green"> 
+					<input type="submit" value="cadastrar" class="btn blue"> <a
+						href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
+
 				</div>
 			</fieldset>
 		</form:form>
 	</div>
 	<script type="text/javascript">
-	$(document).ready(function(){
-		$(document).ready(function(){
-		    $('select').formSelect();
-		  });
+		$(document).ready(function() {
+			$(document).ready(function() {
+				$('select').formSelect();
+			});
 		});
 	</script>
 
