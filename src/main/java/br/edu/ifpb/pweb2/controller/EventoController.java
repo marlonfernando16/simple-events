@@ -1,6 +1,5 @@
 package br.edu.ifpb.pweb2.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifpb.pweb2.dao.Candidato_VagaDAO;
 import br.edu.ifpb.pweb2.dao.EspecialidadeDAO;
 import br.edu.ifpb.pweb2.dao.EventoDAO;
 import br.edu.ifpb.pweb2.dao.VagaDAO;
+import br.edu.ifpb.pweb2.model.Candidato_Vaga;
 import br.edu.ifpb.pweb2.model.Especialidade;
 import br.edu.ifpb.pweb2.model.Evento;
+import br.edu.ifpb.pweb2.model.State;
 import br.edu.ifpb.pweb2.model.User;
 import br.edu.ifpb.pweb2.model.Vaga;
 
@@ -36,6 +39,9 @@ public class EventoController {
 	EspecialidadeDAO especialidadedao;
 	@Autowired
 	VagaDAO vagadao;
+	@Autowired 
+	@Qualifier("Candidato_VagaDAO")
+	Candidato_VagaDAO candidatovagadao;
 	
 		
 	@RequestMapping("/form")
@@ -93,16 +99,29 @@ public class EventoController {
 		}
 	
 	@RequestMapping("/candidatar")
-	public ModelAndView candidataEvento(HttpSession session, @RequestParam("vagas") List<Long> idvagas) {
+	public ModelAndView candidataEvento(HttpSession session, @RequestParam("vagas") List<Long> idvagas,
+			RedirectAttributes attr) {
 		User user = (User) session.getAttribute("user");
-		Vaga vaga;
-		for(long id: idvagas) {
-			vaga = vagadao.findById(id);
-			System.out.println("vaga = "+vaga);
-		}
-		ModelAndView mv = new ModelAndView("redirect: eventos");
+		if(user == null) {
+			attr.addFlashAttribute("erro", "Usuário precisa está logado");
+			return new ModelAndView("redirect:/login/form");
+		}else {
+			Vaga vaga;
+			Candidato_Vaga candidato_vaga;
+			for(long id: idvagas) {
+				vaga = vagadao.findById(id);
+				candidato_vaga = new Candidato_Vaga();
+				candidato_vaga.setCandidato(user);
+				candidato_vaga.setState(State.NAO_AVALIADO);
+				candidato_vaga.setVaga(vaga);
+				System.out.println("candidato vaga = "+candidato_vaga);
+				candidatovagadao.gravar(candidato_vaga);
+			}
+		attr.addFlashAttribute("message", "Candidatura efetuada com sucesso !");
+		ModelAndView mv = new ModelAndView("redirect:/eventos");
 		return mv;
 		}
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView liste(HttpSession session) {

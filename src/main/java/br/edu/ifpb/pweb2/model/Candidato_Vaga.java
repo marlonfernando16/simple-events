@@ -57,4 +57,11 @@ public class Candidato_Vaga {
 		this.candidato = candidato;
 	}
 
+	@Override
+	public String toString() {
+		return "Candidato_Vaga [id=" + id + ", vaga=" + vaga.getEspecialidade().getNome() + ", nota_desempenho=" + nota_desempenho + ", state="
+				+ state + ", candidato=" + candidato.getNome() + "]";
+	}
+	
+
 }

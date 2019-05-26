@@ -154,6 +154,11 @@ body {
 								<c:if test="${fn:length(vaga.candidato_vaga) == 0}">
 									<li class="grey-text ">Não tem candidatos</li>
 								</c:if>
+								<c:if test="${fn:length(vaga.candidato_vaga) > 0}">
+									<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
+										<li class="black-text ">${candidatovaga.candidato.email}</li>
+									</c:forEach>
+								</c:if>
 						</c:forEach>
 					</div>
 				</c:if>

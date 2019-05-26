@@ -36,7 +36,7 @@
 
 				<div class="card-content">
 					<c:if test="${not empty erro }">
-						<p class="center" style="color: red">${erro}</p>
+						<p class="center" style="color:red">${erro}</p>
 					</c:if>
 					<c:if test="${not empty message }">
 						<p class="center" style="color: green">${message}</p>
