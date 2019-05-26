@@ -53,52 +53,57 @@ public class EventoController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView cadastre(HttpSession session, @Valid Evento evento,
-			 @RequestParam("especialidades")List<Integer> especialidades, BindingResult bindingResult,
-			RedirectAttributes attr,Model model) {
+			 @RequestParam("especialidades")List<Long> especialidades,
+			 @RequestParam("quantidadevagas")List<Integer> quantidadevagas,
+			 BindingResult bindingResult,
+			 RedirectAttributes attr,Model model) {
 				if (bindingResult.hasErrors())
 					return new ModelAndView("evento-form");
 				else {
 					User user = (User) session.getAttribute("user");
 					evento.setOwner(user);
-					//eventodao.gravar(evento);
+					eventodao.gravar(evento);
 					Especialidade especialidade;
-					List<Vaga> vagas = new ArrayList<>();
+					int i =0;
 					for(long id : especialidades) {
 						especialidade = especialidadedao.findById(id);
 						Vaga vaga = new Vaga();
 						vaga.setEspecialidade(especialidade);
-						vaga.setQtd_vagas(1);
+						vaga.setQtd_vagas(quantidadevagas.get(i));
 						vaga.setEvento(evento);
-						vagas.add(vaga);
-						//vagadao.gravar(vaga);
+						vagadao.gravar(vaga);
+						System.out.println("vaga = "+vaga);
+						evento.add(vaga);
+						i++;
 					}
+					eventodao.update(evento.getId(), evento);
+					System.out.println("eventos vagas = "+evento.getVagas());
 					attr.addFlashAttribute("mensagem", "Evento cadastrado com sucesso!");
-					ModelAndView mv = new ModelAndView("evento-next");
-					mv.addObject("evento",evento);
-					mv.addObject("vagas", vagas);
+					ModelAndView mv = new ModelAndView("redirect: eventos ");
 					return mv;
 		}
 	}
 	
-	@RequestMapping("/add")
-	public ModelAndView cadastreNext(HttpSession session, @Valid Evento evento, 
-			@RequestParam("vagasespecialidade")List<Integer> vagas, BindingResult bindingResult) {
-		if (bindingResult.hasErrors())
-			return new ModelAndView("evento-form");
-		else {
-			/*
-			eventodao.gravar(evento);
-			vagadao.gravar(v);
-			System.out.println("vagas = "+vagas);*/
-			System.out.println("evento"+evento);
-			System.out.println(vagas);
-			}
-		return null;
+	@RequestMapping("/evento/{eventoId}")
+	public ModelAndView showCandidatura(@PathVariable Long eventoId) {
+		Evento evento = eventodao.findById(eventoId);
+		ModelAndView mv = new ModelAndView("evento-candidatura");
+		mv.addObject("evento",evento);
+		return mv;
 		}
 	
+	@RequestMapping("/candidatar")
+	public ModelAndView candidataEvento(HttpSession session, @RequestParam("vagas") List<Long> idvagas) {
+		User user = (User) session.getAttribute("user");
+		Vaga vaga;
+		for(long id: idvagas) {
+			vaga = vagadao.findById(id);
+			System.out.println("vaga = "+vaga);
+		}
+		ModelAndView mv = new ModelAndView("redirect: eventos");
+		return mv;
+		}
 	
-	
-
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView liste(HttpSession session) {
 		ModelAndView a = new ModelAndView("eventos-list");

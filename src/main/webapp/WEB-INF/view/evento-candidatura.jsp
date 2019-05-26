@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Novo Evento</title>
+<title>Listagem de Eventos</title>
 <!-- CSS  -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
@@ -30,9 +30,15 @@
 <!-- Compiled and minified JavaScript -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+</head>
+
 <style>
 body {
 	background-color: #F8F8F8;
+}
+
+.eventos {
+	margin-left: 10%;
 }
 
 .i-circle.md-login {
@@ -45,8 +51,11 @@ body {
 	border-radius: 50%;
 	color: black;
 }
+
+.gambiarra {
+	width: 25% !important;
+}
 </style>
-</head>
 <body>
 	<!--menu-->
 	<!-- Dropdown Structure -->
@@ -60,6 +69,11 @@ body {
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i
 						class="material-icons left">home</i>Home</a></li>
+				<c:if test="${user.admin }">
+					<li>
+					<a href="${pageContext.request.contextPath }/especialidade"><i
+							class="material-icons left">work</i>Especialidades</a></li>
+				</c:if>
 				<c:if test="${user!=null}">
 					<li><a href="${pageContext.request.contextPath }/eventos/form"><i
 							class="material-icons left">event</i>Cadastrar eventos</a></li>
@@ -69,6 +83,12 @@ body {
 							class="i-circle md-login center white ">${fn:toUpperCase(fn:substring(user.email, -1, 1))}</span><i
 							class="material-icons right">arrow_drop_down</i></a></li>
 				</c:if>
+				<c:if test="${user == null}">
+					<li><a href="${pageContext.request.contextPath }/login/form"><i
+							class="material-icons left">account_circle</i>Log in </a></li>
+				</c:if>
+
+
 			</ul>
 		</div>
 	</nav>
@@ -76,65 +96,88 @@ body {
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
-		<form:form action="${pageContext.request.contextPath }/eventos/add"
-			method="post" class="col s12 white " modelAttribute="evento">
+		<form action="${pageContext.request.contextPath}/eventos/candidatar"
+		 method="post" class="col s12 white ">
 			<fieldset class="formulario">
 				<legend>
 					<i class="material-icons prefix " style="font-size: 70px">event_available</i>
 				</legend>
-				<h5 class="light center">Cadastro de Eventos</h5>
+				<h3 class=" center">${evento.descricao}</h3>
 
-				<!--Campo Descricao -->
-				<div class="input-field col s12">
-					<i class="material-icons prefix">event_note</i>
-					<form:input path="descricao" />
-					<form:errors class="center red-text" path="descricao"
-						value="${evento.descricao }" />
-					<label for="descricao">Descricao</label>
-				</div>
 
 				<!--Campo Data -->
 				<div class="input-field col s12">
 					<i class="material-icons prefix">calendar_today</i>
-					<form:input path="data" type="date" value="01/12/2019" />
-					<form:errors class="center red-text" path="data" />
-					<label for="data">Data</label>
+					<h6 style="margin-left: 40px; margin-top: 12px" class="light">
+						<fmt:formatDate pattern="dd-MM-yyyy" value="${evento.data}" />
+					</h6>
 				</div>
 
 				<!--Campo Local -->
 				<div class="input-field col s12">
 					<i class="material-icons prefix">location_on</i>
-					<form:input path="local" />
-					<form:errors class="center red-text" path="local"
-						value="${evento.local }" />
-					<label for="local">Local</label>
+					<h6 style="margin-left: 40px; margin-top: 12px" class="light">${evento.local }</h6>
 				</div>
 
-				<!--Vagas -->
+				<!--Campo Owner-->
 				<div class="input-field col s12">
-					<c:forEach var="vaga" items="${vagas}">
-						<div class="input-field col s2">
-							<input name="vagasespecialidade" type="number" value="${vaga.qtd_vagas}" />
-							<label for="especialidade">${vaga.especialidade.nome}</label>
-						</div>
-						
-					</c:forEach>
+					<i class="material-icons prefix">account_circle</i>
+					<h6 style="margin-left: 40px; margin-top: 12px" class="light">${evento.owner.email }</h6>
 				</div>
-
-				<!--Botões-->
-				<div class="input-field col s4">
-					<input type="submit" value="cadastrar" class="btn blue"> <a
-						href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
-
-				</div>
+				<h3 class=" center blue-text">Vagas</h3>
+				
+				<!--Candidato ou visitante -->
+				
+				<c:if test="${evento.owner.email != user.email }">
+					<div class="input-field col s12">
+						<c:forEach var="vaga" items="${evento.vagas}">
+							<div class="row">
+								<div class="input-field col s3 ">
+									<p>
+										<label> <input type="checkbox" class="vagas"
+											name="vagas" value="${vaga.id }" class="filled-in" />
+											<span>${vaga.especialidade.nome } (${vaga.qtd_vagas})</span>
+										</label>
+									</p>
+								</div>
+						</c:forEach>
+					</div>
+				</c:if>
+				
+				<!--Promotor -->
+				
+				<c:if test="${evento.owner.email == user.email }">
+					<div class="input-field col s12">
+						<c:forEach var="vaga" items="${evento.vagas}">
+							<h6 style="font-weight:700" class="text-darken-3">
+							${vaga.especialidade.nome } (${vaga.qtd_vagas})</h6>
+								<c:if test="${fn:length(vaga.candidato_vaga) == 0}">
+									<li class="grey-text ">Não tem candidatos</li>
+								</c:if>
+						</c:forEach>
+					</div>
+				</c:if>
+					<!--Botões-->
+					<div class="input-field col s4">
+						<a href="${pageContext.request.contextPath }/eventos"
+							class="btn red">cancelar</a>
+						<c:if test="${evento.owner.email != user.email }">
+							<input type="submit" value="candidatar-se" class="btn blue">
+						</c:if>
+						<c:if test="${evento.owner.email == user.email }">
+							<input type="submit" disabled value="candidatar-se"
+								class="btn blue">
+						</c:if>
+					</div>
 			</fieldset>
-		</form:form>
+		</form>
 	</div>
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$(document).ready(function() {
-				$('select').formSelect();
-			});
+			$('.modal').modal();
+			$('.dropdown-trigger').dropdown();
 		});
 	</script>
 

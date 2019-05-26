@@ -110,19 +110,29 @@ body {
 
 				<!--Vagas -->
 				<div class="input-field col s12">
-					<select name="especialidades" multiple>
-						<option value="" disabled selected>Choose your option</option>
-						<c:forEach var="esp" items="${especialidades }">
-							<option value="${esp.id}">${esp.nome }</option>
-						</c:forEach>
-
-					</select> <label>Especialidades</label>
+					<c:forEach var="esp" items="${especialidades }">
+						<div class="row">
+							<div class="input-field col s2 	">
+								<p>
+									<label> 
+										<input type="checkbox" class="especialidades" name="especialidades" value="${esp.id }" class="filled-in" /> 
+										<span>${esp.nome }</span>
+									</label>
+							</p>
+							</div>
+							<div class="input-field col s1">
+								<input name="quantidadevagas" class="quantidadevagas"
+								 disabled type="number" value="1" />
+								 <label for="especialidade">${vaga.especialidade.nome}</label>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 
 				<!--Botões-->
 				<div class="input-field col s4">
 					<a href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
-					<input type="submit" value="next" class="btn green"> 
+					<input type="submit" value="cadastrar" class="btn blue"> 
 				</div>
 			</fieldset>
 		</form:form>
@@ -133,6 +143,21 @@ body {
 		    $('select').formSelect();
 		  });
 		});
+	//ativando o imput de quantidade de vagas quando o checkbox for marcado
+	
+	let especialidades = document.querySelectorAll('.especialidades');
+	let quantidadevagas = document.querySelectorAll('.quantidadevagas');
+	especialidades.forEach(x=> {
+			x.addEventListener('change',function(){
+				if(this.checked) {
+			        quantidadevagas[this.value-1].disabled = false
+			        console.log(this.value)
+			        
+			    } 
+			})
+		
+		
+	})
 	</script>
 
 </body>

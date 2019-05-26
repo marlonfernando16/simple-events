@@ -42,7 +42,7 @@ public class EventoDAO {
 	public Evento update(Long id, Evento evento) {   
 		Evento removed = manager.find(Evento.class, id);
 		manager.remove(removed);
-		manager.persist(evento);
+		manager.merge(evento);
 	    return evento;
 	}
 	
