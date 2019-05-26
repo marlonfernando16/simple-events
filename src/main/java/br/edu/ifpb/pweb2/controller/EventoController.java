@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,12 +79,12 @@ public class EventoController {
 						vaga.setQtd_vagas(quantidadevagas.get(i));
 						vaga.setEvento(evento);
 						vagadao.gravar(vaga);
-						System.out.println("vaga = "+vaga);
+						//System.out.println("vaga = "+vaga);
 						evento.add(vaga);
 						i++;
 					}
 					eventodao.update(evento.getId(), evento);
-					System.out.println("eventos vagas = "+evento.getVagas());
+					//System.out.println("eventos vagas = "+evento.getVagas());
 					attr.addFlashAttribute("mensagem", "Evento cadastrado com sucesso!");
 					ModelAndView mv = new ModelAndView("redirect: eventos ");
 					return mv;
@@ -96,7 +97,7 @@ public class EventoController {
 		ModelAndView mv = new ModelAndView("evento-candidatura");
 		mv.addObject("evento",evento);
 		return mv;
-		}
+	}
 	
 	@RequestMapping("/candidatar")
 	public ModelAndView candidataEvento(HttpSession session, @RequestParam("vagas") List<Long> idvagas,
@@ -107,14 +108,31 @@ public class EventoController {
 			return new ModelAndView("redirect:/login/form");
 		}else {
 			Vaga vaga;
+			Evento e;
 			Candidato_Vaga candidato_vaga;
+			ArrayList<Candidato_Vaga> inscricoes_user_logado;
 			for(long id: idvagas) {
 				vaga = vagadao.findById(id);
+				e = vaga.getEvento();
+				inscricoes_user_logado = (ArrayList<Candidato_Vaga>) candidatovagadao.findByUser(user);
+				for(Candidato_Vaga i: inscricoes_user_logado) {
+					System.out.println(i.getVaga().getEvento());
+					System.out.println(vaga.getEvento());
+					//if(vaga.getEvento().getId() == i.getVaga().getEvento().getId())
+					// Se usar o if acima ao invés do if abaixo, o usuário só pode se candidatar
+					// uma vez num mesmo evento. Já com o if de baixo, o usuário pode se candidatar
+					// uma vez em todas as especialidades do evento.
+					if(vaga.getEspecialidade().getId() == i.getVaga().getEspecialidade().getId()) {
+						ModelAndView mav = new ModelAndView("redirect:evento/"+e.getId());
+						attr.addFlashAttribute("message", "Candidato ja inscrito nessa especialidade");
+						return mav.addObject("mensagem", "Candidato ja inscrito nessa especialidade");
+					}
+				}
 				candidato_vaga = new Candidato_Vaga();
 				candidato_vaga.setCandidato(user);
 				candidato_vaga.setState(State.NAO_AVALIADO);
 				candidato_vaga.setVaga(vaga);
-				System.out.println("candidato vaga = "+candidato_vaga);
+				//System.out.println("candidato vaga = "+candidato_vaga);
 				candidatovagadao.gravar(candidato_vaga);
 			}
 		attr.addFlashAttribute("message", "Candidatura efetuada com sucesso !");

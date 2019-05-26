@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Listagem de Eventos</title>
+<title>${evento.descricao}</title>
 <!-- CSS  -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
@@ -134,12 +134,14 @@ body {
 							<div class="row">
 								<div class="input-field col s3 ">
 									<p>
-										<label> <input type="checkbox" class="vagas"
+										<label> 
+										<input type="checkbox" class="vagas"
 											name="vagas" value="${vaga.id }" class="filled-in" />
 											<span>${vaga.especialidade.nome } (${vaga.qtd_vagas})</span>
 										</label>
 									</p>
 								</div>
+							</div>
 						</c:forEach>
 					</div>
 				</c:if>

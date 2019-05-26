@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
 import br.edu.ifpb.pweb2.model.Candidato_Vaga;
+import br.edu.ifpb.pweb2.model.User;
 import br.edu.ifpb.pweb2.model.Vaga;
 @Component("Candidato_VagaDAO")
 public class Candidato_VagaDAO {
@@ -42,6 +44,12 @@ private static Candidato_VagaDAO instance = null;
 
 	public List<Candidato_Vaga> findAll() {
 		return manager.createQuery("select cv from Candidato_Vaga cv", Candidato_Vaga.class).getResultList();
+	}
+	
+	public List<Candidato_Vaga> findByUser(User user) {
+		Query q = manager.createQuery("select cv from Candidato_Vaga cv where cv.candidato = :user", Candidato_Vaga.class);
+		q.setParameter("user", user);
+		return q.getResultList();
 	}
 
 }
