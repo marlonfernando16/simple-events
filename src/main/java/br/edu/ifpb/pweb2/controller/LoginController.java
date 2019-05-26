@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.dao.UserDAO;
 import br.edu.ifpb.pweb2.model.User;
@@ -24,20 +25,19 @@ public class LoginController {
 	
 	
 	@RequestMapping("/form")
-	public String showForm() {
-		return "form-login";
+	public ModelAndView showForm() {
+		return new ModelAndView("form-login");
 	}
 	
 	@RequestMapping("/valide")
-	public ModelAndView valide(HttpSession session, String login, String senha, Model model) {
+	public ModelAndView valide(HttpSession session, String login, String senha, RedirectAttributes attr) {
 		User user = userdao.findByEmail(login);
 		if(user != null && user.getSenha().equals(senha)) {
 			session.setAttribute("user", user);
-			
 			return new ModelAndView("redirect:/eventos") ;
 		}else {
-			model.addAttribute("erro", "Login ou senha inv�lidos");
-			return new ModelAndView("redirect : form");
+			attr.addFlashAttribute("erro", "Login ou senha inválidos");
+			return new ModelAndView("redirect:form");
 		}
 	}
 	

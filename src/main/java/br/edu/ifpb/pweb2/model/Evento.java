@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,16 +39,24 @@ public class Evento {
 	@ManyToOne
 	private User owner;
 	
-	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "evento", cascade = CascadeType.ALL)
 	/* Rela��o com as vagas */
 	private List<Vaga> vagas = new ArrayList<>();
 
 	/* rela��o com avalia��o_eventos */
-	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "evento", cascade = CascadeType.ALL)
 	private List<Avaliacao_Evento> avaliacao_eventos = new ArrayList<>();
 
 	public Evento() {
 	}
+	
+	
+
+	public void setAvaliacao_eventos(List<Avaliacao_Evento> avaliacao_eventos) {
+		this.avaliacao_eventos = avaliacao_eventos;
+	}
+
+
 
 	public Evento(String d, Date dh, String l) {
 		super();
@@ -58,6 +67,10 @@ public class Evento {
 
 	public List<Avaliacao_Evento> getAvaliacao_eventos() {
 		return avaliacao_eventos;
+	}
+	
+	public void add(Vaga vaga) {
+		this.vagas.add(vaga);
 	}
 
 	public void setAvaliacao_eventos(ArrayList<Avaliacao_Evento> avaliacao_eventos) {
@@ -110,6 +123,10 @@ public class Evento {
 
 	public void setLocal(String local) {
 		this.local = local;
+	}
+	
+	public void setVagas(List<Vaga> vagas) {
+		this.vagas = vagas;
 	}
 
 	@Override

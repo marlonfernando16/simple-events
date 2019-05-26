@@ -70,10 +70,10 @@
 <c:forEach var="e" items="${especialidades}">
 	<div class="row">
     <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
+      <div class="card-panel white hoverable lighten-5 z-depth-1">
         <div class="card-content white-text">
-          <span class="card-title">${e.nome}</span>
-          <p>${e.descricao}</p>
+          <h4 class="black-text text-darken-3" style="font-weight:700">${e.nome}</h4>
+          <h6 class="black-text" >${e.descricao}</h6>
         </div>
         <div class="card-action">
           <a href="${pageContext.request.contextPath}/especialidade/read/${e.id}">Atualizar</a>

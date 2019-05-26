@@ -62,6 +62,9 @@
 			<a href="#!" class="brand-logo">Simple event</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
+				<c:if test="${user.admin }">
+					<li><a href="${pageContext.request.contextPath }/especialidade"><i class="material-icons left">work</i>Especialidades</a></li>
+				</c:if>
 				<c:if test="${user!=null}">
 					<li><a href="${pageContext.request.contextPath }/eventos/form"><i class="material-icons left">event</i>Cadastrar eventos</a></li>
 				<!-- Dropdown Trigger -->
@@ -84,29 +87,34 @@
 	<ul class="eventos">
 		<c:forEach var="e" items="${eventos}">
 
-	<div class="col s12 m8 offset-m2 l6 offset-l3">
+	<div class="col s12 ">
       <div class="card-panel white hoverable lighten-5 z-depth-1" style="width:90%;height:9em;padding-top:5px">
         <div class="row">
-            <div class="col s12 m4 l5 gambiarra">
+            <div class="col s12 m4 l3">
             <span class="black-text">
-                <h4><a href="#" class="black-text text-darken-3" style="font-weight:700">  ${e.descricao} </a></h4>
+                <h4><a href="${pageContext.request.contextPath}/evento/${e.id}" class="black-text text-darken-3" style="font-weight:700">  ${e.descricao} </a></h4>
                 <small class="grey-text">created by ${e.owner.email }</small>
               </span>
             </div>
-            <div class="col s12 m4 l5 gambiarra">
+            <div class="col s12 m4 l3">
               <h4 class="locais blue-text" >${e.local}</h4>
               <small class="grey-text center">will happen in <fmt:formatDate pattern="dd-MM-yyyy" value="${e.data}" /></small>
             </div>
-            <c:if test="${usuario.email == e.owner.email}">
-            <div class="col s14 m4 l5 gambiarra">
-				<p><a href="${pageContext.request.contextPath}/eventos/read/${e.id}"><i class="material-icons">create</i></a></p> 
-				<small class="grey-text">Edit</small>
+            <div class="col s12 m4 l3">
+            	<h4 class="locais blue-text" >Vagas</h4>
+            	<small class="grey-text center">
+            		<c:forEach var="vaga"  items="${e.vagas}">
+            			${vaga.especialidade.nome } -
+            		</c:forEach>
+            	</small>
             </div>
-            </c:if>
             <c:if test="${usuario.email == e.owner.email}">
-            <div class="col s14 m4 l5 gambiarra">
+            <div class="col s12 m4 l1" style = "margin-top: 20px">
 				<p><a href="${pageContext.request.contextPath}/eventos/delete/${e.id}"><i class="material-icons">delete_forever</i></a></p> 
-				<small class="grey-text">Delete</small>
+            </div>
+            <div class="col s12 m4 l1" style = "margin-top: 20px">
+            	<p><a href="${pageContext.request.contextPath}/eventos/read/${e.id}"><i class="material-icons">create</i></a></p> 
+				
             </div>
             </c:if>
         </div>

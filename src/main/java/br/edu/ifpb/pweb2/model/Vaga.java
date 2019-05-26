@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Vaga {
 	@ManyToOne
 	private Evento evento;
 	private int qtd_vagas;
-	@OneToMany(mappedBy = "vaga", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "vaga", cascade = CascadeType.ALL)
 	private List<Candidato_Vaga> candidato_vaga = new ArrayList<>();
 	@OneToOne
 	private Especialidade especialidade;
@@ -64,6 +65,14 @@ public class Vaga {
 	public void setCandidato_vaga(ArrayList<Candidato_Vaga> candidato_vaga) {
 		this.candidato_vaga = candidato_vaga;
 	}
+
+	@Override
+	public String toString() {
+		return "Vaga [id=" + id + ", evento=" + evento.getDescricao() + ", qtd_vagas=" + qtd_vagas+
+				", especialidade=" + especialidade.getNome() + "]";
+	}
+	
+	
 	
 	
 	
