@@ -115,7 +115,7 @@ body {
 							<div class="input-field col s2 	">
 								<p>
 									<label> 
-										<input type="checkbox" class="especialidades" name="especialidades" value="${esp.id }" class="filled-in" /> 
+										<input type="checkbox" class="especialidades" name="especialidades" value="${esp.id}" class="filled-in" /> 
 										<span>${esp.nome }</span>
 									</label>
 							</p>
@@ -147,13 +147,15 @@ body {
 	
 	let especialidades = document.querySelectorAll('.especialidades');
 	let quantidadevagas = document.querySelectorAll('.quantidadevagas');
-	especialidades.forEach(x=> {
-			x.addEventListener('change',function(){
+	especialidades.forEach((value, indice)=> {
+			value.addEventListener('change',function(){
 				if(this.checked) {
-			        quantidadevagas[this.value-1].disabled = false
-			        console.log(this.value)
+					console.log(indice)
+			        quantidadevagas[indice].disabled = false
 			        
-			    } 
+			    }else {
+			    	quantidadevagas[indice].disabled = true
+			    }
 			})
 		
 		
