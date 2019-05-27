@@ -29,7 +29,7 @@ public class JPAConfiguration {
 		//Descomentá-las quando for dar push para o github
 		dataSource.setUsername(System.getenv("DATABASE_USER"));
 		dataSource.setPassword(System.getenv("DATABASE_PASSWORD"));
-		dataSource.setUrl(System.getenv("DATABASE_URL"));
+		dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
 		dataSource.setDriverClassName("org.postgresql.Driver");
 
 		//Local config
