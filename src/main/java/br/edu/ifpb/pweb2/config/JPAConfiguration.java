@@ -1,4 +1,4 @@
-﻿package br.edu.ifpb.pweb2.config;
+package br.edu.ifpb.pweb2.config;
 
 import java.util.Properties;
 
