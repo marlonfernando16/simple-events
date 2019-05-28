@@ -59,7 +59,7 @@
 	</ul>
 	<nav class="teal lighten-2" >
 		<div class="nav-wrapper">
-			<a href="#!" class="brand-logo">Simple event</a>
+			<a href="#!" class="brand-logo">Simple events</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
 				<c:if test="${user.admin }">
@@ -79,6 +79,8 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<span style="color: #08c117;">${message}</span>
 	
 	<c:if test="${empty eventos}">
 		<p>Ainda não há eventos cadastrados.</p>
@@ -112,11 +114,11 @@
             <div class="col s12 m4 l1" style = "margin-top: 20px">
 				<p><a href="${pageContext.request.contextPath}/eventos/delete/${e.id}"><i class="material-icons">delete_forever</i></a></p> 
             </div>
-            <div class="col s12 m4 l1" style = "margin-top: 20px">
+            <%-- <div class="col s12 m4 l1" style = "margin-top: 20px">
             	<p><a href="${pageContext.request.contextPath}/eventos/read/${e.id}"><i class="material-icons">create</i></a></p> 
-				
-            </div>
+            </div> --%>
             </c:if>
+            
         </div>
       </div>
   </div>

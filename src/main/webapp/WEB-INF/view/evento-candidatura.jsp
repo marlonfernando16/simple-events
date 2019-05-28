@@ -65,7 +65,7 @@ body {
 	</ul>
 	<nav class="teal lighten-2">
 		<div class="nav-wrapper">
-			<a href="#!" class="brand-logo">Simple event</a>
+			<a href="#!" class="brand-logo">Simple events</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i
 						class="material-icons left">home</i>Home</a></li>
@@ -92,6 +92,8 @@ body {
 			</ul>
 		</div>
 	</nav>
+	
+	<span style="color: #ea4343;">${message}</span>
 
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
