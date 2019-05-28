@@ -72,11 +72,4 @@ public class Vaga {
 				", especialidade=" + especialidade.getNome() + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
-
 }

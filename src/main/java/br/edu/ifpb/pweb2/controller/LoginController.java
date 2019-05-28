@@ -36,7 +36,7 @@ public class LoginController {
 			session.setAttribute("user", user);
 			return new ModelAndView("redirect:/eventos") ;
 		}else {
-			attr.addFlashAttribute("erro", "Login ou senha inválidos");
+			attr.addFlashAttribute("erro", "Login ou senha invalidos");
 			return new ModelAndView("redirect:form");
 		}
 	}

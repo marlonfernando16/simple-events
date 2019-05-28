@@ -102,7 +102,7 @@ public class EventoController {
 			RedirectAttributes attr) {
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			attr.addFlashAttribute("erro", "Usuário precisa está logado");
+			attr.addFlashAttribute("erro", "Usuario precisa estar logado");
 			return new ModelAndView("redirect:/login/form");
 		} else {
 			Vaga vaga;
@@ -119,7 +119,7 @@ public class EventoController {
 					if (vaga.getEvento().getId() == i.getVaga().getEvento().getId()) {
 						if (vaga.getEspecialidade().getId() == i.getVaga().getEspecialidade().getId()) {
 							ModelAndView mav = new ModelAndView("redirect:evento/" + e.getId());
-							attr.addFlashAttribute("message", "Candidato ja inscrito nessa especialidade");
+							attr.addFlashAttribute("message", "Candidato ja inscrito nessa especialidade!");
 							return mav;
 						}
 					}
@@ -131,7 +131,7 @@ public class EventoController {
 				// System.out.println("candidato vaga = "+candidato_vaga);
 				candidatovagadao.gravar(candidato_vaga);
 			}
-			attr.addFlashAttribute("message", "Candidatura efetuada com sucesso !");
+			attr.addFlashAttribute("message", "Candidatura efetuada com sucesso!");
 			ModelAndView mv = new ModelAndView("redirect:/eventos");
 			return mv;
 		}
@@ -174,7 +174,7 @@ public class EventoController {
 				attr.addFlashAttribute("evento", e);
 				return new ModelAndView("redirect:/eventos/");
 			} else {
-				attr.addFlashAttribute("message", "Evento n�o pode ser atualizado");
+				attr.addFlashAttribute("message", "Evento nao pode ser atualizado");
 				attr.addFlashAttribute("evento", e);
 				return new ModelAndView("redirect:/eventos/");
 			}

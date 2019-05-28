@@ -84,7 +84,7 @@ public class EspecialidadeController {
 				attr.addFlashAttribute("especialidade", e);
 				return new ModelAndView("redirect:/especialidade/");
 			} else {
-				attr.addFlashAttribute("message", "Especialidade n�o pode ser atualizada");
+				attr.addFlashAttribute("message", "Especialidade nao pode ser atualizada");
 				attr.addFlashAttribute("especialidade", e);
 				return new ModelAndView("redirect:/especialidade/");
 			}

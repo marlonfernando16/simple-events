@@ -45,7 +45,7 @@ public class User implements Serializable {
 	@Past(message = "A data deve estar no passado")
 	private Date datanascimento;
 	
-	/* rela��o com eventos */
+	/* relacao com eventos */
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Evento> eventos = new ArrayList<>();
 	

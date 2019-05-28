@@ -26,37 +26,33 @@ public class Evento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty(message = "Descri��o � obrigat�ria")
+	@NotEmpty(message = "Descricao e obrigatoria")
 	private String descricao;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@NotNull(message = "Data � obrigat�ria")
+	@NotNull(message = "Data e obrigatoria")
 	@Future(message = "A data deve estar no futuro")
 	private Date data;
 	private String local;
 	
-	/* rela��o com Dono do evento */
+	/* relacao com Dono do evento */
 	@ManyToOne
 	private User owner;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "evento", cascade = CascadeType.ALL)
-	/* Rela��o com as vagas */
+	/* Relacao com as vagas */
 	private List<Vaga> vagas = new ArrayList<>();
 
-	/* rela��o com avalia��o_eventos */
+	/* relacao com avaliacao_eventos */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "evento", cascade = CascadeType.ALL)
 	private List<Avaliacao_Evento> avaliacao_eventos = new ArrayList<>();
 
 	public Evento() {
-	}
-	
-	
+	}	
 
 	public void setAvaliacao_eventos(List<Avaliacao_Evento> avaliacao_eventos) {
 		this.avaliacao_eventos = avaliacao_eventos;
 	}
-
-
 
 	public Evento(String d, Date dh, String l) {
 		super();
