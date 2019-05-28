@@ -49,7 +49,7 @@
 	</ul>
 	<nav class="teal lighten-2" >
 		<div class="nav-wrapper">
-			<a href="#!" class="brand-logo">Simple event</a>
+			<a href="#!" class="brand-logo">Simple events</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
 				<li><a href="${pageContext.request.contextPath }/especialidade/form"><i class="material-icons left">event</i>Cadastrar Especialidades</a></li>

@@ -57,7 +57,7 @@ public class EspecialidadeController {
 			return new ModelAndView("especialidade-form");
 		else {
 			dao.gravar(especialidade);
-			attr.addFlashAttribute("mensagem", "Especialidade cadastrado com sucesso!");
+			attr.addFlashAttribute("message", "Especialidade cadastrada com sucesso!");
 			return new ModelAndView("redirect:/especialidade/");
 		}
 	}

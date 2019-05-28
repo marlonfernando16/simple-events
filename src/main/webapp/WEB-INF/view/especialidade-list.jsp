@@ -50,7 +50,7 @@
 	</ul>
 	<nav class="teal lighten-2" >
 		<div class="nav-wrapper">
-			<a href="#!" class="brand-logo">Simple event</a>
+			<a href="#!" class="brand-logo">Simple events</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="${pageContext.request.contextPath }/eventos"><i class="material-icons left">home</i>Home</a></li>
 				<li><a href="${pageContext.request.contextPath }/especialidade/form"><i class="material-icons left">event</i>Cadastrar Especialidades</a></li>
@@ -62,6 +62,8 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<span style="color: #08c117;">${message}</span>
 	
 <c:if test="${empty especialidades}">
 	<p>Ainda não há especialidades cadastradas.</p>
@@ -75,9 +77,9 @@
           <h4 class="black-text text-darken-3" style="font-weight:700">${e.nome}</h4>
           <h6 class="black-text" >${e.descricao}</h6>
         </div>
-        <div class="card-action">
+        <%-- <div class="card-action">
           <a href="${pageContext.request.contextPath}/especialidade/read/${e.id}">Atualizar</a>
-        </div>
+        </div> --%>
       </div>
     </div>
   </div>

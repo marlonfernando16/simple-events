@@ -83,8 +83,8 @@ public class EventoController {
 			}
 			eventodao.update(evento.getId(), evento);
 			// System.out.println("eventos vagas = "+evento.getVagas());
-			attr.addFlashAttribute("mensagem", "Evento cadastrado com sucesso!");
-			ModelAndView mv = new ModelAndView("redirect: eventos ");
+			attr.addFlashAttribute("message", "Evento cadastrado com sucesso!");
+			ModelAndView mv = new ModelAndView("redirect:/eventos/");
 			return mv;
 		}
 	}
@@ -116,15 +116,11 @@ public class EventoController {
 				for (Candidato_Vaga i : inscricoes_user_logado) {
 					System.out.println(i.getVaga().getEvento());
 					System.out.println(vaga.getEvento());
-					// if(vaga.getEvento().getId() == i.getVaga().getEvento().getId())
-					// Se usar o if acima ao inv�s do if abaixo, o usu�rio s� pode se candidatar
-					// uma vez num mesmo evento. J� com o if de baixo, o usu�rio pode se candidatar
-					// uma vez em todas as especialidades do evento.
 					if (vaga.getEvento().getId() == i.getVaga().getEvento().getId()) {
 						if (vaga.getEspecialidade().getId() == i.getVaga().getEspecialidade().getId()) {
 							ModelAndView mav = new ModelAndView("redirect:evento/" + e.getId());
 							attr.addFlashAttribute("message", "Candidato ja inscrito nessa especialidade");
-							return mav.addObject("mensagem", "Candidato ja inscrito nessa especialidade");
+							return mav;
 						}
 					}
 				}
