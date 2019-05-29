@@ -12,19 +12,21 @@ import org.springframework.stereotype.Component;
 import br.edu.ifpb.pweb2.model.Candidato_Vaga;
 import br.edu.ifpb.pweb2.model.User;
 import br.edu.ifpb.pweb2.model.Vaga;
+
 @Component("Candidato_VagaDAO")
 public class Candidato_VagaDAO {
-private static Candidato_VagaDAO instance = null;
-	
+
+	private static Candidato_VagaDAO instance = null;
+
 	@PersistenceContext
 	protected EntityManager manager;
 
-	public static Candidato_VagaDAO getInstance(){
-		if(instance == null)
+	public static Candidato_VagaDAO getInstance() {
+		if (instance == null)
 			instance = new Candidato_VagaDAO();
 		return instance;
 	}
-	
+
 	public Candidato_Vaga findById(Long id) {
 		return manager.find(Candidato_Vaga.class, id);
 	}
@@ -33,9 +35,9 @@ private static Candidato_VagaDAO instance = null;
 	public void gravar(Candidato_Vaga cv) {
 		manager.persist(cv);
 	}
-	
+
 	@Transactional
-	public Candidato_Vaga update(Long id, Candidato_Vaga cv) {	   
+	public Candidato_Vaga update(Long id, Candidato_Vaga cv) {
 		Vaga removed = manager.find(Vaga.class, id);
 		manager.remove(removed);
 		manager.merge(cv);
@@ -45,9 +47,10 @@ private static Candidato_VagaDAO instance = null;
 	public List<Candidato_Vaga> findAll() {
 		return manager.createQuery("select cv from Candidato_Vaga cv", Candidato_Vaga.class).getResultList();
 	}
-	
+
 	public List<Candidato_Vaga> findByUser(User user) {
-		Query q = manager.createQuery("select cv from Candidato_Vaga cv where cv.candidato = :user", Candidato_Vaga.class);
+		Query q = manager.createQuery("select cv from Candidato_Vaga cv where cv.candidato = :user",
+				Candidato_Vaga.class);
 		q.setParameter("user", user);
 		return q.getResultList();
 	}

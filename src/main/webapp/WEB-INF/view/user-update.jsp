@@ -9,7 +9,8 @@
 <title>Cadastro de Usuarios</title>
 </head>
 <body>
-	<form:form action="${pageContext.request.contextPath}/usuario/update/${user.id}"
+	<form:form
+		action="${pageContext.request.contextPath}/usuario/update/${user.id}"
 		method="POST" modelAttribute="user" acceptCharset="UTF-8">
 		
 		Nome: <form:input path="nome" />

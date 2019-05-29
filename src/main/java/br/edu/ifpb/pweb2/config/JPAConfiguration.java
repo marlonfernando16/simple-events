@@ -22,7 +22,6 @@ public class JPAConfiguration {
 		factoryBean.setJpaVendorAdapter(vendorAdapter);
 		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		
 
 		//Heroku config
 		//Comentar essas linhas quando for usar localmente
@@ -54,6 +53,7 @@ public class JPAConfiguration {
 		
 		return factoryBean;
 	}
+	
 	@Bean
 	public JpaTransactionManager transactionManager (EntityManagerFactory emf) {
 		return new JpaTransactionManager(emf);

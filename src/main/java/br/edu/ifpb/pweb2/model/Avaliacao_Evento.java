@@ -11,17 +11,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_avaliacao_evento")
 public class Avaliacao_Evento {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne	
+	
+	@ManyToOne
 	private Evento evento;
+	
 	private int nota_avaliacao_evento;
+	
 	@OneToOne
 	private User participante;
 
-	public Avaliacao_Evento() {
-	};
+	public Avaliacao_Evento() {};
 
 	public Evento getEvento() {
 		return evento;

@@ -70,8 +70,8 @@ body {
 				<li><a href="${pageContext.request.contextPath }/eventos"><i
 						class="material-icons left">home</i>Home</a></li>
 				<c:if test="${user.admin }">
-					<li>
-					<a href="${pageContext.request.contextPath }/especialidade"><i
+					<li><a
+						href="${pageContext.request.contextPath }/especialidades"><i
 							class="material-icons left">work</i>Especialidades</a></li>
 				</c:if>
 				<c:if test="${user!=null}">
@@ -92,14 +92,15 @@ body {
 			</ul>
 		</div>
 	</nav>
-	
-	<span style="color: #ea4343;">${message}</span>
+
+	<span style="color: #08c117;">${message_success}</span>
+	<span style="color: #e82727;">${message_error}</span>
 
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
 		<form action="${pageContext.request.contextPath}/eventos/candidatar"
-		 method="post" class="col s12 white ">
+			method="post" class="col s12 white ">
 			<fieldset class="formulario">
 				<legend>
 					<i class="material-icons prefix " style="font-size: 70px">event_available</i>
@@ -127,19 +128,18 @@ body {
 					<h6 style="margin-left: 40px; margin-top: 12px" class="light">${evento.owner.email }</h6>
 				</div>
 				<h3 class=" center blue-text">Vagas</h3>
-				
+
 				<!--Candidato ou visitante -->
-				
+
 				<c:if test="${evento.owner.email != user.email }">
 					<div class="input-field col s12">
 						<c:forEach var="vaga" items="${evento.vagas}">
 							<div class="row">
 								<div class="input-field col s3 ">
 									<p>
-										<label> 
-										<input type="checkbox" class="vagas"
-											name="vagas" value="${vaga.id }" class="filled-in" />
-											<span>${vaga.especialidade.nome } (${vaga.qtd_vagas})</span>
+										<label> <input type="checkbox" class="vagas"
+											name="vagas" value="${vaga.id }" class="filled-in" /> <span>${vaga.especialidade.nome }
+												(${vaga.qtd_vagas})</span>
 										</label>
 									</p>
 								</div>
@@ -147,37 +147,37 @@ body {
 						</c:forEach>
 					</div>
 				</c:if>
-				
+
 				<!--Promotor -->
-				
+
 				<c:if test="${evento.owner.email == user.email }">
 					<div class="input-field col s12">
 						<c:forEach var="vaga" items="${evento.vagas}">
-							<h6 style="font-weight:700" class="text-darken-3">
-							${vaga.especialidade.nome } (${vaga.qtd_vagas})</h6>
-								<c:if test="${fn:length(vaga.candidato_vaga) == 0}">
-									<li class="grey-text ">Não tem candidatos</li>
-								</c:if>
-								<c:if test="${fn:length(vaga.candidato_vaga) > 0}">
-									<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
-										<li class="black-text ">${candidatovaga.candidato.email}</li>
-									</c:forEach>
-								</c:if>
+							<h6 style="font-weight: 700" class="text-darken-3">
+								${vaga.especialidade.nome } (${vaga.qtd_vagas})</h6>
+							<c:if test="${fn:length(vaga.candidato_vaga) == 0}">
+								<li class="grey-text ">Não tem candidatos</li>
+							</c:if>
+							<c:if test="${fn:length(vaga.candidato_vaga) > 0}">
+								<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
+									<li class="black-text ">${candidatovaga.candidato.email}</li>
+								</c:forEach>
+							</c:if>
 						</c:forEach>
 					</div>
 				</c:if>
-					<!--Botões-->
-					<div class="input-field col s4">
-						<a href="${pageContext.request.contextPath }/eventos"
-							class="btn red">cancelar</a>
-						<c:if test="${evento.owner.email != user.email }">
-							<input type="submit" value="candidatar-se" class="btn blue">
-						</c:if>
-						<c:if test="${evento.owner.email == user.email }">
-							<input type="submit" disabled value="candidatar-se"
-								class="btn blue">
-						</c:if>
-					</div>
+				<!--Botões-->
+				<div class="input-field col s4">
+					<a href="${pageContext.request.contextPath }/eventos"
+						class="btn red">cancelar</a>
+					<c:if test="${evento.owner.email != user.email }">
+						<input type="submit" value="candidatar-se" class="btn blue">
+					</c:if>
+					<c:if test="${evento.owner.email == user.email }">
+						<input type="submit" disabled value="candidatar-se"
+							class="btn blue">
+					</c:if>
+				</div>
 			</fieldset>
 		</form>
 	</div>

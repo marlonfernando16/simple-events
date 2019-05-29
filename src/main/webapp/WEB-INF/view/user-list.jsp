@@ -11,15 +11,16 @@
 <body>
 
 	<h1>Usuarios Cadastrados</h1>
-	
+
 	<a href="${pageContext.request.contextPath}/usuario/">Novo Usuario</a>
 
-	<div>${message} ${user.nome}</div>
-	
+	<div>${message}${user.nome}</div>
+
 
 	<ul>
 		<c:forEach var="userItem" items="${users}">
-			<li>${userItem.id} ${userItem.nome}<a href="read/${userItem.id}">Edit</a> <a href="delete/${userItem.id}">Delete</a></li>
+			<li>${userItem.id}${userItem.nome}<a href="read/${userItem.id}">Edit</a>
+				<a href="delete/${userItem.id}">Delete</a></li>
 		</c:forEach>
 	</ul>
 
