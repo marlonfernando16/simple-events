@@ -23,9 +23,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Entity
 @Table(name = "tb_usuario")
-@Scope(value=WebApplicationContext.SCOPE_SESSION)
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class User implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -33,34 +35,34 @@ public class User implements Serializable {
 	@NotEmpty(message = "Nome e obrigatorio")
 	private String nome;
 
-//	@Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", message = "Informe um telefone [(83) 98892-1223]")
+//	@Pattern(
+//	regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", 
+//	message = "Informe um telefone [(83) 98892-1223]")
+	
 	private String telefone;
-	
+
+	@NotEmpty(message = "Email e obrigatorio")
 	private String email;
-	
-	@Size(min = 8, message = "a senha deve conter no minino 8 caracteres")
+
+	@Size(min = 8, message = "A senha deve conter no minino 8 caracteres")
 	private String senha;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Past(message = "A data deve estar no passado")
 	private Date datanascimento;
-	
-	/* relacao com eventos */
+
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Evento> eventos = new ArrayList<>();
-	
-	/* relacao com candidato_vaga */
+
 	@OneToOne
 	private Candidato_Vaga candidato_vaga;
-	
-	/* relacao com Avaliacao_evento */
+
 	@OneToOne
 	private Avaliacao_Evento avaliacao_evento;
-	
+
 	private boolean isAdmin = false;
 
-	public User() {
-	};
+	public User() {};
 
 	public Avaliacao_Evento getAvaliacao_evento() {
 		return avaliacao_evento;

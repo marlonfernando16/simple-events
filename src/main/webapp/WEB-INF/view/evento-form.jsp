@@ -76,7 +76,7 @@ body {
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
-		<form:form action="${pageContext.request.contextPath }/eventos"
+		<form:form action="${pageContext.request.contextPath }/eventos/add"
 			method="post" class="col s12 white " modelAttribute="evento">
 			<fieldset class="formulario">
 				<legend>
@@ -114,16 +114,15 @@ body {
 						<div class="row">
 							<div class="input-field col s2 	">
 								<p>
-									<label> 
-										<input type="checkbox" class="especialidades" name="especialidades" value="${esp.id}" class="filled-in" /> 
+									<label> <input type="checkbox" class="especialidades"
+										name="especialidades" value="${esp.id}" class="filled-in" />
 										<span>${esp.nome }</span>
 									</label>
-							</p>
+								</p>
 							</div>
 							<div class="input-field col s1">
-								<input name="quantidadevagas" class="quantidadevagas"
-								 disabled type="number" value="1" />
-								 <label for="especialidade">${vaga.especialidade.nome}</label>
+								<input name="quantidadevagas" class="quantidadevagas" disabled
+									type="number" value="1" /> <label for="especialidade">${vaga.especialidade.nome}</label>
 							</div>
 						</div>
 					</c:forEach>
@@ -131,8 +130,9 @@ body {
 
 				<!--Botões-->
 				<div class="input-field col s4">
-					<a href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
-					<input type="submit" value="cadastrar" class="btn blue"> 
+					<a href="${pageContext.request.contextPath }/eventos"
+						class="btn red">cancelar</a> <input type="submit"
+						value="cadastrar" class="btn blue">
 				</div>
 			</fieldset>
 		</form:form>

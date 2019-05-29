@@ -15,14 +15,13 @@ import br.edu.ifpb.pweb2.model.User;
 public class UserDAO {
 
 	private static UserDAO instance = null;
+	
 	@PersistenceContext
 	protected EntityManager manager;
 
 	public static UserDAO getInstance() {
-		if (instance == null) {
+		if (instance == null)
 			instance = new UserDAO();
-		}
-
 		return instance;
 	}
 
@@ -41,7 +40,7 @@ public class UserDAO {
 		try {
 			User u = (User) query.getSingleResult();
 			return u;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
@@ -58,7 +57,7 @@ public class UserDAO {
 //	public User update(User user) {
 //		return manager.merge(user);
 //	}
-//
+
 	@Transactional
 	public User delete(Long id) {
 		User user = findById(id);

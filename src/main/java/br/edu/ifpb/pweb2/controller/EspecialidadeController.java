@@ -18,77 +18,79 @@ import br.edu.ifpb.pweb2.model.Especialidade;
 import br.edu.ifpb.pweb2.model.User;
 
 @Controller
-@RequestMapping("/especialidade")
+@RequestMapping("/especialidades")
 public class EspecialidadeController {
-	
+
 	@Autowired
 	EspecialidadeDAO dao;
-	@RequestMapping({"", "/"})
-	public ModelAndView listar(HttpSession session, Especialidade e) {
+
+	@RequestMapping({ "", "/" })
+	public ModelAndView listar(HttpSession session, Especialidade especialidade) {
 		User user = (User) session.getAttribute("user");
-		if(user == null) {
-			return new ModelAndView("redirect:/eventos/");
-		}
-		else if(!user.isAdmin())
-			return new ModelAndView("redirect:/eventos/");
+		if (user == null)
+			return new ModelAndView("redirect:/permissao-negada/");
+
+		else if (!user.isAdmin())
+			return new ModelAndView("redirect:/permissao-negada/");
+
 		ModelAndView mav = new ModelAndView("especialidade-list");
 		mav.addObject("especialidades", dao.findAll());
 		return mav;
 	}
-	
-	@RequestMapping("/form")
-	public ModelAndView cadastrar(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		if(user == null)
-			return new ModelAndView("redirect:/permissao-negada/");
-		
-		if(!user.isAdmin())
-			return new ModelAndView("redirect:/permissao-negada/");
-		
-		ModelAndView mav = new ModelAndView("especialidade-form");
-		mav.addObject("especialidade", new Especialidade());
-		return mav;
-	}
-	
+
 	@RequestMapping("/add")
-	public ModelAndView cadastre(HttpSession session, @Valid Especialidade especialidade, 
-			BindingResult bindingResult, RedirectAttributes attr) {
+	public ModelAndView create(HttpSession session, @Valid Especialidade especialidade, BindingResult bindingResult,
+			RedirectAttributes attr) {
 		if (bindingResult.hasErrors())
 			return new ModelAndView("especialidade-form");
 		else {
 			dao.gravar(especialidade);
-			attr.addFlashAttribute("message", "Especialidade cadastrada com sucesso!");
-			return new ModelAndView("redirect:/especialidade/");
+			attr.addFlashAttribute("message_success", "Especialidade cadastrada com sucesso!");
+			return new ModelAndView("redirect:/especialidades/");
 		}
 	}
-	
-	@RequestMapping("read/{especialidadeId}")
-	public ModelAndView readEvent(@PathVariable Long especialidadeId, HttpServletRequest request,
-			HttpServletResponse response) {
-		Especialidade e = dao.findById(especialidadeId);
-		if (e != null) {
-			return new ModelAndView("especialidade-update").addObject(e);
-		}
-		return null;
-	}
-	
-	@RequestMapping("update/{especialidadeId}")
-	public ModelAndView updateEvento(HttpSession session, @PathVariable Long especialidadeId, @Valid Especialidade especialidade, 
-			BindingResult bindingResult, RedirectAttributes attr) {
-		if (bindingResult.hasErrors()) {
-			return new ModelAndView("especialidade-form");
-		} else {
-			Especialidade e = dao.update(especialidadeId, especialidade);
-			if (e != null) {
-				attr.addFlashAttribute("message", "Especialidade atualizada");
-				attr.addFlashAttribute("especialidade", e);
-				return new ModelAndView("redirect:/especialidade/");
-			} else {
-				attr.addFlashAttribute("message", "Especialidade nao pode ser atualizada");
-				attr.addFlashAttribute("especialidade", e);
-				return new ModelAndView("redirect:/especialidade/");
-			}
-		}
+
+//	@RequestMapping("read/{especialidadeId}")
+//	public ModelAndView read(@PathVariable Long especialidadeId, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		Especialidade especialidade = dao.findById(especialidadeId);
+//		if (especialidade != null)
+//			return new ModelAndView("especialidade-update").addObject(especialidade);
+//
+//		return null;
+//	}
+
+//	@RequestMapping("update/{especialidadeId}")
+//	public ModelAndView update(HttpSession session, @PathVariable Long especialidadeId,
+//			@Valid Especialidade especialidade, BindingResult bindingResult, RedirectAttributes attr) {
+//		if (bindingResult.hasErrors()) {
+//			return new ModelAndView("especialidade-form");
+//		} else {
+//			Especialidade e = dao.update(especialidadeId, especialidade);
+//			if (e != null) {
+//				attr.addFlashAttribute("message_success", "Especialidade atualizada!");
+//				attr.addFlashAttribute("especialidade", e);
+//				return new ModelAndView("redirect:/especialidades/");
+//			} else {
+//				attr.addFlashAttribute("message_error", "Especialidade nao pode ser atualizada.");
+//				attr.addFlashAttribute("especialidade", e);
+//				return new ModelAndView("redirect:/especialidades/");
+//			}
+//		}
+//	}
+
+	@RequestMapping("/form")
+	public ModelAndView cadastrar(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user == null)
+			return new ModelAndView("redirect:/permissao-negada/");
+
+		if (!user.isAdmin())
+			return new ModelAndView("redirect:/permissao-negada/");
+
+		ModelAndView mav = new ModelAndView("especialidade-form");
+		mav.addObject("especialidade", new Especialidade());
+		return mav;
 	}
 
 }

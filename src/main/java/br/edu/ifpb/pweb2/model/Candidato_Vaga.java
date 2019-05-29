@@ -15,15 +15,18 @@ public class Candidato_Vaga {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@ManyToOne
 	private Vaga vaga;
+	
 	private int nota_desempenho;
+	
 	private State state;
+	
 	@OneToOne
 	private User candidato;
 
-	public Candidato_Vaga() {
-	};
+	public Candidato_Vaga() {};
 
 	public Vaga getVaga() {
 		return vaga;
@@ -59,9 +62,8 @@ public class Candidato_Vaga {
 
 	@Override
 	public String toString() {
-		return "Candidato_Vaga [id=" + id + ", vaga=" + vaga.getEspecialidade().getNome() + ", nota_desempenho=" + nota_desempenho + ", state="
-				+ state + ", candidato=" + candidato.getNome() + "]";
+		return "Candidato_Vaga [id=" + id + ", vaga=" + vaga.getEspecialidade().getNome() + ", nota_desempenho="
+				+ nota_desempenho + ", state=" + state + ", candidato=" + candidato.getNome() + "]";
 	}
-	
 
 }

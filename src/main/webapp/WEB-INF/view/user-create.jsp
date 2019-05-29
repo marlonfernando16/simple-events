@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,10 +18,10 @@
 </head>
 
 <style>
-		body {
-		background-color: #F8F8F8 ;
-		margin-top: 3%;
-		}
+body {
+	background-color: #F8F8F8;
+	margin-top: 3%;
+}
 </style>
 <body>
 	<div class="valign-wrapper row login-box">
@@ -33,51 +33,54 @@
 				<h3 class="center">Sign up</h3>
 			</div>
 
-				<div class="card-content">
-					<c:if test="${not empty erro }">
-						<p class="center" style="color: red">${erro}</p>
-					</c:if>
-					<form:form action="${pageContext.request.contextPath}/usuario/create" method="post" modelAttribute="user" acceptCharset="UTF-8">
+			<div class="card-content">
+				<c:if test="${not empty message_error }">
+					<p class="center" style="color: red">${message_error}</p>
+				</c:if>
+				<form:form
+					action="${pageContext.request.contextPath}/usuario/create"
+					method="post" modelAttribute="user" acceptCharset="UTF-8">
 					<div class="input-field col s12">
-							<i class="material-icons prefix">account_circle</i>
-							<form:input path="nome" class="validate"  />
-							<form:errors class="center red-text" path="nome"/>
-							<label for="nome">Name</label>
+						<i class="material-icons prefix">account_circle</i>
+						<form:input path="nome" class="validate" />
+						<form:errors class="center red-text" path="nome" />
+						<label for="nome">Name</label>
 					</div>
 					<div class="input-field col s12">
-							<i class="material-icons prefix">phone</i>
-							<form:input path="telefone" class="validate"  />
-							<form:errors class="center red-text" path="telefone"/>
-							<label for="telefone">Phone</label>
+						<i class="material-icons prefix">phone</i>
+						<form:input path="telefone" class="validate" />
+						<form:errors class="center red-text" path="telefone" />
+						<label for="telefone">Phone</label>
 					</div>
 					<div class="input-field col s12">
-							<i class="material-icons prefix">calendar_today</i>
-							<form:input path="datanascimento" type="date" class="validate"   />
-							<form:errors class="center red-text" path="datanascimento"/>
-							<label for="datanascimento">Date of birth</label>
+						<i class="material-icons prefix">calendar_today</i>
+						<form:input path="datanascimento" type="date" class="validate" />
+						<form:errors class="center red-text" path="datanascimento" />
+						<label for="datanascimento">Date of birth</label>
 					</div>
 					<div class="input-field col s12">
-							<i class="material-icons prefix">email</i>
-							<form:input path="email" class="validate"  type="email" />
-							<form:errors class="center red-text" path="email"/>
-							<label for="email">Email</label>
+						<i class="material-icons prefix">email</i>
+						<form:input path="email" class="validate" type="email" />
+						<form:errors class="center red-text" path="email" />
+						<label for="email">Email</label>
 					</div>
 					<div class="input-field col s12">
-							<i class="material-icons prefix">lock</i>
-						 	<input type="password" class="validate" name="senha"/><br>
-						 	<label for="login">Password</label>
-						 	<form:errors class="center red-text" path="senha"/>
+						<i class="material-icons prefix">lock</i> <input type="password"
+							class="validate" name="senha" /><br> <label for="login">Password</label>
+						<form:errors class="center red-text" path="senha" />
 					</div>
-							<div class="form-field center-align">
-								<button class="btn-large ">Sign up</button>
-							</div>
-							<br>
-							<div class ="center">
-								Already have an account? <a href="${pageContext.request.contextPath }/login/form"> Log in </a>
-							</div> 
-					</form:form>
-			 </div>
-        </div>
-    </div>
+					<div class="form-field center-align">
+						<button class="btn-large ">Sign up</button>
+					</div>
+					<br>
+					<div class="center">
+						Already have an account? <a
+							href="${pageContext.request.contextPath }/login/form"> Log in
+						</a>
+					</div>
+				</form:form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

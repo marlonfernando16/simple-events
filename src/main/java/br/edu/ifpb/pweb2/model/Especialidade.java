@@ -9,14 +9,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_especialidade")
 public class Especialidade {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
+	
 	private String descricao;
 
-	public Especialidade() {
-	};
+	public Especialidade() {};
 
 	public Long getId() {
 		return id;
