@@ -87,7 +87,7 @@ body {
 				<!--Campo Descricao -->
 				<div class="input-field col s12">
 					<i class="material-icons prefix">event_note</i>
-					<form:input path="descricao" />
+					<form:input autofocus="autofocus" type="text" required="required" path="descricao" />
 					<form:errors class="center red-text" path="descricao" />
 					<label for="descricao">Descricao</label>
 				</div>
@@ -95,7 +95,7 @@ body {
 				<!--Campo Data -->
 				<div class="input-field col s12">
 					<i class="material-icons prefix">calendar_today</i>
-					<form:input path="data" type="date" />
+					<form:input path="data" required="required" type="date" />
 					<form:errors class="center red-text" path="data" />
 					<label for="data">Data</label>
 				</div>
@@ -103,7 +103,7 @@ body {
 				<!--Campo Local -->
 				<div class="input-field col s12">
 					<i class="material-icons prefix">location_on</i>
-					<form:input path="local" />
+					<form:input path="local" type="text" required="required" />
 					<form:errors class="center red-text" path="local" />
 					<label for="local">Local</label>
 				</div>

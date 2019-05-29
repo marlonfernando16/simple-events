@@ -66,6 +66,8 @@ public class EventoController {
 			RedirectAttributes attr, Model model) {
 		if (bindingResult.hasErrors())
 			return new ModelAndView("evento-form");
+		if (especialidades == null)
+			return new ModelAndView("evento-form");
 		else {
 			User user = (User) session.getAttribute("user");
 			evento.setOwner(user);
