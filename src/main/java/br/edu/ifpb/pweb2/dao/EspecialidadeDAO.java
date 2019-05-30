@@ -35,10 +35,11 @@ public class EspecialidadeDAO {
 
 	@Transactional
 	public Especialidade update(Long id, Especialidade e) {
-		Especialidade removed = manager.find(Especialidade.class, id);
-		manager.remove(removed);
-		manager.persist(e);
-		return e;
+		Especialidade atualizada = manager.find(Especialidade.class, id);
+		atualizada.setDescricao(e.getDescricao());
+		atualizada.setNome(e.getNome());
+		manager.merge(atualizada);
+		return atualizada;
 	}
 
 	public List<Especialidade> findAll() {

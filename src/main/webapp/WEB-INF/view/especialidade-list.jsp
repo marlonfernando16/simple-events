@@ -90,9 +90,10 @@ body {
 						<h4 class="black-text text-darken-3" style="font-weight: 700">${e.nome}</h4>
 						<h6 class="black-text">${e.descricao}</h6>
 					</div>
-					<%-- <div class="card-action">
-          <a href="${pageContext.request.contextPath}/especialidades/read/${e.id}">Atualizar</a>
-        </div> --%>
+					<div class="card-action">
+						<a
+							href="${pageContext.request.contextPath}/especialidades/read/${e.id}">Atualizar</a>
+					</div>
 				</div>
 			</div>
 		</div>
