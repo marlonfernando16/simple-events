@@ -131,7 +131,7 @@ body {
 
 				<!--Candidato ou visitante -->
 
-				<c:if test="${evento.owner.email != user.email }">
+				
 					<div class="input-field col s12">
 						<c:forEach var="vaga" items="${evento.vagas}">
 							<div class="row">
@@ -146,37 +146,14 @@ body {
 							</div>
 						</c:forEach>
 					</div>
-				</c:if>
-
-				<!--Promotor -->
-
-				<c:if test="${evento.owner.email == user.email }">
-					<div class="input-field col s12">
-						<c:forEach var="vaga" items="${evento.vagas}">
-							<h6 style="font-weight: 700" class="text-darken-3">
-								${vaga.especialidade.nome } (${vaga.qtd_vagas})</h6>
-							<c:if test="${fn:length(vaga.candidato_vaga) == 0}">
-								<li class="grey-text ">Não tem candidatos</li>
-							</c:if>
-							<c:if test="${fn:length(vaga.candidato_vaga) > 0}">
-								<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
-									<li class="black-text ">${candidatovaga.candidato.email}</li>
-								</c:forEach>
-							</c:if>
-						</c:forEach>
-					</div>
-				</c:if>
+				
 				<!--Botões-->
 				<div class="input-field col s4">
 					<a href="${pageContext.request.contextPath }/eventos"
-						class="btn red">cancelar</a>
-					<c:if test="${evento.owner.email != user.email }">
-						<input type="submit" value="candidatar-se" class="btn blue">
-					</c:if>
-					<c:if test="${evento.owner.email == user.email }">
-						<input type="submit" disabled value="candidatar-se"
-							class="btn blue">
-					</c:if>
+						class="btn red">cancelar</a> 
+						<input type="submit"
+						value="candidatar-se" class="btn blue">
+
 				</div>
 			</fieldset>
 		</form>

@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import br.edu.ifpb.pweb2.model.Evento;
+import br.edu.ifpb.pweb2.model.User;
 import br.edu.ifpb.pweb2.model.Vaga;
 
 
@@ -44,6 +47,24 @@ public class VagaDAO {
 
 	public List<Vaga> findAll() {
 		return manager.createQuery("select v from Vaga v", Vaga.class).getResultList();
+	}
+	
+	public Evento findEventoByVaga(Long idvaga) {
+		Query query = manager.createQuery("select v.evento from Vaga v where v.id = :idvaga", Evento.class);
+		query.setParameter("idvaga", idvaga);
+		try {
+			Evento e = (Evento) query.getSingleResult();
+			return e;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	@Transactional
+	public Vaga delete(Long id) {
+		Vaga vaga = findById(id);
+		manager.remove(vaga);
+		System.out.println("testando vaga ="+vaga);
+		return vaga;
 	}
 
 }
