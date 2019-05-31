@@ -70,6 +70,9 @@ body {
 			</ul>
 		</div>
 	</nav>
+	
+	<span style="color: #08c117;">${message_success}</span>
+	<span style="color: #e82727;">${message_error}</span>
 
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
@@ -121,6 +124,59 @@ body {
 					</form:errors>
 					<label for="local">Local</label>
 				</div>
+
+				<!--Promotor -->
+				<div class="container">
+					<c:forEach var="vaga" items="${evento.vagas}">
+						<table class="striped" style="margin-top: 30px; border:1px solid;">
+							<tbody>
+								<tr>
+									<td >${vaga.especialidade.nome}</td>
+									<td>Vagas</td>
+									<td><input type="number" class="col s1"
+										name="quantidadevagas" value="${vaga.qtd_vagas}" />
+									</td>
+									<td>
+										<a href="#">
+											<i class="material-icons prefix green-text">check</i>
+										</a>
+									</td>
+									<td>
+										<a href="${pageContext.request.contextPath}/vagas/delete/${vaga.id }">
+											<i class="material-icons prefix red-text">delete_forever</i>
+										</a>
+									</td>
+								</tr>
+
+								<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
+									<tr>
+										<td>${candidatovaga.candidato.email}</td>
+										<td>deferido</td>
+										<td>indeferido</td>
+										<td></td>
+										<td></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:forEach>
+				</div>
+				<%--
+					<div class="input-field col s12">
+						<c:forEach var="vaga" items="${evento.vagas}">
+							<h6 style="font-weight: 700" class="text-darken-3">
+								${vaga.especialidade.nome } (${vaga.qtd_vagas})</h6>
+							<c:if test="${fn:length(vaga.candidato_vaga) == 0}">
+								<li class="grey-text ">Não tem candidatos</li>
+							</c:if>
+							<c:if test="${fn:length(vaga.candidato_vaga) > 0}">
+								<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
+									<li class="black-text ">${candidatovaga.candidato.email}</li>
+								</c:forEach>
+							</c:if>
+						</c:forEach>
+					</div>
+				--%>
 
 				<!--Botões-->
 				<div class="input-field col s12">

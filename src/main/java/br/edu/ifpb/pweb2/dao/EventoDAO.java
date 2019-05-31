@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import br.edu.ifpb.pweb2.model.Especialidade;
 import br.edu.ifpb.pweb2.model.Evento;
 
 @Repository
@@ -35,10 +36,12 @@ public class EventoDAO {
 
 	@Transactional
 	public Evento update(Long id, Evento evento) {
-		Evento removed = manager.find(Evento.class, id);
-		manager.remove(removed);
-		manager.merge(evento);
-		return evento;
+		Evento atualizado = manager.find(Evento.class, id);
+		atualizado.setDescricao(evento.getDescricao());
+		atualizado.setData(evento.getData());
+		atualizado.setLocal(evento.getLocal());
+		manager.merge(atualizado);
+		return atualizado;
 	}
 
 	public Evento findById(Long id) {

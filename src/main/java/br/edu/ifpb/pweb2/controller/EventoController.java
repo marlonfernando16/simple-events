@@ -59,7 +59,7 @@ public class EventoController {
 		return mav;
 	}
 
-	@RequestMapping(value="/add", method=RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView create(HttpSession session, @ModelAttribute("evento") Evento evento,
 			@RequestParam("especialidades") List<Long> especialidades,
 			@RequestParam("quantidadevagas") List<Integer> quantidadevagas, BindingResult bindingResult,
@@ -103,12 +103,18 @@ public class EventoController {
 
 	// Está sendo usada para ver os detalhes do evento.
 	@RequestMapping("/{eventoId}")
-	public ModelAndView read(@PathVariable Long eventoId, RedirectAttributes attr) {
+	public ModelAndView read(HttpSession session, @PathVariable Long eventoId, RedirectAttributes attr) {
 		Evento evento = eventodao.findById(eventoId);
+		User user = (User) session.getAttribute("user");
 		if (evento == null) {
 			attr.addFlashAttribute("message_error", "Evento não existe.");
 			return new ModelAndView("redirect:/eventos/");
-		} else {
+		}
+		if (user!=null && evento.getOwner().getId().equals(user.getId())) {
+			ModelAndView mv = new ModelAndView("evento-update");
+			mv.addObject("evento", evento);
+			return mv;
+		}else {
 			ModelAndView mav = new ModelAndView("evento-candidatura");
 			mav.addObject("evento", evento);
 			return mav;
@@ -119,7 +125,7 @@ public class EventoController {
 	public ModelAndView update(HttpSession session, @PathVariable Long eventoId, @Valid Evento evento,
 			BindingResult bindingResult, RedirectAttributes attr) {
 		if (bindingResult.hasErrors()) {
-			return new ModelAndView("evento-form");
+			return new ModelAndView("redirect:/eventos/" + evento.getId()).addObject("evento", evento);
 		} else {
 			User user = (User) session.getAttribute("user");
 			evento.setOwner(user);
