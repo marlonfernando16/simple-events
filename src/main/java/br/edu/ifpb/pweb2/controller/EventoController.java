@@ -112,9 +112,10 @@ public class EventoController {
 		}
 		if (user!=null && evento.getOwner().getId().equals(user.getId())) {
 			ModelAndView mv = new ModelAndView("evento-update");
-			List<Especialidade> especialidades = eventodao.findEspecialidadesWithoutEvento(eventoId);
+			List<Especialidade> especialidades = eventodao.findEspecialidadesByEvento(eventoId);
+			List<Especialidade> especialidadesFiltered = especialidadedao.findEspecialidadesFilter(especialidades);
 			mv.addObject("evento", evento);
-			mv.addObject("especialidades",especialidades);
+			mv.addObject("especialidades",especialidadesFiltered);
 			return mv;
 		}else {
 			ModelAndView mav = new ModelAndView("evento-candidatura");
@@ -145,7 +146,8 @@ public class EventoController {
 	}
 
 	@RequestMapping("delete/{eventoId}")
-	private ModelAndView deleteEvento(HttpSession session, @PathVariable Long eventoId, RedirectAttributes attr) {
+	private ModelAndView deleteEvento(HttpSession session, @PathVariable Long eventoId,
+			RedirectAttributes attr) {
 		Evento e = eventodao.findById(eventoId);
 		if (e != null) {
 			User user = (User) session.getAttribute("user");

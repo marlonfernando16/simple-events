@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -44,6 +45,17 @@ public class EspecialidadeDAO {
 
 	public List<Especialidade> findAll() {
 		return manager.createQuery("select e from Especialidade e", Especialidade.class).getResultList();
+	}
+	
+	public List<Especialidade> findEspecialidadesFilter(List<Especialidade> especialidades) {
+		Query query = manager.createQuery("select e from Especialidade e  WHERE e NOT IN :especialidades", Especialidade.class);
+		query.setParameter("especialidades", especialidades);
+		try {
+			List<Especialidade> especialidadesFiltered = (List<Especialidade>)query.getResultList();
+			return especialidadesFiltered;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

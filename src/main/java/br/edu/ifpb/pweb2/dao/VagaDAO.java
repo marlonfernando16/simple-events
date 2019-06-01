@@ -42,7 +42,7 @@ public class VagaDAO {
 	public Vaga update(Long id, Vaga v) {
 		Vaga removed = manager.find(Vaga.class, id);
 		manager.remove(removed);
-		manager.persist(v);
+		manager.merge(v);
 		return v;
 	}
 
