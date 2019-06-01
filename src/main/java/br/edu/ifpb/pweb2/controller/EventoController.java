@@ -112,7 +112,9 @@ public class EventoController {
 		}
 		if (user!=null && evento.getOwner().getId().equals(user.getId())) {
 			ModelAndView mv = new ModelAndView("evento-update");
+			List<Especialidade> especialidades = eventodao.findEspecialidadesWithoutEvento(eventoId);
 			mv.addObject("evento", evento);
+			mv.addObject("especialidades",especialidades);
 			return mv;
 		}else {
 			ModelAndView mav = new ModelAndView("evento-candidatura");
