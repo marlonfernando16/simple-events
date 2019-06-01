@@ -36,12 +36,11 @@ public class EventoDAO {
 		return manager.createQuery("select e from Evento e", Evento.class).getResultList();
 	}
 	
-	public List<Especialidade> findEspecialidadesWithoutEvento(Long idevento) {
+	public List<Especialidade> findEspecialidadesByEvento(Long idevento) {
 		Query query = manager.createQuery("select e from Especialidade e LEFT JOIN e.vagas v  LEFT JOIN v.evento ev  where ev.id = :idevento", Especialidade.class);
 		query.setParameter("idevento", idevento);
 		try {
 			List<Especialidade> especialidades = (List<Especialidade>)query.getResultList();
-			System.out.println("especialidades aew"+especialidades);
 			return especialidades;
 		} catch (Exception e) {
 			return null;
