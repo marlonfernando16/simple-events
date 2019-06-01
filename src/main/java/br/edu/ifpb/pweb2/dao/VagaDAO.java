@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import br.edu.ifpb.pweb2.model.Especialidade;
 import br.edu.ifpb.pweb2.model.Evento;
 import br.edu.ifpb.pweb2.model.User;
 import br.edu.ifpb.pweb2.model.Vaga;
@@ -59,6 +60,10 @@ public class VagaDAO {
 			return null;
 		}
 	}
+	
+
+	
+	
 	@Transactional
 	public Vaga delete(Long id) {
 		Vaga vaga = findById(id);

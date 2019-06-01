@@ -70,7 +70,7 @@ body {
 			</ul>
 		</div>
 	</nav>
-	
+
 	<span style="color: #08c117;">${message_success}</span>
 	<span style="color: #e82727;">${message_error}</span>
 
@@ -125,27 +125,38 @@ body {
 					<label for="local">Local</label>
 				</div>
 
+				<!-- Título Vagas -->
+				<div class="row" style="margin-left: 43%;">
+
+					<div class="col s2">
+						<h5 class="light">Vagas</h5>
+					</div>
+
+					<div class="col s2">
+						<a href="#" onclick="openModal()" class="modal-trigger"> <i
+							class="material-icons prefix green-text"
+							style="margin-top: 18px;">add</i>
+						</a>
+					</div>
+				</div>
 				<!--Promotor -->
 				<div class="container">
 					<c:forEach var="vaga" items="${evento.vagas}">
-						<table class="striped" style="margin-top: 30px; border:1px solid;">
+						<table class="striped"
+							style="margin-top: 30px; border: 1px solid;">
 							<tbody>
 								<tr>
-									<td >${vaga.especialidade.nome}</td>
+									<td>${vaga.especialidade.nome}</td>
 									<td>Vagas</td>
 									<td><input type="number" class="col s1"
-										name="quantidadevagas" value="${vaga.qtd_vagas}" />
-									</td>
-									<td>
-										<a href="#">
-											<i class="material-icons prefix green-text">check</i>
-										</a>
-									</td>
-									<td>
-										<a href="${pageContext.request.contextPath}/vagas/delete/${vaga.id }">
+										name="quantidadevagas" value="${vaga.qtd_vagas}" /></td>
+									<td><a href="#"> <i
+											class="material-icons prefix green-text">check</i>
+									</a></td>
+									<td><a
+										href="${pageContext.request.contextPath}/vagas/delete/${vaga.id }">
 											<i class="material-icons prefix red-text">delete_forever</i>
-										</a>
-									</td>
+									</a></td>
 								</tr>
 
 								<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
@@ -186,6 +197,59 @@ body {
 			</fieldset>
 		</form:form>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal" id="modal" style="width: 30%; height: 50%; margin-top: 5%;">
+		<div class="modal-header blue">
+			<div class="classemuda"
+				style="color: white; display: flex; flex-direction: row;">
+				<i class="material-icons prefix "
+					style="font-size: 30px; margin-bottom: 10px; margin-top: 10px; margin-left: 3px">
+					add_circle_outline</i>
+				<h5 style="margin-top: 12px; margin-left: 5px">Adicionar Vaga</h5>
+			</div>
+		</div>
+		<div class="modal-content">
+			<form action="#" method="post" class="col s12">
+				<div class="row">
+				
+					<!-- Campo especialidade -->
+					<div class="input-field col s5 m6">
+						<select>
+							<c:forEach var="especialidade" items="${especialidades}" >
+								<option value="especialidade.id">${especialidade.nome }</option>
+							</c:forEach>
+							
+						</select> 
+						<label>Vaga</label>
+					</div>
+	
+					<!--Campo Quantidade -->
+					<div class="input-field  col s2 m2">
+						 <input type="number" name="quantidadevagas" class="validate" id="title"
+							value="1" required>
+						 <label for="theme">Quantidade</label>
+					</div>
+
+				</div>
+		</div>
+		<div class="modal-footer" style="margin-top: 15%;">
+			<button type="submit" id="saveData"
+				class="btn blue modal-close modal-action">Ok</button>
+			<a class="btn red modal-close modal-action">Cancel</a>
+		</div>
+		</form>
+
+	</div>
+	<script type="text/javascript">
+		$('#modal').modal();
+		function openModal() {
+			$('#modal').modal('open');
+		}
+		$(document).ready(function(){
+		    $('select').formSelect();
+		  });
+	</script>
 
 </body>
 </html>
