@@ -45,6 +45,10 @@ body {
 	border-radius: 50%;
 	color: black;
 }
+
+.bold-text {
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -82,7 +86,31 @@ body {
 		<p>Ainda não há especialidades cadastradas.</p>
 	</c:if>
 
-	<c:forEach var="e" items="${especialidades}">
+	<div class="container" style="border: 1px solid; margin-top: 30px;">
+		<table class="striped centered">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Descrição</th>
+					<th>Atualizar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="e" items="${especialidades}">
+					<tr>
+						<td class="bold-text">${e.nome}</td>
+						<td class="bold-text">${e.descricao}</td>
+						<td><a
+							href="${pageContext.request.contextPath}/especialidades/read/${e.id}">
+								<i class="material-icons prefix blue-text">edit</i>
+						</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
+	<%--<c:forEach var="e" items="${especialidades}">
 		<div class="row">
 			<div class="col s12 m6">
 				<div class="card-panel white hoverable lighten-5 z-depth-1">
@@ -97,7 +125,7 @@ body {
 				</div>
 			</div>
 		</div>
-	</c:forEach>
+	</c:forEach> --%>
 
 </body>
 </html>
