@@ -26,11 +26,11 @@ public class JPAConfiguration {
 		//Heroku config
 		//Comentar essas linhas quando for usar localmente
 		//Descomentá-las quando for dar push para o github
-		 dataSource.setUsername(System.getenv("DATABASE_USER"));
-		 dataSource.setPassword(System.getenv("DATABASE_PASSWORD"));
-		 dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
-		 dataSource.setDriverClassName("org.postgresql.Driver");
-		 
+		dataSource.setUsername(System.getenv("DATABASE_USER"));
+		dataSource.setPassword(System.getenv("DATABASE_PASSWORD"));
+		dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
+		dataSource.setDriverClassName("org.postgresql.Driver");
+
 
 		//Local config
 		// Descomentar essas linhas quando for usar localmente
