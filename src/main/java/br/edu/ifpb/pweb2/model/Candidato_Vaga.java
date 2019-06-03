@@ -8,6 +8,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "tb_candidato_vaga")
 public class Candidato_Vaga {
@@ -64,6 +67,14 @@ public class Candidato_Vaga {
 	public String toString() {
 		return "Candidato_Vaga [id=" + id + ", vaga=" + vaga.getEspecialidade().getNome() + ", nota_desempenho="
 				+ nota_desempenho + ", state=" + state + ", candidato=" + candidato.getNome() + "]";
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

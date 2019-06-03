@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import br.edu.ifpb.pweb2.model.Candidato_Vaga;
+import br.edu.ifpb.pweb2.model.Evento;
 import br.edu.ifpb.pweb2.model.User;
 import br.edu.ifpb.pweb2.model.Vaga;
 
@@ -53,6 +54,13 @@ public class Candidato_VagaDAO {
 				Candidato_Vaga.class);
 		q.setParameter("user", user);
 		return q.getResultList();
+	}
+	
+	@Transactional
+	public Candidato_Vaga delete(Long id) {
+		Candidato_Vaga candidato = findById(id);
+		manager.remove(candidato);
+		return candidato;
 	}
 
 }

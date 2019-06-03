@@ -30,6 +30,7 @@ public class Vaga {
 	
 	private int qtd_vagas;
 	
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "vaga", cascade = CascadeType.ALL)
 	private List<Candidato_Vaga> candidato_vaga = new ArrayList<>();
 	
@@ -77,6 +78,11 @@ public class Vaga {
 	public void setCandidato_vaga(ArrayList<Candidato_Vaga> candidato_vaga) {
 		this.candidato_vaga = candidato_vaga;
 	}
+	
+	public void setCandidato(int i,Candidato_Vaga candidato) {
+		this.candidato_vaga.add(i,candidato);
+	}
+	
 
 	@Override
 	public String toString() {

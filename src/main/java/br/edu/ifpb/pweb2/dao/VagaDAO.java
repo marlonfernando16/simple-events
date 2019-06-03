@@ -41,7 +41,7 @@ public class VagaDAO {
 	@Transactional
 	public Vaga update(Long id, Vaga v) {
 		Vaga removed = manager.find(Vaga.class, id);
-		manager.remove(removed);
+//		manager.remove(removed);
 		manager.merge(v);
 		return v;
 	}
