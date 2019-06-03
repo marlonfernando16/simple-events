@@ -45,6 +45,11 @@ body {
 	border-radius: 50%;
 	color: black;
 }
+
+.modal {
+	width: 25% !important;
+	margin-top: 5%
+}
 </style>
 </head>
 <body>
@@ -70,9 +75,27 @@ body {
 			</ul>
 		</div>
 	</nav>
+	<!-- open modal success -->
+	<c:if test="${not empty message_success}">
+		<script>
+		//open modal sucess
+		$(document).ready(function(){
+			$('#modalsuccess').modal();
+			$('#modalsuccess').modal('open');
+		})
+ 	</script>
+	</c:if>
 
-	<span style="color: #08c117;">${message_success}</span>
-	<span style="color: #e82727;">${message_error}</span>
+	<!-- open modal error -->
+	<c:if test="${not empty message_error}">
+		<script>
+		//open modal sucess
+		$(document).ready(function(){
+			$('#modalerror').modal();
+			$('#modalerror').modal('open');
+		})
+ 	</script>
+	</c:if>
 
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
@@ -202,8 +225,7 @@ body {
 	</div>
 
 	<!-- Modal Add Vaga -->
-	<div class="modal" id="modal"
-		style="width: 30%; height: 50%; margin-top: 5%;">
+	<div class="modal" id="modal">
 		<div class="modal-header blue">
 			<div class="classemuda"
 				style="color: white; display: flex; flex-direction: row;">
@@ -234,7 +256,8 @@ body {
 						<!--Campo Quantidade -->
 						<div class="input-field  col s2 m2">
 							<input type="number" name="quantidadevagas" class="validate"
-								id="title" value="1" min="1" required> <label for="theme">Quantidade</label>
+								id="title" value="1" min="1" required> <label
+								for="theme">Quantidade</label>
 						</div>
 
 					</c:if>
@@ -253,8 +276,7 @@ body {
 	</div>
 
 	<!-- Modal update vaga -->
-	<div class="modal" id="modalupdate"
-		style="width: 30%; margin-top: 5%;">
+	<div class="modal" id="modalupdate">
 		<div class="modal-header blue">
 			<div class="classemuda"
 				style="color: white; display: flex; flex-direction: row;">
@@ -270,12 +292,13 @@ body {
 				<div class="row">
 					<!--Nome da vaga -->
 					<div class="col s5 ">
-						<h6 class="descricaovaga" style="font-weight:700; margin-top:15px;">nome da vaga :</h6>
+						<h6 class="descricaovaga"
+							style="font-weight: 700; margin-top: 15px;">nome da vaga :</h6>
 					</div>
-					
+
 					<!-- Id vaga -->
 					<input type="hidden" name="idvaga" class="inputIdVaga" value="">
-					
+
 					<!--Campo Quantidade -->
 					<div class=" col s2">
 						<input type="number" name="quantidadevaga" class="quantidadevaga"
@@ -290,11 +313,60 @@ body {
 		</form>
 	</div>
 
-	<script type="text/javascript">
+	<!-- Modal sucess -->
+	<div class="modal" id="modalsuccess">
+		<div class="modal-header green">
+			<div class="center white-text">
+				<i class="material-icons prefix center "
+					style="font-size: 50px; margin-bottom: 10px; margin-top: 10px; margin-left: 3px">
+					check_circle</i>
+				<h5 style="margin-top: 12px; margin-left: 5px"></h5>
+			</div>
+		</div>
+		<div class="modal-content">
+			<div class="center green-text">${message_success}</div>
+			<div class="modal-footer center">
+				<a class="btn green modal-close modal-action">Ok</a>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal error -->
+	<div class="modal" id="modalerror">
+		<div class="modal-header red">
+			<div class="center white-text">
+				<i class="material-icons prefix center "
+					style="font-size: 50px; margin-bottom: 10px; margin-top: 10px; margin-left: 3px">
+					error_outline</i>
+				<h5 style="margin-top: 12px; margin-left: 5px"></h5>
+			</div>
+		</div>
+		<div class="modal-content">
+			<div class="center red-text">${message_error}</div>
+			<div class="modal-footer center">
+				<a class="btn red modal-close modal-action">Close</a>
+			</div>
+		</div>
+	</div>
+
+
+		<script type="text/javascript">
+		//modal add vaga
 		$('#modal').modal();
 		function openModal() {
 			$('#modal').modal('open');
 		}
+		//modal sucess
+		$('#modalsuccess').modal();
+		function openModalSuccess() {
+			$('#modalsuccess').modal('open');
+		}
+		//modal error
+		$('#modalerror').modal();
+		function openModalError() {
+			$('#modalerror').modal('open');
+		}
+		//modal update vaga
 		$('#modalupdate').modal();
 		function openModalUpdate(nomevaga, idvaga, qtdvagas) {
 			$('#modalupdate').modal('open');
@@ -309,6 +381,5 @@ body {
 			$('select').formSelect();
 		});
 	</script>
-
 </body>
 </html>
