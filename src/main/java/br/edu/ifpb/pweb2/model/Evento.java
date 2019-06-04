@@ -40,9 +40,19 @@ public class Evento {
 
 	@ManyToOne
 	private User owner;
+	
+	boolean finalizado;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "evento", cascade = CascadeType.REMOVE, orphanRemoval=true)
 	private List<Vaga> vagas = new ArrayList<>();
+
+	public boolean isFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
+	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "evento", cascade = CascadeType.ALL)
 	private List<Avaliacao_Evento> avaliacao_eventos = new ArrayList<>();

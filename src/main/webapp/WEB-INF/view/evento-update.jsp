@@ -77,11 +77,11 @@ body {
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
-		<form:form
-			action="${pageContext.request.contextPath }/eventos/update/${evento.id}"
-			method="post" class="col s12 white " id="form"
-			modelAttribute="evento">
-			<fieldset class="formulario">
+		<fieldset class="formulario">
+			<form:form
+				action="${pageContext.request.contextPath }/eventos/update/${evento.id}"
+				method="post" class="col s12 white " id="form2"
+				modelAttribute="evento">
 				<legend>
 					<i class="material-icons prefix " style="font-size: 70px">event_available</i>
 				</legend>
@@ -125,7 +125,13 @@ body {
 					</form:errors>
 					<label for="local">Local</label>
 				</div>
-
+				<div class="center">
+					<input type="submit" value="Atualizar" class="btn blue">
+				</div>
+			</form:form>
+			<form:form
+				action="${pageContext.request.contextPath }/eventos/finalizar/${evento.id}"
+				method="post" class="col s12 white " id="form">
 				<!-- Título Vagas -->
 				<div class="row" style="margin-left: 43%;">
 					<div class="col s2">
@@ -201,12 +207,13 @@ body {
 
 				<!--Botões-->
 				<div class="input-field col s12">
-					<input type="submit" value="atualizar" class="btn blue"> <a
+					<input type="submit" value="Finalizar" class="btn blue"> <a
 						href="${pageContext.request.contextPath }/eventos" class="btn red">cancelar</a>
 				</div>
-			</fieldset>
-		</form:form>
+			</form:form>
+		</fieldset>
 	</div>
+
 
 	<!-- Modal Add Vaga -->
 	<div class="modal" id="modal"
@@ -317,6 +324,8 @@ body {
 			$('select').formSelect();
 		});
 		
+		
+		
 		//gerar os inputs para cada candidato para resgatar no controller
 	    $("#form").submit( function(eventObj) {	
 	    	$('.defere:checked').each(function() {
@@ -326,7 +335,11 @@ body {
 	            .attr('value', $(this).val())
 	            .appendTo('#form');
 			});	  	
-	  });
+	    	
+	    	
+			
+	    
+	    });
 	</script>
 
 </body>

@@ -123,56 +123,65 @@ public class EventoController {
 			return mav;
 		}
 	}
-
-	@RequestMapping("update/{eventoId}")
-	public ModelAndView update(HttpSession session, @PathVariable Long eventoId, @Valid Evento evento,
+	
+	@RequestMapping("finalizar/{eventoId}")
+	public ModelAndView finalizar(HttpSession session, @PathVariable Long eventoId,
 			@RequestParam("deferimentos_vagas")List<Long> candidatos_ids,
 			@RequestParam(name="deferejs",required=false)List<String> deferimentos_values,
+			RedirectAttributes attr) {
+			System.out.println(candidatos_ids);
+			System.out.println(deferimentos_values);
+		    if(deferimentos_values == null || candidatos_ids.size() != deferimentos_values.size()) {
+					attr.addFlashAttribute("message_error", "Defira todas as vagas.");
+					return new ModelAndView("redirect:/eventos/{eventoId}");
+				}
+		    ArrayList<Candidato_Vaga> candidatos_avaliados_memoria = new ArrayList<Candidato_Vaga>();
+			int id = 0;
+			for(Long id_candidato:candidatos_ids) {
+				Candidato_Vaga candidato = candidatovagadao.findById(id_candidato);  
+				String state =  deferimentos_values.get(id);
+				if(state.equals("DEFERIDO")) {
+					candidato.setState(State.APROVADO);
+				}   
+				if(state.equals("NAO_DEFERIDO")) {			   
+					candidato.setState(State.NAO_APROVADO);
+				}  
+
+				id++;
+				candidatos_avaliados_memoria.add(candidato);
+			}
+
+			Evento ev = eventodao.findById(eventoId);
+			for(Vaga vaga_banco: ev.getVagas()) {
+				for(Candidato_Vaga cand_memoria:candidatos_avaliados_memoria) {
+					boolean flag = vaga_banco.getId().equals(cand_memoria.getVaga().getId());
+					if(flag) {
+						for(Candidato_Vaga cand_vaga_banco:vaga_banco.getCandidato_vaga()) {
+							if(cand_vaga_banco.getId().equals(cand_memoria.getId())){
+								Integer index_candidato_banco = vaga_banco.getCandidato_vaga().indexOf(cand_vaga_banco);
+								vaga_banco.getCandidato_vaga().set(index_candidato_banco,cand_memoria);
+								long index_candidato_memoria_long = index_candidato_banco.longValue();
+								vagadao.update(index_candidato_memoria_long,vaga_banco);
+							}
+						}
+					}
+				}
+			}
+			
+			
+			attr.addFlashAttribute("message_error", "Evento finalizado com sucesso.");
+			return new ModelAndView("redirect:/eventos/{eventoId}");
+	}
+	@RequestMapping("update/{eventoId}")
+	public ModelAndView update(HttpSession session, @PathVariable Long eventoId, @Valid Evento evento,
 			BindingResult bindingResult, RedirectAttributes attr) {
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			return new ModelAndView("redirect:/eventos/" + evento.getId()).addObject("evento", evento);
 		} else {
 			User user = (User) session.getAttribute("user");
 			evento.setOwner(user);
 			Evento e = eventodao.update(eventoId, evento);
 			if (e != null) {
-				if(deferimentos_values == null || candidatos_ids.size() != deferimentos_values.size()) {
-					attr.addFlashAttribute("message_error", "Defira todas as vagas.");
-					attr.addFlashAttribute("evento", e);
-					return new ModelAndView("redirect:/eventos/");
-				}
-				ArrayList<Candidato_Vaga> candidatos_avaliados_memoria = new ArrayList<Candidato_Vaga>();
-				int id = 0;
-				for(Long id_candidato:candidatos_ids) {
-					Candidato_Vaga candidato = candidatovagadao.findById(id_candidato);  
-					String state =  deferimentos_values.get(id);
-					if(state.equals("DEFERIDO")) {
-						candidato.setState(State.APROVADO);
-					}   
-					if(state.equals("NAO_DEFERIDO")) {			   
-						candidato.setState(State.NAO_APROVADO);
-					}  
-
-					id++;
-					candidatos_avaliados_memoria.add(candidato);
-				}
-
-				Evento ev = eventodao.findById(eventoId);
-				for(Vaga vaga_banco: ev.getVagas()) {
-					for(Candidato_Vaga cand_memoria:candidatos_avaliados_memoria) {
-						boolean flag = vaga_banco.getId().equals(cand_memoria.getVaga().getId());
-						if(flag) {
-							for(Candidato_Vaga cand_vaga_banco:vaga_banco.getCandidato_vaga()) {
-								if(cand_vaga_banco.getId().equals(cand_memoria.getId())){
-									Integer index_candidato_banco = vaga_banco.getCandidato_vaga().indexOf(cand_vaga_banco);
-									vaga_banco.getCandidato_vaga().set(index_candidato_banco,cand_memoria);
-									long index_candidato_memoria_long = index_candidato_banco.longValue();
-									vagadao.update(index_candidato_memoria_long,vaga_banco);
-								}
-							}
-						}
-					}
-				}
 				attr.addFlashAttribute("message_success", "Evento atualizado!");
 				attr.addFlashAttribute("evento", e);
 				return new ModelAndView("redirect:/eventos/");
@@ -183,7 +192,6 @@ public class EventoController {
 			}
 		}
 	}
-
 	@RequestMapping("delete/{eventoId}")
 	private ModelAndView deleteEvento(HttpSession session, @PathVariable Long eventoId,
 			RedirectAttributes attr) {
