@@ -124,6 +124,12 @@ public class EventoController {
 		}
 	}
 	
+	@RequestMapping("finalizado")
+	public ModelAndView evento_finalizado(RedirectAttributes attr) {
+		attr.addFlashAttribute("message_success", "Evento finalizado com sucesso.");
+		return new ModelAndView("evento-finalizado");
+	}
+	
 	@RequestMapping("finalizar/{eventoId}")
 	public ModelAndView finalizar(HttpSession session, @PathVariable Long eventoId,
 			@RequestParam("deferimentos_vagas")List<Long> candidatos_ids,
@@ -168,9 +174,7 @@ public class EventoController {
 				}
 			}
 			
-			
-			attr.addFlashAttribute("message_error", "Evento finalizado com sucesso.");
-			return new ModelAndView("redirect:/eventos/{eventoId}");
+			return new ModelAndView("redirect:/eventos/finalizado");
 	}
 	@RequestMapping("update/{eventoId}")
 	public ModelAndView update(HttpSession session, @PathVariable Long eventoId, @Valid Evento evento,

@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	  pop up : evento finalizado com sucesso
+	  <br>
 	  dados do evento finalizado
 </body>
 </html>
