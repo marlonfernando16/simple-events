@@ -109,6 +109,9 @@ public class EventoController {
 		if (evento == null) {
 			attr.addFlashAttribute("message_error", "Evento não existe.");
 			return new ModelAndView("redirect:/eventos/");
+		} 
+		if(evento.isFinalizado()) {
+			return new ModelAndView("redirect:/eventos/finalizado");
 		}
 		if (user!=null && evento.getOwner().getId().equals(user.getId())) {
 			ModelAndView mv = new ModelAndView("evento-update");
@@ -173,7 +176,8 @@ public class EventoController {
 					}
 				}
 			}
-			
+		    ev.setFinalizado(true);
+		    eventodao.update(eventoId, ev);
 			return new ModelAndView("redirect:/eventos/finalizado");
 	}
 	@RequestMapping("update/{eventoId}")
@@ -188,7 +192,7 @@ public class EventoController {
 			if (e != null) {
 				attr.addFlashAttribute("message_success", "Evento atualizado!");
 				attr.addFlashAttribute("evento", e);
-				return new ModelAndView("redirect:/eventos/");
+				return new ModelAndView("redirect:/eventos/{eventoId}") ;
 			} else {
 				attr.addFlashAttribute("message_error", "Evento nao pode ser atualizado.");
 				attr.addFlashAttribute("evento", e);

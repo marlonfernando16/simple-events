@@ -55,6 +55,10 @@ body {
 .gambiarra {
 	width: 25% !important;
 }
+.modal {
+	width: 25% !important;
+	margin-top: 5%
+}
 </style>
 <body>
 	<!--menu-->
@@ -92,10 +96,26 @@ body {
 			</ul>
 		</div>
 	</nav>
-
-	<span style="color: #08c117;">${message_success}</span>
-	<span style="color: #e82727;">${message_error}</span>
-
+	<!-- open modal success -->
+	<c:if test="${not empty message_success}">
+		<script>
+			//open modal sucess
+    			$(document).ready(function() { 
+    				$('#modalsuccess').modal();
+    				$('#modalsuccess').modal('open');
+    			});
+		</script>
+	</c:if>
+	<!-- open modal error -->
+	<c:if test="${not empty message_error}">
+		<script>
+			$(document).ready(function() { 
+				$('#modalerror').modal();
+				$('#modalerror').modal('open');
+			});
+		</script>
+	</c:if>
+	
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
@@ -158,13 +178,49 @@ body {
 			</fieldset>
 		</form>
 	</div>
+	
+	<!-- Modal sucess -->
+	<div class="modal" id="modalsuccess">
+		<div class="modal-header green">
+			<div class="center white-text">
+				<i class="material-icons prefix center "
+					style="font-size: 50px; margin-bottom: 10px; margin-top: 10px; margin-left: 3px">
+					check_circle</i>
+				<h5 style="margin-top: 12px; margin-left: 5px"></h5>
+			</div>
+		</div>
+		<div class="modal-content">
+			<div class="center green-text">${message_success}</div>
+			<div class="modal-footer center">
+				<a class="btn green modal-close modal-action">Ok</a>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- Modal error -->
+	<div class="modal" id="modalerror">
+		<div class="modal-header red">
+			<div class="center white-text">
+				<i class="material-icons prefix center "
+					style="font-size: 50px; margin-bottom: 10px; margin-top: 10px; margin-left: 3px">
+					error_outline</i>
+				<h5 style="margin-top: 12px; margin-left: 5px"></h5>
+			</div>
+		</div>
+		<div class="modal-content">
+			<div class="center red-text">${message_error}</div>
+			<div class="modal-footer center">
+				<a class="btn red modal-close modal-action">Close</a>
+			</div>
+		</div>
+	</div>
 
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.modal').modal();
-			$('.dropdown-trigger').dropdown();
-		});
+		$('.modal').modal();
+		$('.dropdown-trigger').dropdown();
+	
 	</script>
 
 </body>

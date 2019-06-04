@@ -53,6 +53,7 @@ public class EventoDAO {
 		atualizado.setDescricao(evento.getDescricao());
 		atualizado.setData(evento.getData());
 		atualizado.setLocal(evento.getLocal());
+		atualizado.setFinalizado(evento.isFinalizado());
 		manager.merge(atualizado);
 		return atualizado;
 	}
