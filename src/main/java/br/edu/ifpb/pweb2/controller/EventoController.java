@@ -111,7 +111,7 @@ public class EventoController {
 			return new ModelAndView("redirect:/eventos/");
 		} 
 		if(evento.isFinalizado()) {
-			return new ModelAndView("redirect:/eventos/finalizado");
+			return new ModelAndView("redirect:/eventos/finalizado/"+evento.getId());
 		}
 		if (user!=null && evento.getOwner().getId().equals(user.getId())) {
 			ModelAndView mv = new ModelAndView("evento-update");
@@ -127,10 +127,12 @@ public class EventoController {
 		}
 	}
 	
-	@RequestMapping("finalizado")
-	public ModelAndView evento_finalizado(RedirectAttributes attr) {
+	@RequestMapping("finalizado/{eventoId}")
+	public ModelAndView evento_finalizado(RedirectAttributes attr,@PathVariable Long eventoId ) {
+		Evento evento = eventodao.findById(eventoId);
+		System.out.println("evento = "+evento);
 		attr.addFlashAttribute("message_success", "Evento finalizado com sucesso.");
-		return new ModelAndView("evento-finalizado");
+		return new ModelAndView("evento-finalizado").addObject("evento", evento);
 	}
 	
 	@RequestMapping("finalizar/{eventoId}")
@@ -178,7 +180,7 @@ public class EventoController {
 			}
 		    ev.setFinalizado(true);
 		    eventodao.update(eventoId, ev);
-			return new ModelAndView("redirect:/eventos/finalizado");
+			return new ModelAndView("redirect:/eventos/finalizado/"+ev.getId());
 	}
 	@RequestMapping("update/{eventoId}")
 	public ModelAndView update(HttpSession session, @PathVariable Long eventoId, @Valid Evento evento,
