@@ -61,34 +61,37 @@ public class EventoController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView create(HttpSession session, @ModelAttribute("evento") Evento evento,
-			@RequestParam("especialidades") List<Long> especialidades,
-			@RequestParam("quantidadevagas") List<Integer> quantidadevagas, BindingResult bindingResult,
+			@RequestParam(value="especialidades", required=false) List<Long> especialidades,
+			@RequestParam(value="quantidadevagas", required=false) List<Integer> quantidadevagas, BindingResult bindingResult,
 			RedirectAttributes attr, Model model) {
 		if (bindingResult.hasErrors())
 			return new ModelAndView("evento-form");
-		if (especialidades == null)
-			return new ModelAndView("evento-form");
-		else {
-			User user = (User) session.getAttribute("user");
-			evento.setOwner(user);
-			eventodao.gravar(evento);
-			Especialidade especialidade;
-			int i = 0;
-			for (long id : especialidades) {
-				especialidade = especialidadedao.findById(id);
-				Vaga vaga = new Vaga();
-				vaga.setEspecialidade(especialidade);
-				vaga.setQtd_vagas(quantidadevagas.get(i));
-				vaga.setEvento(evento);
-				vagadao.gravar(vaga);
-				evento.add(vaga);
-				i++;
-			}
-			eventodao.update(evento.getId(), evento);
-			attr.addFlashAttribute("message_success", "Evento cadastrado com sucesso!");
-			ModelAndView mv = new ModelAndView("redirect:/eventos/");
-			return mv;
+		if (especialidades == null) {
+			attr.addFlashAttribute("message_error", "Escolha pelo menos uma vaga!");
+			ModelAndView mav = new ModelAndView("redirect:/eventos/form");
+			return mav;
 		}
+		
+		User user = (User) session.getAttribute("user");
+		evento.setOwner(user);
+		eventodao.gravar(evento);
+		Especialidade especialidade;
+		int i = 0;
+		for (long id : especialidades) {
+			especialidade = especialidadedao.findById(id);
+			Vaga vaga = new Vaga();
+			vaga.setEspecialidade(especialidade);
+			vaga.setQtd_vagas(quantidadevagas.get(i));
+			vaga.setEvento(evento);
+			vagadao.gravar(vaga);
+			evento.add(vaga);
+			i++;
+		}
+		eventodao.update(evento.getId(), evento);
+		attr.addFlashAttribute("message_success", "Evento cadastrado com sucesso!");
+		ModelAndView mv = new ModelAndView("redirect:/eventos/");
+		return mv;
+		
 	}
 
 	// Está sendo usada para trazer a página de update do evento.
