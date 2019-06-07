@@ -40,7 +40,6 @@ public class Candidato_VagaDAO {
 	@Transactional
 	public Candidato_Vaga update(Long id, Candidato_Vaga cv) {
 		Vaga removed = manager.find(Vaga.class, id);
-		manager.remove(removed);
 		manager.merge(cv);
 		return cv;
 	}
