@@ -204,8 +204,10 @@ body {
 										</label></td>
 										<td></td>
 									</tr>
+									<%--
 									<input type="hidden" name="deferimentos_vagas"
 										value="${candidatovaga.id}">
+								    --%>
 								</c:forEach>
 							</c:forEach>
 						</tbody>
@@ -405,6 +407,11 @@ body {
 	    		$('<input />').attr('type', 'hidden')
 	            .attr('name', "deferejs")
 	            .attr('value', $(this).val())
+	            .appendTo('#form');
+	    		
+	    		$('<input />').attr('type', 'hidden')
+	            .attr('name', "deferimentos_vagas")
+	            .attr('value', $(this).attr('name'))
 	            .appendTo('#form');
 			});	  	
 	    	
