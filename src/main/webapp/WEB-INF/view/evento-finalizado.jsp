@@ -160,9 +160,11 @@ body {
 					<div class="collapsible-header" style="font-weight: 700">
 						${vaga.especialidade.nome}</div>
 					<div class="collapsible-body">
-						<c:if test="${not empty vaga.candidato_vaga}">
-							<span>
-								<table>
+						<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
+							<c:if
+								test="${not empty vaga.candidato_vaga && candidatovaga.state != 'NAO_AVALIADO'}">
+								<span>
+									<table>
 										<thead>
 											<th>candidato</th>
 											<th>situação</th>
@@ -171,35 +173,33 @@ body {
 												<th>avaliar desempenho</th>
 											</c:if>
 										</thead>
-									<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
+
 										<tbody>
 											<tr>
-												<c:if test="${candidatovaga.state != 'NAO_AVALIADO' }">
-													<td>${candidatovaga.candidato.email}</td>
-													<c:if test="${candidatovaga.state == 'APROVADO' }">
-														<td class="green-text">DEFERIDO</td>
-													</c:if>
-													<c:if test="${candidatovaga.state == 'NAO_APROVADO' }">
-														<td class="red-text">INDEFERIDO</td>
-													</c:if>
+												<td>${candidatovaga.candidato.email}</td>
+												<c:if test="${candidatovaga.state == 'APROVADO' }">
+													<td class="green-text">DEFERIDO</td>
+												</c:if>
+												<c:if test="${candidatovaga.state == 'NAO_APROVADO' }">
+													<td class="red-text">INDEFERIDO</td>
+												</c:if>
 
-													<td>${candidatovaga.nota_desempenho}</td>
-													<c:if test="${evento.owner.id == user.id }">
-														<td><a href="#"> <i
-																class="material-icons prefix blue-text">note_add</i>
-														</a></td>
-													</c:if>
+												<td>${candidatovaga.nota_desempenho}</td>
+												<c:if test="${evento.owner.id == user.id }">
+													<td><a href="#"> <i
+															class="material-icons prefix blue-text">note_add</i>
+													</a></td>
 												</c:if>
 											</tr>
-									</c:forEach>
-
-									</tbody>
-								</table>
-							</span>
-						</c:if>
-						<c:if test="${empty vaga.candidato_vaga}">
-							<p class="red-text">não teve inscritos para esta vaga</p>
-						</c:if>
+										</tbody>
+									</table>
+								</span>
+							</c:if>
+							<c:if
+								test="${empty vaga.candidato_vaga || candidatovaga.state == 'NAO_AVALIADO'}">
+								<p class="red-text">não teve inscritos para esta vaga</p>
+							</c:if>
+						</c:forEach>
 					</div>
 				</li>
 			</c:forEach>

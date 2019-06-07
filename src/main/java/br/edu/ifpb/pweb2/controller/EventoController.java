@@ -130,7 +130,6 @@ public class EventoController {
 	@RequestMapping("finalizado/{eventoId}")
 	public ModelAndView evento_finalizado(RedirectAttributes attr,@PathVariable Long eventoId ) {
 		Evento evento = eventodao.findById(eventoId);
-		System.out.println("evento = "+evento);
 		attr.addFlashAttribute("message_success", "Evento finalizado com sucesso.");
 		return new ModelAndView("evento-finalizado").addObject("evento", evento);
 	}
@@ -209,8 +208,6 @@ public class EventoController {
 			@RequestParam(name = "deferimentos_vagas",required=false)List<Long> candidatos_ids,
 			@RequestParam(name="deferejs",required=false)List<String> deferimentos_values,
 			RedirectAttributes attr) {
-		System.out.println("candidatos ids:"+candidatos_ids);
-		System.out.println("deferimentos: "+deferimentos_values);
 		ArrayList<Candidato_Vaga> candidatos_avaliados_memoria = new ArrayList<Candidato_Vaga>();
 		List<Candidato_Vaga> candidatos_distinct = new ArrayList<Candidato_Vaga>();
 		if(deferimentos_values == null || candidatos_ids == null) {
@@ -239,12 +236,12 @@ public class EventoController {
 			id++;
 			candidatos_avaliados_memoria.add(candidato);
 			if(count_aprovados_duplicados > 0) {
-				attr.addFlashAttribute("message_error", "Candidato só pode ser deferido em uma unica vaga.");
+				attr.addFlashAttribute("message_error", "Candidato sï¿½ pode ser deferido em uma unica vaga.");
 				return new ModelAndView("redirect:/eventos/{eventoId}");
 			}
 
 		}		
-		System.out.println("candidatos unicos: "+candidatos_unicos);
+		
 		Evento ev = eventodao.findById(eventoId);
 		for(Vaga vaga_banco: ev.getVagas()) {
 			for(Candidato_Vaga cand_memoria:candidatos_avaliados_memoria) {
