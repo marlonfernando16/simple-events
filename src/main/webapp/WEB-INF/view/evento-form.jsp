@@ -73,6 +73,16 @@ body {
 		</div>
 	</nav>
 
+	<!-- open modal error -->
+	<c:if test="${not empty message_error}">
+		<script>
+			$(document).ready(function() { 
+				$('#modalerror').modal();
+				$('#modalerror').modal('open');
+			});
+		</script>
+	</c:if>
+
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
@@ -127,16 +137,56 @@ body {
 						</div>
 					</c:forEach>
 				</div>
+				
+				<div class="hide" id="msg_erro_vagas">
+					<span class="red-text">Escolha pelo menos uma vaga!</span>
+				</div>
 
 				<!--Botões-->
 				<div class="input-field col s4">
 					<a href="${pageContext.request.contextPath }/eventos"
 						class="btn red">cancelar</a> <input type="submit"
-						value="cadastrar" class="btn blue">
+						value="cadastrar" class="btn blue" id="botaoCadastrar">
 				</div>
 			</fieldset>
 		</form:form>
 	</div>
+	
+	<!-- Modal error -->
+	<div class="modal" id="modalerror">
+		<div class="modal-header red">
+			<div class="center white-text">
+				<i class="material-icons prefix center "
+					style="font-size: 50px; margin-bottom: 10px; margin-top: 10px; margin-left: 3px">
+					error_outline</i>
+				<h5 style="margin-top: 12px; margin-left: 5px"></h5>
+			</div>
+		</div>
+		<div class="modal-content">
+			<div class="center red-text">${message_error}</div>
+			<div class="modal-footer center">
+				<a class="btn red modal-close modal-action">Close</a>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		$('.modal').modal();
+		$('.dropdown-trigger').dropdown();
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function () {
+    		$('#botaoCadastrar').click(function() {
+      			checked = $("input[type=checkbox]:checked").length;
+		      if(!checked) {
+		      	$('#msg_erro_vagas').removeClass('hide');
+      		  }
+    		});
+		});
+	</script>
+	
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$(document).ready(function(){
@@ -152,13 +202,10 @@ body {
 				if(this.checked) {
 					console.log(indice)
 			        quantidadevagas[indice].disabled = false
-			        
 			    }else {
 			    	quantidadevagas[indice].disabled = true
 			    }
 			})
-		
-		
 	})
 	</script>
 
