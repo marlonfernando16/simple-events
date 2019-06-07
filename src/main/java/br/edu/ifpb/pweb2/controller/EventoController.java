@@ -270,5 +270,24 @@ public class EventoController {
 			return mv;
 		}
 	}
+	
+	@RequestMapping("/avaliar/desempenho")
+	public ModelAndView avaliarDesempenho(HttpSession session,
+			@RequestParam("idcandidatovaga") Long idcandidatovaga,
+			@RequestParam("star") Integer nota,
+			RedirectAttributes attr) {
+		User user = (User) session.getAttribute("user");
+		if (user == null)
+			return new ModelAndView("redirect:/eventos/");
+		Candidato_Vaga cv = candidatovagadao.findById(idcandidatovaga);
+		Evento evento = cv.getVaga().getEvento();
+		System.out.println("evento"+evento);
+		if(cv.getNota_desempenho()>0) {
+			return new ModelAndView("evento-finalizado").addObject("evento", evento).addObject("message_error", "Esse  candidato ja foi avaliado!");
+		}
+		cv.setNota_desempenho(nota);
+		candidatovagadao.update(cv.getId(), cv);
+		return new ModelAndView("evento-finalizado").addObject("evento", evento).addObject("message_success", "Candidato avaliado com sucesso!");
+	}
 
 }
