@@ -60,7 +60,6 @@ public class UserDAO {
 		atualizado.setTelefone(user.getTelefone());
 		atualizado.setDatanascimento(user.getDatanascimento());
 		atualizado.setEmail(user.getEmail());
-		atualizado.setSenha(user.getSenha());
 		manager.merge(atualizado);
 		return atualizado;
 	}
