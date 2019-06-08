@@ -26,19 +26,19 @@ public class JPAConfiguration {
 		//Heroku config
 		//Comentar essas linhas quando for usar localmente
 		//Descomentá-las quando for dar push para o github
-		dataSource.setUsername(System.getenv("DATABASE_USER"));
-		dataSource.setPassword(System.getenv("DATABASE_PASSWORD"));
-		dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
-		dataSource.setDriverClassName("org.postgresql.Driver");
+//		dataSource.setUsername(System.getenv("DATABASE_USER"));
+//		dataSource.setPassword(System.getenv("DATABASE_PASSWORD"));
+//		dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
+//		dataSource.setDriverClassName("org.postgresql.Driver");
 
 
 		//Local config
 		// Descomentar essas linhas quando for usar localmente
 		//Comentá-las quando for dar push para o github
-//		dataSource.setUsername("postgres");
-//		dataSource.setPassword("");
-//		dataSource.setUrl("jdbc:postgresql://localhost/simple-events");
-//		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUsername("postgres");
+		dataSource.setPassword("123");
+		dataSource.setUrl("jdbc:postgresql://localhost/simple-events");
+		dataSource.setDriverClassName("org.postgresql.Driver");
 		
 		factoryBean.setDataSource(dataSource);
 		
