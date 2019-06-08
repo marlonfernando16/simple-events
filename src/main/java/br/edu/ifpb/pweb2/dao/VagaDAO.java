@@ -1,11 +1,13 @@
 package br.edu.ifpb.pweb2.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Repository;
 
@@ -61,15 +63,18 @@ public class VagaDAO {
 		}
 	}
 	
-
-	
-	
 	@Transactional
 	public Vaga delete(Long id) {
 		Vaga vaga = findById(id);
 		manager.remove(vaga);
 		System.out.println("testando vaga ="+vaga);
 		return vaga;
+	}
+
+	public ArrayList<Vaga> findByEspecialidade(Long especialidadeId) {
+		Query q = manager.createQuery("select v from Vaga v where v.especialidade.id = :especialidadeId", Vaga.class);
+		q.setParameter("especialidadeId", especialidadeId);
+		return (ArrayList<Vaga>) q.getResultList();
 	}
 
 }
