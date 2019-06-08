@@ -131,36 +131,6 @@ body {
 	color: #fff;
 }
 
-.filter-container ul {
-	padding: 1rem 2rem;
-}
-
-.filter-container ul li {
-	display: block;
-	padding: 16px 0 0;
-}
-
-.search-title-filter {
-	background-color: #3299BB;
-	color: #fff;
-}
-
-nav {
-	background-color: #40a8a7;
-	border-color: #E7E7E7;
-}
-
-nav ul>li>a, nav .brand-logo {
-	color: #fff;
-}
-
-nav .brand-logo {
-	font-size: 1.4em !important;
-}
-
-#container {
-	padding: 20px 10px;
-}
 </style>
 <body>
 	<!--menu-->
@@ -241,10 +211,10 @@ nav .brand-logo {
 								target="_blank"><i class="small material-icons">room</i>${evento.local}</a>
 							<%-- <time>17th March</time> --%>
 						</div>
-						<span class="card-title grey-text text-darken-4">${evento.descricao}</span>
-						<p class="card-subtitle grey-text text-darken-2">
-							Criado por: ${evento.owner.email}&#10; - ${evento.finalizado}
-						</p>
+						<span class="card-title grey-text text-darken-4 descricao">${evento.descricao}</span>
+						<span class="card-subtitle grey-text text-darken-2">Criado por:
+							${evento.owner.email} - </span>
+						<span class="card-subtitle text-darken-2 finalizado">${evento.finalizado}</span>
 						<span class="text-darken-2 card-info"><i
 							class="small material-icons">label</i> <c:forEach var="vaga"
 								items="${evento.vagas}">
@@ -253,7 +223,7 @@ nav .brand-logo {
 					</div>
 					<div class="card-action">
 						<a href="${pageContext.request.contextPath}/eventos/${evento.id}"><i
-							class="material-icons">&nbsp;language</i>VISIT EVENT</a>
+							class="material-icons">&nbsp;language</i>VISITAR EVENTO</a>
 					</div>
 				</div>
 				<!-- End of card -->
@@ -316,17 +286,28 @@ nav .brand-logo {
 			$('#modalerror').modal('open');
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 	$(document).ready(function(){
-		let meses = document.querySelectorAll('.card__date__month');
-		console.log(meses)
+		let meses = document.querySelectorAll('.card__date__month')
 		meses.forEach(elemento => {
 			let array_meses = [
 				'JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN',
 				'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'
 			]
 			elemento.textContent = array_meses[elemento.textContent]
+		});
+		
+		let estados = document.querySelectorAll('.finalizado')
+		estados.forEach(elemento => {
+			console.log(elemento.textContent)
+			if (elemento.textContent == 'true') {
+				elemento.textContent = "Inscrições encerradas."
+				elemento.classList.add("red-text")
+			} else {
+				elemento.textContent = "Inscrições abertas."
+				elemento.classList.add("green-text")
+			}
 		});
 	});
 	</script>
