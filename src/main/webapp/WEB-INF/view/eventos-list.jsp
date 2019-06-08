@@ -221,9 +221,13 @@ body {
 							${vaga.especialidade.nome},&nbsp;
 						</c:forEach> </span>
 					</div>
-					<div class="card-action">
+					<div class="card-action" style="display: flex; justify-content: space-between;">
 						<a href="${pageContext.request.contextPath}/eventos/${evento.id}"><i
 							class="material-icons">&nbsp;language</i>VISITAR EVENTO</a>
+						<c:if test="${evento.owner.id == user.id}">
+						<a class="red-text" href="${pageContext.request.contextPath}/eventos/delete/${evento.id}"><i
+							class="material-icons delete">delete</i>APAGAR</a>
+						</c:if>
 					</div>
 				</div>
 				<!-- End of card -->
