@@ -27,7 +27,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
 <!-- Compiled and minified JavaScript -->
 <script
@@ -35,50 +36,56 @@
 </head>
 
 <style>
-rating
-{
-  align-items: center;
-  background-color: #fdfdfd;
-  display: flex;
-  flex-flow: column nowrap;
-  height: 100vh;
-  justify-content: center;
-  width: 100%;
+rating {
+	align-items: center;
+	background-color: #fdfdfd;
+	display: flex;
+	flex-flow: column nowrap;
+	height: 100vh;
+	justify-content: center;
+	width: 100%;
 }
+
 p {
-  color: #333;
-  font-family: 'segoe ui', sans-serif;
-  font-size: 24pt;
-  transition: transform .5s ease;
+	color: #333;
+	font-family: 'segoe ui', sans-serif;
+	font-size: 24pt;
+	transition: transform .5s ease;
 }
+
 p:hover {
-  transform: scale(1.5, 1.5);
+	transform: scale(1.5, 1.5);
 }
+
 .rating {
-  display: block;
-  direction: rtl;
-  unicode-bidi: bidi-override;
-  text-align: center;
+	display: block;
+	direction: rtl;
+	unicode-bidi: bidi-override;
+	text-align: center;
 }
+
 .rating .star {
-  display: none;
+	display: none;
 }
+
 .rating label {
-  color: lightgray;
-  display: inline-block;
-  font-size: 22pt;
-  margin: 0 -2px;
-  transition: transform .15s ease;
+	color: lightgray;
+	display: inline-block;
+	font-size: 22pt;
+	margin: 0 -2px;
+	transition: transform .15s ease;
 }
+
 .rating label:hover {
-  transform: scale(1.35, 1.35);
+	transform: scale(1.35, 1.35);
 }
-.rating label:hover,
-.rating label:hover ~ label {
-  color: orange;
+
+.rating label:hover, .rating label:hover ~ label {
+	color: orange;
 }
+
 .rating .star:checked ~ label {
-  color: orange;
+	color: orange;
 }
 
 body {
@@ -205,83 +212,86 @@ body {
 		<ul class="collapsible">
 			<c:forEach var="vaga" items="${evento.vagas}">
 				<li>
-					<div class="collapsible-header" style="font-weight:700">
-						${vaga.especialidade.nome}
-					</div>
+					<div class="collapsible-header" style="font-weight: 700">
+						${vaga.especialidade.nome}</div>
 					<div class="collapsible-body">
-						<c:if test="${not empty vaga.candidato_vaga}">
-							<span> 
-								<table>
-									<thead>
-										<th>candidato</th>
-										<th>situação</th>
-										<th>nota desempenho</th>
-										<c:if test="${evento.owner.id == user.id }">
-											<th> </th>
-										</c:if>
-									</thead>
-										<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
-												<tbody>
-												<tr>	
-													<td>${candidatovaga.candidato.email}</td>
-													<c:if test="${candidatovaga.state == 'APROVADO' }">
-														<td class="green-text">DEFERIDO</td>
+						<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
+							<c:if test="${not empty vaga.candidato_vaga && candidatovaga.state != 'NAO_AVALIADO'}">
+								<span>
+									<table>
+										<thead>
+											<th>candidato</th>
+											<th>situação</th>
+											<th>nota desempenho</th>
+											<c:if test="${evento.owner.id == user.id }">
+												<th></th>
+											</c:if>
+										</thead>
+										<tbody>
+											<tr>
+												<td>${candidatovaga.candidato.email}</td>
+												<c:if test="${candidatovaga.state == 'APROVADO' }">
+													<td class="green-text">DEFERIDO</td>
+												</c:if>
+												<c:if test="${candidatovaga.state == 'NAO_APROVADO' }">
+													<td class="red-text">INDEFERIDO</td>
+												</c:if>
+
+												<c:if
+													test="${candidatovaga.state == 'APROVADO' && candidatovaga.nota_desempenho == 0 }">
+													<td>
+														<div style="fonte-weight: 700; margin-left: 50px;">-</div>
+													</td>
+												</c:if>
+
+												<c:if
+													test="${candidatovaga.state == 'APROVADO' && candidatovaga.nota_desempenho > 0 }">
+													<td>
+														<div>
+															<c:forEach var="i" begin="1" end="5">
+																<c:if test="${i <= candidatovaga.nota_desempenho }">
+																	<i class="fa fa-star orange-text" aria-hidden="true"></i>
+																</c:if>
+																<c:if test="${i > candidatovaga.nota_desempenho }">
+																	<i class="fa fa-star grey-text" aria-hidden="true"></i>
+																</c:if>
+															</c:forEach>
+														</div>
+													</td>
+												</c:if>
+												<c:if test="${candidatovaga.state == 'NAO_APROVADO' }">
+													<td>
+														<div style="fonte-weight: 700; margin-left: 50px;">-</div>
+													</td>
+												</c:if>
+
+												<td>
+												    <c:if
+														test="${evento.owner.id == user.id && candidatovaga.state == 'APROVADO' }">
+														<a href="#"
+															onclick="openModalDesempenho('${candidatovaga.candidato.nome}', ${candidatovaga.id })"
+															class="modal-trigger"> <i
+															class="material-icons prefix blue-text">note_add</i>
+														</a>
 													</c:if>
-													<c:if test="${candidatovaga.state == 'NAO_APROVADO' }">
-														<td class="red-text">INDEFERIDO</td>
-													</c:if>
-													
-													<c:if test="${candidatovaga.state == 'APROVADO' && candidatovaga.nota_desempenho == 0 }">
-														<td>
-															<div style="fonte-weight:700; margin-left:50px;">-</div>
-														</td>
-													</c:if>
-													
-													<c:if test="${candidatovaga.state == 'APROVADO' && candidatovaga.nota_desempenho > 0 }">
-														<td>
-															<div >
-															    <c:forEach var = "i" begin = "1" end = "5">
-															    	<c:if test="${i <= candidatovaga.nota_desempenho }">
-																   		<i class="fa fa-star orange-text" aria-hidden="true"></i>
-																   	</c:if>
-																   	<c:if test="${i > candidatovaga.nota_desempenho }">
-																   		<i class="fa fa-star grey-text" aria-hidden="true"></i>
-																   	</c:if>
-																</c:forEach>
-															 </div>
-														</td>
-													</c:if>
-													<c:if test="${candidatovaga.state == 'NAO_APROVADO' }">
-														<td>
-															<div style="fonte-weight:700; margin-left:50px;">-</div>
-														</td>
-													</c:if>
-												
-													
-														<td>
-															<c:if test="${evento.owner.id == user.id && candidatovaga.state == 'APROVADO' }">
-																<a href="#" onclick="openModalDesempenho('${candidatovaga.candidato.nome}', ${candidatovaga.id })" class="modal-trigger">
-															 		<i class="material-icons prefix blue-text">note_add</i>
-																</a>
-															</c:if>
-														</td>
-													
-												</tr>
-											</c:forEach>
+												</td>
+											</tr>
 										</tbody>
 									</table>
-							</span>
-						</c:if>
-						<c:if test="${empty vaga.candidato_vaga}">
-							<div class="red-text">não teve inscritos para esta vaga</div>
-						</c:if>
+								</span>
+							</c:if>
+						</c:forEach>
+						<c:if
+								test="${empty vaga.candidato_vaga || candidatovaga.state == 'NAO_AVALIADO'}">
+								<div class="red-text">não teve inscritos para esta vaga</div>
+							</c:if>
 					</div>
 				</li>
 			</c:forEach>
 		</ul>
 	</div>
-	
-		<!-- Modal desempenho -->
+
+	<!-- Modal desempenho -->
 	<div class="modal" id="modaldesempenho">
 		<div class="modal-header blue">
 			<div class="classemuda"
@@ -289,40 +299,43 @@ body {
 				<i class="material-icons prefix "
 					style="font-size: 30px; margin-bottom: 10px; margin-top: 10px; margin-left: 3px">
 					event_note</i>
-				<h5 style="margin-top: 12px; margin-left: 5px">Avalie o desempenho</h5>
+				<h5 style="margin-top: 12px; margin-left: 5px">Avalie o
+					desempenho</h5>
 			</div>
 		</div>
 		<div class="modal-content">
-			<h7 style="font-weight: 700; margin-left: 10px;">Como foi o desempenho de </h7> 
+			<h7 style="font-weight: 700; margin-left: 10px;">Como foi o
+			desempenho de </h7>
 			<h7 style="font-weight: 700;" class="candidatonome blue-text">nome</h7>
-			
+
 			<!-- Id do evento -->
-			
-			
-			<span class="grey-text">Escolha de 1 a 5 estrelas para classificar</span>
-				<form action="${pageContext.request.contextPath }/eventos/avaliar/desempenho" method="post">
-					<div class="rating">
-					  <input type="hidden" name="idcandidatovaga" class="idCandidatoVaga" value="">
-					  <input id="radio1" type="radio" name="star" value="5" class="star" />
-					  <label for="radio1">&#9733;</label>
-					  <input id="radio2" type="radio" name="star" value="4" class="star" />
-					  <label for="radio2">&#9733;</label>
-					  <input id="radio3" type="radio" name="star" value="3" class="star" />
-					  <label for="radio3">&#9733;</label>
-					  <input id="radio4" type="radio" name="star" value="2" class="star" />
-					  <label for="radio4">&#9733;</label>
-					  <input id="radio5" type="radio" name="star" checked value="1" class="star" />
-					  <label for="radio5">&#9733;</label>
-					</div>
-					
-					<div class="modal-footer ">
-						<button type="submit" id="saveData" class="btn blue">Avaliar</button>
-						<a class="btn red modal-close modal-action">Cancelar</a>
-					</div>
-				</form>
-			</div>
+
+
+			<span class="grey-text">Escolha de 1 a 5 estrelas para
+				classificar</span>
+			<form
+				action="${pageContext.request.contextPath }/eventos/avaliar/desempenho"
+				method="post">
+				<div class="rating">
+					<input type="hidden" name="idcandidatovaga" class="idCandidatoVaga"
+						value=""> <input id="radio1" type="radio" name="star"
+						value="5" class="star" /> <label for="radio1">&#9733;</label> <input
+						id="radio2" type="radio" name="star" value="4" class="star" /> <label
+						for="radio2">&#9733;</label> <input id="radio3" type="radio"
+						name="star" value="3" class="star" /> <label for="radio3">&#9733;</label>
+					<input id="radio4" type="radio" name="star" value="2" class="star" />
+					<label for="radio4">&#9733;</label> <input id="radio5" type="radio"
+						name="star" checked value="1" class="star" /> <label for="radio5">&#9733;</label>
+				</div>
+
+				<div class="modal-footer ">
+					<button type="submit" id="saveData" class="btn blue">Avaliar</button>
+					<a class="btn red modal-close modal-action">Cancelar</a>
+				</div>
+			</form>
 		</div>
-		
+	</div>
+
 	<!-- Modal sucess -->
 	<div class="modal" id="modalsuccess">
 		<div class="modal-header green">
