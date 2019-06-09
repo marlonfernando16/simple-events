@@ -50,4 +50,19 @@ public class Avaliacao_Evento {
 		this.participante = participante;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Avaliacao_Evento [id=" + id + ", evento=" + evento.getDescricao() + ", nota_avaliacao_evento=" + nota_avaliacao_evento
+				+ ", participante=" + participante.getNome() + "]";
+	}
+	
+
 }

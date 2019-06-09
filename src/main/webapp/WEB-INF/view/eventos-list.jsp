@@ -29,7 +29,8 @@
 <!-- Compiled and minified JavaScript -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-
+	
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 </head>
 
 <style>
@@ -131,6 +132,36 @@ body {
 	color: #fff;
 }
 
+.score {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.score-wrap {
+  display: inline-block;
+  position: relative;
+  height: 19px;
+}
+
+.score .stars-active {
+  color: #EEBD01;
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.score .stars-inactive {
+  color: grey;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-text-stroke: initial;
+  /* overflow: hidden; */
+}
+
 </style>
 <body>
 	<!--menu-->
@@ -212,6 +243,31 @@ body {
 							<%-- <time>17th March</time> --%>
 						</div>
 						<span class="card-title grey-text text-darken-4 descricao">${evento.descricao}</span>
+						<span class="card-title grey-text text-darken-4 descricao">
+							<span class="score">
+							    <div class="score-wrap">
+							        <span class="stars-active" style="width:${evento.getMediaAvaliacao()*100 / 5}%">
+							            <i class="fa fa-star" aria-hidden="true"></i>
+							            <i class="fa fa-star" aria-hidden="true"></i>
+							            <i class="fa fa-star" aria-hidden="true"></i>
+							            <i class="fa fa-star" aria-hidden="true"></i>
+							            <i class="fa fa-star" aria-hidden="true"></i>
+							        </span>
+									<span class="stars-inactive">
+							            <i class="fa fa-star-o" aria-hidden="true"></i>
+							            <i class="fa fa-star-o" aria-hidden="true"></i>
+							            <i class="fa fa-star-o" aria-hidden="true"></i>
+							            <i class="fa fa-star-o" aria-hidden="true"></i>
+							            <i class="fa fa-star-o" aria-hidden="true"></i>
+									</span>
+								</div>
+							</span>
+							<span class="grey-text" style="margin-left:105px; margin-top:-27px; float:left; font-size:15px;">
+								${ evento.getMediaAvaliacao()} 
+								(${fn:length(evento.avaliacao_eventos)} avaliações)
+							</span>
+						</span>
+						
 						<span class="card-subtitle grey-text text-darken-2">Criado por:
 							${evento.owner.email} - </span>
 						<span class="card-subtitle text-darken-2 finalizado">${evento.finalizado}</span>
