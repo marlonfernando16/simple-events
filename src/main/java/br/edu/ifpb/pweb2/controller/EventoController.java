@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifpb.pweb2.dao.Avaliacao_EventoDAO;
 import br.edu.ifpb.pweb2.dao.Candidato_VagaDAO;
 import br.edu.ifpb.pweb2.dao.EspecialidadeDAO;
 import br.edu.ifpb.pweb2.dao.EventoDAO;
 import br.edu.ifpb.pweb2.dao.VagaDAO;
+import br.edu.ifpb.pweb2.model.Avaliacao_Evento;
 import br.edu.ifpb.pweb2.model.Candidato_Vaga;
 import br.edu.ifpb.pweb2.model.Especialidade;
 import br.edu.ifpb.pweb2.model.Evento;
@@ -48,6 +50,10 @@ public class EventoController {
 	@Autowired
 	@Qualifier("Candidato_VagaDAO")
 	Candidato_VagaDAO candidatovagadao;
+	
+	@Autowired
+	@Qualifier("Avaliacao_EventoDAO")
+	Avaliacao_EventoDAO avaliacaoeventodao;
 
 	@RequestMapping({ "", "/" })
 	public ModelAndView listar(HttpSession session) {
@@ -114,7 +120,8 @@ public class EventoController {
 			return new ModelAndView("redirect:/eventos/");
 		} 
 		if(evento.isFinalizado()) {
-			return new ModelAndView("redirect:/eventos/finalizado/"+evento.getId());
+			return new ModelAndView("evento-finalizado").addObject("evento", evento);
+			//return new ModelAndView("redirect:/eventos/finalizado/"+evento.getId());
 		}
 		if (user!=null && evento.getOwner().getId().equals(user.getId())) {
 			ModelAndView mv = new ModelAndView("evento-update");
@@ -209,7 +216,7 @@ public class EventoController {
 	@RequestMapping("/avaliar/desempenho")
 	public ModelAndView avaliarDesempenho(HttpSession session,
 			@RequestParam("idcandidatovaga") Long idcandidatovaga,
-			@RequestParam("star") Integer nota,
+			@RequestParam("starde") Integer nota,
 			RedirectAttributes attr) {
 		User user = (User) session.getAttribute("user");
 		if (user == null)
@@ -218,11 +225,63 @@ public class EventoController {
 		Evento evento = cv.getVaga().getEvento();
 		System.out.println("evento"+evento);
 		if(cv.getNota_desempenho()>0) {
-			return new ModelAndView("evento-finalizado").addObject("evento", evento).addObject("message_error", "Esse  candidato ja foi avaliado!");
+			attr.addFlashAttribute("message_error", "Esse  candidato ja foi avaliado!");
+			return new ModelAndView("redirect:/eventos/"+evento.getId());
 		}
 		cv.setNota_desempenho(nota);
 		candidatovagadao.update(cv.getId(), cv);
-		return new ModelAndView("evento-finalizado").addObject("evento", evento).addObject("message_success", "Candidato avaliado com sucesso!");
+		attr.addFlashAttribute("message_success", "Candidato avaliado com sucesso!");
+		return new ModelAndView("redirect:/eventos/"+evento.getId());
+	}
+	
+	@RequestMapping("/avaliar/evento")
+	public ModelAndView avaliarEvento(HttpSession session,
+			@RequestParam("idevento") Long idevento,
+			@RequestParam("star") Integer nota,
+			RedirectAttributes attr) {
+		User user = (User) session.getAttribute("user");
+		if (user == null)
+			return new ModelAndView("redirect:/eventos/");
+		Evento evento = eventodao.findById(idevento);
+		if(user.getId().equals(evento.getOwner().getId())) {
+			System.out.println("promotr dono do evento");
+			return new ModelAndView("evento-finalizado").addObject("evento", evento).addObject("message_error", "O promotor não pode avaliar o próprio evento");
+		}
+		List<Vaga> vagas = evento.getVagas();
+		boolean apto = false;//variavel usado pra verificar se o usuario ja foi deferido em uma das vagas
+		for (Vaga vaga: vagas) {
+			List<Candidato_Vaga> candidato_vagas = vaga.getCandidato_vaga();
+			for (Candidato_Vaga cv : candidato_vagas) {
+				if(cv.getCandidato().getId().equals(user.getId())) {
+					if(cv.getState()== State.APROVADO) {
+						apto = true;
+					}
+				}
+			}
+		}
+		if(apto) {
+			System.out.println("candidato apto");
+			Avaliacao_Evento av = avaliacaoeventodao.findByUserAndEvento(user, evento);
+			if(av == null) {
+				System.out.println("oi");
+				av = new Avaliacao_Evento();
+				av.setEvento(evento);
+				av.setNota_avaliacao_evento(nota);
+				av.setParticipante(user);
+				avaliacaoeventodao.gravar(av);
+				attr.addFlashAttribute("message_success", "Evento avaliado com sucesso");
+				return new ModelAndView("redirect:/eventos/"+evento.getId());
+			}else {
+				attr.addFlashAttribute("message_error", "você ja avaliou esse evento");
+				return new ModelAndView("redirect:/eventos/"+evento.getId());
+			}
+
+		}else {
+			attr.addFlashAttribute("message_error", "você não participou desse evento");
+			return new ModelAndView("redirect:/eventos/"+evento.getId());
+			
+		}
+		//return null;
 	}
 
 	@RequestMapping("finalizar/{eventoId}")

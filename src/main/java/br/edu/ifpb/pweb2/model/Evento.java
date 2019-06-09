@@ -137,7 +137,16 @@ public class Evento {
 	@Override
 	public String toString() {
 		return "Evento [id=" + id + ", descricao=" + descricao + ", data=" + data + ", local=" + local + ", owner="
-				+ owner + ", vagas=" + vagas + ", avaliacao_eventos=" + avaliacao_eventos +"finalizado"+finalizado+ "]";
+				+ owner + ", vagas=" + vagas + ", avaliacao_eventos=" + avaliacao_eventos +"finalizado"+finalizado+"media"+getMediaAvaliacao()+ "]";
+	}
+	
+	public double getMediaAvaliacao() {
+		double sum = 0;
+		for (Avaliacao_Evento av:  this.avaliacao_eventos) {
+			sum += av.getNota_avaliacao_evento();
+		}
+		double media = sum / this.avaliacao_eventos.size();
+		return (double) Math.round(media * 100) / 100;
 	}
 
 }
