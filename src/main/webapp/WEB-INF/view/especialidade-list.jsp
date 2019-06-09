@@ -116,6 +116,7 @@ body {
 					<th>Nome</th>
 					<th>Descrição</th>
 					<th>Atualizar</th>
+					<th>Deletar</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -126,6 +127,10 @@ body {
 						<td><a
 							href="${pageContext.request.contextPath}/especialidades/read/${e.id}">
 								<i class="material-icons prefix blue-text">edit</i>
+						</a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/especialidades/delete/${e.id}">
+								<i class="material-icons prefix red-text">delete</i>
 						</a></td>
 					</tr>
 				</c:forEach>
