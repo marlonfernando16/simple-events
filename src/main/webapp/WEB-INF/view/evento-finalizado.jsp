@@ -35,7 +35,6 @@
 </head>
 
 <style>
-
 rating
 {
   align-items: center;
@@ -81,7 +80,6 @@ p:hover {
 .rating .star:checked ~ label {
   color: orange;
 }
-
 ratingde
 {
   align-items: center;
@@ -127,15 +125,12 @@ p:hover {
 .ratingde .starde:checked ~ label {
   color: orange;
 }
-
 body {
 	background-color: #F8F8F8;
 }
-
 .eventos {
 	margin-left: 10%;
 }
-
 .i-circle.md-login {
 	margin-left: 50px;
 	margin-top: 50%;
@@ -146,11 +141,9 @@ body {
 	border-radius: 50%;
 	color: black;
 }
-
 .gambiarra {
 	width: 25% !important;
 }
-
 .modal {
 	width: 25% !important;
 	margin-top: 5%
@@ -160,13 +153,11 @@ body {
   position: relative;
   overflow: hidden;
 }
-
 .score-wrap {
   display: inline-block;
   position: relative;
   height: 19px;
 }
-
 .score .stars-active {
   color: #EEBD01;
   position: relative;
@@ -175,7 +166,6 @@ body {
   overflow: hidden;
   white-space: nowrap;
 }
-
 .score .stars-inactive {
   color: grey;
   position: absolute;
@@ -568,7 +558,6 @@ body {
 			  //console.log(stars);
 			  console.log("miz")
 			});
-
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.collapsible');
 			var instances = M.Collapsible.init(elems);
@@ -578,7 +567,6 @@ body {
 			let idModalAvaliarEvento = document.querySelector('#idModalAvaliarEvento');
 			idModalAvaliarEvento.style.display= 'none'
 		}
-
 		
 	</script>
 

@@ -56,22 +56,24 @@ public class UserController {
 	}
 
 //	Update
-//	@RequestMapping("update/{userId}")
-//	public ModelAndView update(@PathVariable Long userId, @Valid User user, BindingResult bindingResult, RedirectAttributes attr) {
-//		if (bindingResult.hasErrors()) {
-//			return new ModelAndView("user-create");
-//		} else {
-//			if(userdao.update(user) != null) {
-//				attr.addFlashAttribute("message_success", "Usuario atualizado.");
-//				attr.addFlashAttribute("user", user);
-//				return new ModelAndView("redirect:/usuario/listUsers");
-//			}else {
-//				attr.addFlashAttribute("message_error", "Usuario nao pode ser atualizado.");
-//				attr.addFlashAttribute("user", user);
-//				return new ModelAndView("redirect:/usuario/listUsers");
-//			}
-//		}
-//	}
+	@RequestMapping("update/{userId}")
+	public ModelAndView update(@PathVariable Long userId, @Valid User user, BindingResult bindingResult, RedirectAttributes attr) {
+		if (bindingResult.hasErrors()) {
+			return new ModelAndView("user-create");
+		} else {
+			User u = userdao.update(userId, user);
+			if(u != null) {
+				attr.addFlashAttribute("message_success", "Usuario atualizado.");
+				attr.addFlashAttribute("user", u);
+				System.out.println(u);
+				return new ModelAndView("redirect:/eventos/");
+			}else {
+				attr.addFlashAttribute("message_error", "Usuario nao pode ser atualizado.");
+				attr.addFlashAttribute("user", u);
+				return new ModelAndView("redirect:/eventos/");
+			}
+		}
+	}
 
 //	Delete
 //	@RequestMapping("delete/{userId}")

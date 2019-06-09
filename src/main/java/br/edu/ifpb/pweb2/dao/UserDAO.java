@@ -53,10 +53,17 @@ public class UserDAO {
 		return manager.find(User.class, id);
 	}
 
-//	@Transactional
-//	public User update(User user) {
-//		return manager.merge(user);
-//	}
+	@Transactional
+	public User update(Long id, User user) {
+		User atualizado = manager.find(User.class, id);
+		atualizado.setNome(user.getNome());
+		atualizado.setTelefone(user.getTelefone());
+		atualizado.setDatanascimento(user.getDatanascimento());
+		atualizado.setEmail(user.getEmail());
+		manager.merge(atualizado);
+		return atualizado;
+	}
+
 
 	@Transactional
 	public User delete(Long id) {

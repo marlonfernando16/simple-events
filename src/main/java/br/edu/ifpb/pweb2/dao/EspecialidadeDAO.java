@@ -58,4 +58,10 @@ public class EspecialidadeDAO {
 		}
 	}
 
+	@Transactional
+	public void delete(Long especialidadeId) {
+		Especialidade e = findById(especialidadeId);
+		manager.remove(e);
+	}
+
 }
