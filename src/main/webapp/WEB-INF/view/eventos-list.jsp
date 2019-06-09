@@ -136,7 +136,7 @@ body {
 	<!--menu-->
 	<!-- Dropdown Structure -->
 	<ul id="dropdown1" class="dropdown-content">
-		<li></li>
+		<li><a href="${pageContext.request.contextPath }/usuario/read/${user.id}">Atualizar</a></li>
 		<li><a href="${pageContext.request.contextPath }/login/logout">Sair</a></li>
 	</ul>
 	<nav class="teal lighten-2">
