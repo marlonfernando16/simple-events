@@ -3,6 +3,7 @@ package br.edu.ifpb.pweb2.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifpb.pweb2.dao.Candidato_VagaDAO;
 import br.edu.ifpb.pweb2.dao.EspecialidadeDAO;
 import br.edu.ifpb.pweb2.dao.EventoDAO;
 import br.edu.ifpb.pweb2.dao.VagaDAO;
+import br.edu.ifpb.pweb2.model.Candidato_Vaga;
 import br.edu.ifpb.pweb2.model.Especialidade;
 import br.edu.ifpb.pweb2.model.Evento;
 import br.edu.ifpb.pweb2.model.User;
@@ -28,6 +31,10 @@ public class VagaController {
 	EventoDAO eventodao;
 	@Autowired
 	EspecialidadeDAO especialidadedao;
+	
+	@Autowired
+	@Qualifier("Candidato_VagaDAO")
+	Candidato_VagaDAO candidatovagadao;
 
 	@RequestMapping("/add")
 	private ModelAndView create(HttpSession session, @RequestParam("especialidade") Long idespecialidade,
@@ -95,6 +102,15 @@ public class VagaController {
 			attr.addFlashAttribute("message_error", "não é possível manter um evento sem vagas");
 			return new ModelAndView("redirect:/eventos/" + e.getId());
 		}
+	}
+	@RequestMapping("/desistir/candidatura/{candidatoVagaId}")
+	private ModelAndView desistirCandidatura(HttpSession session,
+			@PathVariable Long candidatoVagaId, RedirectAttributes attr) {
+		
+		Candidato_Vaga cv = candidatovagadao.delete(candidatoVagaId);
+		Evento e = cv.getVaga().getEvento();
+		attr.addFlashAttribute("message_success", "candidatura cancelada ! ");
+		return new ModelAndView("redirect:/eventos/"+e.getId());
 	}
 
 }

@@ -59,6 +59,7 @@ public class Candidato_VagaDAO {
 	public Candidato_Vaga delete(Long id) {
 		Candidato_Vaga candidato = findById(id);
 		manager.remove(candidato);
+		System.out.println("testando candidato ="+candidato);
 		return candidato;
 	}
 
