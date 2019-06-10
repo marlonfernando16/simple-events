@@ -345,13 +345,21 @@ body {
 									</thead>
 										<c:forEach var="candidatovaga" items="${vaga.candidato_vaga}">
 												<tbody>
-												<tr>	
+												<tr>
 													<td>${candidatovaga.candidato.email}</td>
 													<c:if test="${candidatovaga.state == 'APROVADO' }">
 														<td class="green-text">DEFERIDO</td>
 													</c:if>
 													<c:if test="${candidatovaga.state == 'NAO_APROVADO' }">
 														<td class="red-text">INDEFERIDO</td>
+													</c:if>
+													<c:if test="${candidatovaga.state == 'NAO_AVALIADO' }">
+														<td class="grey-text">NÃO AVALIADO</td>
+													</c:if>
+													<c:if test="${candidatovaga.state == 'NAO_AVALIADO' }">
+														<td>
+															<div style="fonte-weight:700; margin-left:50px;">-</div>
+														</td>
 													</c:if>
 													<c:if test="${candidatovaga.state == 'APROVADO' && candidatovaga.nota_desempenho > 0 }">
 														<td>

@@ -180,10 +180,11 @@ public class EventoController {
 	}
 
 	@RequestMapping("/candidatar")
-	public ModelAndView candidatar(HttpSession session, @RequestParam("vagas") List<Long> idvagas,
+	public ModelAndView candidatar(HttpSession session, @RequestParam("vagas")List<Long> idvagas,
 			RedirectAttributes attr) {
 		User user = (User) session.getAttribute("user");
 		Evento evento = null;
+
 		if (user == null) {
 			attr.addFlashAttribute("message_error", "Usuario precisa estar logado!");
 			return new ModelAndView("redirect:/login/form");
@@ -328,17 +329,11 @@ public class EventoController {
 		
 		Evento ev = eventodao.findById(eventoId);
 		for(Vaga vaga_banco: ev.getVagas()) {
-			int qtd_deferidos_vaga = 0;
 			for(Candidato_Vaga cand_memoria:candidatos_avaliados_memoria) {
 				boolean flag = vaga_banco.getId().equals(cand_memoria.getVaga().getId());
 				if(flag) {
 					for(Candidato_Vaga cand_vaga_banco:vaga_banco.getCandidato_vaga()) {
 						if(cand_vaga_banco.getId().equals(cand_memoria.getId())){
-							qtd_deferidos_vaga++;
-							if(qtd_deferidos_vaga>vaga_banco.getQtd_vagas()){
-								attr.addFlashAttribute("message_error", "numero de deferidos maior que a quantidade da vaga.");
-								return new ModelAndView("redirect:/eventos/{eventoId}");
-							}
 							Integer index_candidato_banco = vaga_banco.getCandidato_vaga().indexOf(cand_vaga_banco);
 							vaga_banco.getCandidato_vaga().set(index_candidato_banco,cand_memoria);
 							long index_candidato_memoria_long = index_candidato_banco.longValue();

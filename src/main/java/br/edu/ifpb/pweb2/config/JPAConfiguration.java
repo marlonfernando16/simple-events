@@ -36,7 +36,7 @@ public class JPAConfiguration {
 		//Descomentar essas linhas quando for usar localmente
 		//Comentá-las quando for dar push para o github
 //		dataSource.setUsername("postgres");
-//		dataSource.setPassword("");
+//		dataSource.setPassword("123");
 //		dataSource.setUrl("jdbc:postgresql://localhost/simple-events");
 //		dataSource.setDriverClassName("org.postgresql.Driver");
 		
