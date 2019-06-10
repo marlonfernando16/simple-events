@@ -65,13 +65,16 @@ public class EventoController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ModelAndView create(HttpSession session, @ModelAttribute("evento") Evento evento,
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView create(HttpSession session, @Valid @ModelAttribute("evento") Evento evento,
+			BindingResult bindingResult,
 			@RequestParam(value="especialidades", required=false) List<Long> especialidades,
-			@RequestParam(value="quantidadevagas", required=false) List<Integer> quantidadevagas, BindingResult bindingResult,
+			@RequestParam(value="quantidadevagas", required=false) List<Integer> quantidadevagas,
 			RedirectAttributes attr, Model model) {
-		if (bindingResult.hasErrors())
-			return new ModelAndView("evento-form");
+		if (bindingResult.hasErrors()) {
+			attr.addFlashAttribute("message_error", "Escolha uma data no futuro.");
+			return new ModelAndView("redirect:/eventos/form/");
+		}
 		if (especialidades == null) {
 			attr.addFlashAttribute("message_error", "Escolha pelo menos uma vaga!");
 			ModelAndView mav = new ModelAndView("redirect:/eventos/form");

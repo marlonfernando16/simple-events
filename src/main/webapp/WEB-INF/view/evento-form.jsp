@@ -86,7 +86,7 @@ body {
 	<!-- Formulario de Cadastro -->
 	<div class="row container">
 		<p>&nbsp;</p>
-		<form:form action="${pageContext.request.contextPath }/eventos/add"
+		<form:form action="${pageContext.request.contextPath }/eventos"
 			method="post" class="col s12 white " modelAttribute="evento">
 			<fieldset class="formulario">
 				<legend>
