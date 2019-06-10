@@ -162,6 +162,13 @@ body {
   /* overflow: hidden; */
 }
 
+.pesquisa {
+  background-color: #3299BB;
+  color: #fff;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.07);
+  border-radius: 5px;
+}
+
 </style>
 <body>
 	<!--menu-->
@@ -226,16 +233,36 @@ body {
 
 
 
+	<%-- <nav class="search-title-filter">
+		<div class="nav-wrapper">
+			<div class="input-field col s1">
+				<input id="search" type="search" name="search">
+				<label for="search" class=""><i class="material-icons">search</i></label>
+				<i class="material-icons">close</i>
+			</div>
+		</div>
+	</nav> --%>
+	
+	<div class="row" style="margin-top:20px;">
+      <div class="row col s3 pesquisa">
+        <div class="input-field">
+          <i class="material-icons prefix">search</i>
+          <input id="search" type="search" name="search">
+        </div>
+      </div>
+  </div>
+
+
 
 	<div id="card-container" class="row">
 		<c:forEach var="evento" items="${eventos}">
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6 l4 evento">
 				<!-- Card 1 -->
 				<div class="card">
 					<div class="card-content white-text">
-						<div class="card__date">
-							<span class="card__date__day">${evento.data.day}</span> <span
-								class="card__date__month">${evento.data.month}</span>
+						<div class="card__date" style="padding-top:12px;">
+							<%-- <span class="card__date__day">${evento.data.day}</span> --%> <span
+								style="font-size:13px;" class="card__date__month">${evento.data.month}</span>
 						</div>
 						<div class="card__meta">
 							<a href="https://www.google.com.br/maps/place/${evento.local}"
@@ -243,7 +270,7 @@ body {
 							<%-- <time>17th March</time> --%>
 						</div>
 						<span class="card-title grey-text text-darken-4 descricao">${evento.descricao}</span>
-						<span class="card-title grey-text text-darken-4 descricao">
+						<span class="card-title grey-text text-darken-4">
 							<span class="score">
 							    <div class="score-wrap">
 							        <span class="stars-active" style="width:${evento.getMediaAvaliacao()*100 / 5}%">
@@ -360,7 +387,6 @@ body {
 		
 		let estados = document.querySelectorAll('.finalizado')
 		estados.forEach(elemento => {
-			console.log(elemento.textContent)
 			if (elemento.textContent == 'true') {
 				elemento.textContent = "Inscrições encerradas."
 				elemento.classList.add("red-text")
@@ -369,6 +395,19 @@ body {
 				elemento.classList.add("green-text")
 			}
 		});
+		
+		$('#search').keyup(
+		function searchEvento(){
+  			let pesquisa = this.value.toLowerCase()
+  			let nome
+  			$('.evento').each(function(index, evento) {
+    			nome = $(evento).find('.descricao').text().toLowerCase()
+    			if(nome.indexOf(pesquisa) == -1)
+    				evento.style.display = 'none'
+    			else
+    				evento.style.display = 'block'
+  			})
+		})
 	});
 	</script>
 
