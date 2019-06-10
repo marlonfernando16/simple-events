@@ -153,7 +153,7 @@ body {
 
 				
 					<div class="input-field col s12">
-						<c:forEach var="vaga" items="${evento.vagas}">
+						<c:forEach var="vaga" items="${evento.vagas}" varStatus="loop">
 							<div class="row">
 								<div class="input-field col s3 ">
 									<p>
@@ -162,6 +162,29 @@ body {
 												(${vaga.qtd_vagas})</span>
 										</label>
 									</p>
+									<c:forEach var="candidato_vaga" items="${vaga.candidato_vaga }">
+										<c:if test="${candidato_vaga.candidato.id == user.id }">
+
+											<p>
+												<label> 
+												
+												<input type="checkbox" class="vagaspre"
+													name="vagas" disabled checked value="${vaga.id }" class="filled-in" /> <span>${vaga.especialidade.nome }
+														(${vaga.qtd_vagas})</span>
+												</label>
+												<span>
+												<a href="${pageContext.request.contextPath}/vagas/desistir/candidatura/${candidato_vaga.id}" >
+													<i class="material-icons prefix red-text" style="font-size:22px; margin-top:7px; margin-left:10px; ">cancel</i>
+												</a>
+												</span>
+											</p>
+											<script>
+												$(document).ready(function() { 
+													desabilitaVaga(${loop.index});		
+												});
+											</script>
+										</c:if>
+									</c:forEach>
 								</div>
 							</div>
 						</c:forEach>
@@ -220,6 +243,14 @@ body {
 	<script type="text/javascript">
 		$('.modal').modal();
 		$('.dropdown-trigger').dropdown();
+		
+		function desabilitaVaga(indice){
+			let vagas = document.querySelectorAll('.vagas')[indice];
+			vagas.disabled = true
+			console.log(indice)
+			console.log(vagas)
+			vagas.parentNode.parentNode.style.display= 'none'
+		}
 	
 	</script>
 

@@ -58,7 +58,11 @@ public class Candidato_VagaDAO {
 	@Transactional
 	public Candidato_Vaga delete(Long id) {
 		Candidato_Vaga candidato = findById(id);
-		manager.remove(candidato);
+		Query q = manager.createQuery("delete from Candidato_Vaga cv where cv.id = :id");
+		q.setParameter("id", id);
+		q.executeUpdate();
+		//manager.remove(candidato);
+		System.out.println("testando candidato ="+candidato);
 		return candidato;
 	}
 
