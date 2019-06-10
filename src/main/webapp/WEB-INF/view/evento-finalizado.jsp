@@ -331,8 +331,9 @@ body {
 			<c:forEach var="vaga" items="${evento.vagas}">
 				<li>
 					<div class="collapsible-header" style="font-weight:700">
-						${vaga.especialidade.nome}
+						${vaga.especialidade.nome} (${vaga.qtd_vagas})
 					</div>
+		
 					<div class="collapsible-body">
 						<c:if test="${not empty vaga.candidato_vaga}">
 							<span> 

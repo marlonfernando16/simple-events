@@ -275,12 +275,12 @@ public class EventoController {
 				attr.addFlashAttribute("message_success", "Evento avaliado com sucesso");
 				return new ModelAndView("redirect:/eventos/"+evento.getId());
 			}else {
-				attr.addFlashAttribute("message_error", "você ja avaliou esse evento");
+				attr.addFlashAttribute("message_error", "voce ja avaliou esse evento");
 				return new ModelAndView("redirect:/eventos/"+evento.getId());
 			}
 
 		}else {
-			attr.addFlashAttribute("message_error", "você não participou desse evento");
+			attr.addFlashAttribute("message_error", "voce nao participou desse evento");
 			return new ModelAndView("redirect:/eventos/"+evento.getId());
 			
 		}
@@ -320,7 +320,7 @@ public class EventoController {
 			id++;
 			candidatos_avaliados_memoria.add(candidato);
 			if(count_aprovados_duplicados > 0) {
-				attr.addFlashAttribute("message_error", "Candidato s� pode ser deferido em uma unica vaga.");
+				attr.addFlashAttribute("message_error", "Candidato so pode ser deferido em uma unica vaga.");
 				return new ModelAndView("redirect:/eventos/{eventoId}");
 			}
 
@@ -328,11 +328,17 @@ public class EventoController {
 		
 		Evento ev = eventodao.findById(eventoId);
 		for(Vaga vaga_banco: ev.getVagas()) {
+			int qtd_deferidos_vaga = 0;
 			for(Candidato_Vaga cand_memoria:candidatos_avaliados_memoria) {
 				boolean flag = vaga_banco.getId().equals(cand_memoria.getVaga().getId());
 				if(flag) {
 					for(Candidato_Vaga cand_vaga_banco:vaga_banco.getCandidato_vaga()) {
 						if(cand_vaga_banco.getId().equals(cand_memoria.getId())){
+							qtd_deferidos_vaga++;
+							if(qtd_deferidos_vaga>vaga_banco.getQtd_vagas()){
+								attr.addFlashAttribute("message_error", "numero de deferidos maior que a quantidade da vaga.");
+								return new ModelAndView("redirect:/eventos/{eventoId}");
+							}
 							Integer index_candidato_banco = vaga_banco.getCandidato_vaga().indexOf(cand_vaga_banco);
 							vaga_banco.getCandidato_vaga().set(index_candidato_banco,cand_memoria);
 							long index_candidato_memoria_long = index_candidato_banco.longValue();
